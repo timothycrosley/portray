@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "portray"
-version = "0.0.1"
+version = "0.0.2"
 description = "Your Project with Great Documentation"
 authors = ["Timothy Crosley <timothy.crosley@gmail.com>"]
 license = "MIT"
@@ -12,6 +12,7 @@ hug = "^2.5"
 mkdocs = "^1.0"
 toml = "^0.10.0"
 mkdocs-material = "^4.4"
+GitPython = "^3.0"
 
 [tool.poetry.dev-dependencies]
 vulture = "^1.0"
@@ -28,3 +29,6 @@ pytest-cov = "^2.7"
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.poetry.scripts]
+portray = "portray.cli:__hug__.cli"
