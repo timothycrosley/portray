@@ -12,12 +12,11 @@ from toml import load as toml_load
 MKDOCS_DEFAULTS = {
     "site_name": os.path.basename(os.getcwd()),
     "theme": {"name": "material", "palette": {"primary": "green", "accent": "lightgreen"}},
-    "markdown_extensions": ["admonition", "codehilite", "extra"],
+    "markdown_extensions": ["admonition", "codehilite", "extra"]
 }
 
 PDOC3_DEFAULTS = {
     "modules": [os.path.basename(os.getcwd())],
-    "output_dir": "docs",
     "filter": None,
     "force": True,
     "html": False,
@@ -53,6 +52,7 @@ def mkdocs(directory: str, **overrides) -> _mkdocs_config.base.Config:
 
     errors, warnings = config.validate()
     if errors:
+        print(errors)
         raise _mkdocs_exceptions.ConfigurationError(
             "Aborted with {} Configuration Errors!".format(len(errors))
         )
@@ -80,8 +80,20 @@ def toml(location: str, **overrides) -> dict:
     return config
 
 
-def project(directory: str, config_file: str, **overrides) -> dict:
-    project_config = toml(os.path.join(directory, config_file))
+def project(directory: str, config_file: str, context: Union[dict, None]=None, **overrides) -> dict:
+    project_config = context.copy() if context else {}
+    project_config.update(toml(os.path.join(directory, config_file), **overrides))
+    if "input_dir" in context:
+        if not project_config.setdefault("pdoc3", {}).get("output_dir"):
+            project_config["pdoc3"]["output_dir"] = os.path.join(context["input_dir"], "reference")
+        if not project_config.setdefault("mkdocs", {}).get("docs_dir"):
+            project_config["mkdocs"]["docs_dir"] = context["input_dir"]
+
+    if "output_dir" in context and not project_config["mkdocs"].get("site_dir"):
+        project_config["mkdocs"]["site_dir"] = context["output_dir"]
+    if "nav" in context and not project_config["mkdocs"].get("nav"):
+        project_config["mkdocs"]["nav"] = context["nav"]
+
     project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
     project_config["pdoc3"] = pdoc3(**project_config.get("pdoc3", {}))
     return project_config
