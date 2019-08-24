@@ -8,17 +8,12 @@ import mkdocs.exceptions as _mkdocs_exceptions
 from git import Repo
 from toml import load as toml_load
 
-PORTRAY_DEFAULTS = {
-    "docs_dir": "docs",
-    "output_dir": "site",
-    "port": 8000,
-    "host": "127.0.0.1",
-}
+PORTRAY_DEFAULTS = {"docs_dir": "docs", "output_dir": "site", "port": 8000, "host": "127.0.0.1"}
 
 MKDOCS_DEFAULTS = {
     "site_name": os.path.basename(os.getcwd()),
     "theme": {"name": "material", "palette": {"primary": "green", "accent": "lightgreen"}},
-    "markdown_extensions": ["admonition", "codehilite", "extra"]
+    "markdown_extensions": ["admonition", "codehilite", "extra"],
 }
 
 PDOC3_DEFAULTS = {

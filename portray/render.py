@@ -1,12 +1,12 @@
 import os
+import shutil
 import tempfile
 from argparse import Namespace
-import shutil
-from glob import glob
 from contextlib import contextmanager
+from glob import glob
 
-import pdoc.cli
 import mkdocs.config as mkdocs_config
+import pdoc.cli
 from mkdocs.commands.build import build as mkdocs_build
 
 
@@ -66,7 +66,9 @@ def documentation_in_temp_folder(config):
                 nested_dirs = glob(os.path.join(input_dir, config["docs_dir"], "*/"))
                 for nested_dir in nested_dirs:
                     nested_docs = glob(os.path.join(nested_dir, "*.md"))
-                    nav.append({_label(nested_dir[:1]): [_doc(doc, input_dir) for doc in nested_docs]})
+                    nav.append(
+                        {_label(nested_dir[:1]): [_doc(doc, input_dir) for doc in nested_docs]}
+                    )
 
                 reference_docs = glob(os.path.join(config["pdoc3"]["output_dir"], "**/*.md"))
                 nav.append({"Reference": [_doc(doc, input_dir) for doc in reference_docs]})
