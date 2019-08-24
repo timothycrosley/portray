@@ -70,7 +70,7 @@ def documentation(config):
                     nested_docs = glob(os.path.join(nested_dir, "*.md"))
                     nav.append({_label(nested_dir): [_doc(doc, input_dir) for doc in nested_docs]})
 
-                reference_docs = glob(os.path.join(config["pdoc3"]["output_dir"], "*.md"))
+                reference_docs = glob(os.path.join(config["pdoc3"]["output_dir"], "**/*.md"))
                 nav.append({"Reference": [_doc(doc, input_dir) for doc in reference_docs]})
 
             mkdocs(config["mkdocs"])
