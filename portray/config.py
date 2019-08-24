@@ -11,6 +11,8 @@ from toml import load as toml_load
 PORTRAY_DEFAULTS = {
     "docs_dir": "docs",
     "output_dir": "site",
+    "port": 8000,
+    "host": "127.0.0.1",
 }
 
 MKDOCS_DEFAULTS = {

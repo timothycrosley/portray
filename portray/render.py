@@ -3,6 +3,7 @@ import tempfile
 from argparse import Namespace
 import shutil
 from glob import glob
+from contextlib import contextmanager
 
 import pdoc.cli
 import mkdocs.config as mkdocs_config
@@ -30,16 +31,13 @@ def mkdocs(config):
     return mkdocs_build(config_instance)
 
 
-def _label(path):
-    return os.path.basename(path).split(".")[0].replace("-", " ").replace("_", " ").title()
-
-
-def _doc(path, root_path):
-    path = os.path.relpath(path, root_path)
-    return {_label(path): path}
-
-
 def documentation(config):
+    with documentation_in_temp_folder(config) as documentation_output:
+        shutil.copytree(temp_output_dir, config["output_dir"])
+
+
+@contextmanager
+def documentation_in_temp_folder(config):
     with tempfile.TemporaryDirectory() as input_dir:
         input_dir = os.path.join(input_dir, "input")
         with tempfile.TemporaryDirectory() as temp_output_dir:
@@ -74,4 +72,13 @@ def documentation(config):
                 nav.append({"Reference": [_doc(doc, input_dir) for doc in reference_docs]})
 
             mkdocs(config["mkdocs"])
-            shutil.copytree(temp_output_dir, config["output_dir"])
+            yield temp_output_dir
+
+
+def _label(path):
+    return os.path.basename(path).split(".")[0].replace("-", " ").replace("_", " ").title()
+
+
+def _doc(path, root_path):
+    path = os.path.relpath(path, root_path)
+    return {_label(path): path}
