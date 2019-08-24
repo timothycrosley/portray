@@ -31,7 +31,7 @@ def mkdocs(config):
 
 
 def _label(path):
-    return os.path.basename(path)[:-3].replace("-", " ").replace("_", " ").title()
+    return os.path.basename(path).split(".")[0].replace("-", " ").replace("_", " ").title()
 
 
 def _doc(path, root_path):
@@ -54,7 +54,7 @@ def documentation(config):
             if not "site_dir" in config["mkdocs"]:
                 config["mkdocs"]["site_dir"] = temp_output_dir
             if not "nav" in config["mkdocs"]:
-                nav = []
+                nav = config["mkdocs"]["nav"] = []
 
                 root_docs = glob(os.path.join(input_dir, "*.md"))
                 if "README.md" in root_docs:
@@ -68,7 +68,7 @@ def documentation(config):
                 nested_dirs = glob(os.path.join(input_dir, config["docs_dir"], "*/"))
                 for nested_dir in nested_dirs:
                     nested_docs = glob(os.path.join(nested_dir, "*.md"))
-                    nav.append({_label(nested_dir): [_doc(doc, input_dir) for doc in nested_docs]})
+                    nav.append({_label(nested_dir[:1]): [_doc(doc, input_dir) for doc in nested_docs]})
 
                 reference_docs = glob(os.path.join(config["pdoc3"]["output_dir"], "**/*.md"))
                 nav.append({"Reference": [_doc(doc, input_dir) for doc in reference_docs]})
