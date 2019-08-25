@@ -56,13 +56,17 @@ def documentation_in_temp_folder(config):
                 if readme_doc in root_docs:
                     root_docs.remove(readme_doc)
                     nav.append({"Home": "README.md"})
-                nav.extend(_doc(doc, input_dir) for doc in root_docs)
+                nav.extend(_doc(doc, input_dir, config) for doc in root_docs)
 
                 docs_dir_docs = glob(os.path.join(input_dir, config["docs_dir"], "*.md"))
-                nav.extend(_nested_docs(os.path.join(input_dir, config["docs_dir"]), input_dir))
+                nav.extend(
+                    _nested_docs(os.path.join(input_dir, config["docs_dir"]), input_dir, config)
+                )
 
                 reference_docs = glob(os.path.join(config["pdoc3"]["output_dir"], "**/*.md"))
-                nav.append({"Reference": _nested_docs(config["pdoc3"]["output_dir"], input_dir)})
+                nav.append(
+                    {"Reference": _nested_docs(config["pdoc3"]["output_dir"], input_dir, config)}
+                )
 
             mkdocs(config["mkdocs"])
             yield temp_output_dir
@@ -86,20 +90,23 @@ def _mkdocs_config(config):
     return config_instance
 
 
-def _nested_docs(directory, root_directory, include_docs=True) -> list:
-    nav = [_doc(doc, root_directory) for doc in glob(os.path.join(directory, "*.md"))]
+def _nested_docs(directory, root_directory, config) -> list:
+    nav = [_doc(doc, root_directory, config) for doc in glob(os.path.join(directory, "*.md"))]
 
     nested_dirs = glob(os.path.join(directory, "*/"))
     for nested_dir in nested_dirs:
-        nav.append({_label(nested_dir[:-1]): _nested_docs(nested_dir, root_directory)})
+        nav.append(
+            {_label(nested_dir[:-1], config): _nested_docs(nested_dir, root_directory, config)}
+        )
 
     return nav
 
 
-def _label(path):
-    return os.path.basename(path).split(".")[0].replace("-", " ").replace("_", " ").title()
+def _label(path, config):
+    auto = os.path.basename(path).split(".")[0].replace("-", " ").replace("_", " ").title()
+    return config["labels"].get(auto, auto)
 
 
-def _doc(path, root_path):
+def _doc(path, root_path, config):
     path = os.path.relpath(path, root_path)
-    return {_label(path): path}
+    return {_label(path, config): path}

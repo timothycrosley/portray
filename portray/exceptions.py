@@ -1,5 +1,6 @@
 """All portray specific exception classes should be defined here"""
 
+
 class PortrayError(Exception):
     """Base class for all exceptions returned from portray"""
 

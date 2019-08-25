@@ -10,7 +10,13 @@ from toml import load as toml_load
 
 from portray.exceptions import NoProjectFound
 
-PORTRAY_DEFAULTS = {"docs_dir": "docs", "output_dir": "site", "port": 8000, "host": "127.0.0.1"}
+PORTRAY_DEFAULTS = {
+    "docs_dir": "docs",
+    "output_dir": "site",
+    "port": 8000,
+    "host": "127.0.0.1",
+    "labels": {"Cli": "CLI", "Api": "API", "Http": "HTTP", "Pypi": "PyPI"},
+}
 
 MKDOCS_DEFAULTS = {
     "site_name": os.path.basename(os.getcwd()),

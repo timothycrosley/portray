@@ -114,9 +114,4 @@ def on_github_pages(
         conf = render._mkdocs_config(project_config["mkdocs"])
         conf.config_file_path = directory
 
-        gh_deploy(
-            conf,
-            message=message,
-            force=force,
-            ignore_version=ignore_version,
-        )
+        gh_deploy(conf, message=message, force=force, ignore_version=ignore_version)
