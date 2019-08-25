@@ -1,6 +1,5 @@
 [![portray - Your Project with Great Documentation.](https://raw.github.com/timothycrosley/portray/master/art/logo.png)](https://timothycrosley.github.io/portray/)
-
-===================
+_________________
 
 [![PyPI version](https://badge.fury.io/py/portray.svg)](http://badge.fury.io/py/portray)
 [![Build Status](https://travis-ci.org/timothycrosley/portray.svg?branch=master)](https://travis-ci.org/timothycrosley/portray)
