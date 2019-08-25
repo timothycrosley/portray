@@ -1,11 +1,13 @@
+"""All portray specific exception classes should be defined here"""
+
 class PortrayError(Exception):
-    """Base class for all exceptions returned from Portray"""
+    """Base class for all exceptions returned from portray"""
 
     pass
 
 
 class NoProjectFound(PortrayError):
-    """Exception should be thrown when portray is ran in a directory with no Python project"""
+    """Thrown when portray is ran in a directory with no Python project"""
 
     def __init__(self, directory):
         super().__init__(
@@ -15,7 +17,7 @@ class NoProjectFound(PortrayError):
 
 
 class DocumentationAlreadyExists(PortrayError):
-    """Throw when portray has been told to output documentation where it already exists"""
+    """Thrown when portray has been told to output documentation where it already exists"""
 
     def __init__(self, directory):
         super().__init__(

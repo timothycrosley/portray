@@ -51,12 +51,6 @@ class (
 ```
 
 ${cls.docstring}
-% if show_source_code and cls.source:
-
-??? example "View Source"
-        ${"\n        ".join(cls.source.split("\n"))}
-
-% endif
 
 <%
   class_vars = cls.class_variables(show_inherited_members, sort=sort_identifiers)
@@ -108,6 +102,16 @@ ${function(m) | indent}
 
     % endfor
 % endif
+
+% if show_source_code and cls.source:
+
+??? example "View Source"
+        ${"\n        ".join(cls.source.split("\n"))}
+
+------
+
+% endif
+
 </%def>
 
 ## Start the output logic for an entire module.
