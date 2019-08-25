@@ -1,4 +1,5 @@
-portray - Your Project with Great Documentation
+[![portray - Your Project with Great Documentation.](https://raw.github.com/timothycrosley/portray/master/art/logo.png)](https://timothycrosley.github.io/portray/)
+
 ===================
 
 [![PyPI version](https://badge.fury.io/py/portray.svg)](http://badge.fury.io/py/portray)
