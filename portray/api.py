@@ -25,6 +25,10 @@ def as_html(
        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)
          formatted config file you wish to use.
        - *output_dir*: The directory to place the generated HTML into.
+       - *overwrite*: If set to `True` any existing documentation output will be removed
+         before generating new documentation. Otherwise, if documentation exists in the
+         specified `output_dir` the command will fail with a `DocumentationAlreadyExists`
+         exception.
     """
     render.documentation(project_configuration(directory, config_file), overwrite=overwrite)
     print(logo.ascii_art)

@@ -21,7 +21,7 @@ _________________
 Key Features:
 
 * **Zero-Config**: No configuration is necessary to use `portray`. Just run `portray` in the root of your Python project and it will find your documentation.
-* **Statically Generated**: `portray` is easy to host on GitHub pages and other similar services as it outputs a standard static HTML website.
+* **Statically Generated**: `portray` websites are easy to host on GitHub pages and other similar services as they are outputted as standard static HTML website.
 * **Markdown Aware**: `portray` will automatically include your projects `.md` files and render them into HTML. It will also find and render Markdown within `__doc__` strings.
 * **Fully Configurable**: While `portray` doesn't have to be configured, you still can fully configure it withing the standard `pyproject.toml` file.
 * **Easily Programmable**: `portray` exposes a clean and simple [Python API](https://timothycrosley.github.io/portray/reference/portray/api/).
