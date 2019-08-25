@@ -121,7 +121,12 @@ def repository(directory: str) -> dict:
 
 def mkdocs(directory: str, **overrides) -> dict:
     """Returns back the configuration that will be used when running mkdocs"""
-    return {**MKDOCS_DEFAULTS, **repository(directory), **overrides}
+    mkdocs_config = {**MKDOCS_DEFAULTS, **repository(directory), **overrides}
+    theme = mkdocs_config["theme"]
+    if theme["name"].lower() == "material" and not "custom_dir" in theme:
+        theme["custom_dir"] = MKDOCS_DEFAULTS["theme"]["custom_dir"]
+
+    return mkdocs_config
 
 
 def pdoc3(directory: str, **overrides) -> dict:

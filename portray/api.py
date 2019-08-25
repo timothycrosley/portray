@@ -10,7 +10,7 @@ import webbrowser
 import hug
 from mkdocs.commands.gh_deploy import gh_deploy
 
-from portray import config, render
+from portray import config, render, logo
 
 
 def as_html(
@@ -22,10 +22,13 @@ def as_html(
     """Produces HTML documentation for a Python project.
 
        - *directory*: The root folder of your project.
-       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)  formatted config file you wish to use.
+       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)
+         formatted config file you wish to use.
        - *output_dir*: The directory to place the generated HTML into.
     """
     render.documentation(project_configuration(directory, config_file), overwrite=overwrite)
+    print(logo.ascii_art)
+    print("Documentation successfully generated into {}!".format(os.path.abspath(output_dir)))
 
 
 def in_browser(
@@ -38,7 +41,8 @@ def in_browser(
        then opens a web browser pointing to it.
 
        - *directory*: The root folder of your project.
-       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted config file you wish to use.
+       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
+         config file you wish to use.
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
     """
@@ -55,7 +59,8 @@ def server(
     """Runs a development webserver enabling you to browse documentation locally.
 
        - *directory*: The root folder of your project.
-       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted config file you wish to use.
+       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
+         config file you wish to use.
        - *open_browser": If true a browser will be opened pointing at the documentation server
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
@@ -69,10 +74,10 @@ def server(
         def my_static_dirs():
             return (doc_folder,)
 
-        if open_browser:
-
-            @hug.startup(api=api)
-            def open_browser_to_docs(*args, **kwargs):
+        @hug.startup(api=api)
+        def custom_startup(*args, **kwargs):
+            print(logo.ascii_art)
+            if open_browser:
                 webbrowser.open_new("{}:{}".format(project_config["host"], project_config["port"]))
 
         api.http.serve(
@@ -115,3 +120,6 @@ def on_github_pages(
         conf.config_file_path = directory
 
         gh_deploy(conf, message=message, force=force, ignore_version=ignore_version)
+
+        print(logo.ascii_art)
+        print("Documentation successfully generated and pushed!")

@@ -12,9 +12,9 @@ from pprint import pprint
 
 import hug
 
-from portray import api
+from portray import api, logo
 
-cli = hug.cli(api=hug.API(__name__))
+cli = hug.cli(api=hug.API(__name__, doc=logo.ascii_art))
 cli(api.as_html)
 cli.output(pprint)(api.project_configuration)
 cli(api.server)
