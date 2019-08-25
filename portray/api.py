@@ -87,7 +87,8 @@ def project_configuration(directory: str = os.getcwd(), config_file: str = "pypr
     """Returns the configuration associated with a project.
 
         - *directory*: The root folder of your project.
-        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted config file you wish to use.
+        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
+          config file you wish to use.
     """
     return config.project(directory=directory, config_file=config_file)
 
@@ -99,6 +100,15 @@ def on_github_pages(
     force: bool = False,
     ignore_version: bool = False,
 ):
+    """Regenerates and deploys the documentation to GitHub pages.
+
+        - *directory*: The root folder of your project.
+        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
+          config file you wish to use.
+        - *message*: The commit message to use when uploading your documentation.
+        - *force*: Force the push to the repository.
+        - *ignore_version*: Ignore check that build is not being deployed with an old version.
+    """
     project_config = project_configuration(directory, config_file)
     with render.documentation_in_temp_folder(project_config):
         mkdocs.gh_deploy(
