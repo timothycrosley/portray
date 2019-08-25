@@ -15,6 +15,7 @@ from mkdocs.commands.build import build as mkdocs_build
 
 from portray.exceptions import DocumentationAlreadyExists
 
+
 def documentation(config, overwrite: bool = False):
     """Renders the entire project given the project config into the config's
     specified output directory.
