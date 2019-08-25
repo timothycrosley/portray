@@ -18,7 +18,7 @@ def as_html(
     config_file: str = "pyproject.toml",
     output_dir: str = "site",
     overwrite: bool = False,
-):
+) -> None:
     """Produces HTML documentation for a Python project.
 
        - *directory*: The root folder of your project.
@@ -40,7 +40,7 @@ def in_browser(
     config_file: str = "pyproject.toml",
     port: int = None,
     host: str = None,
-):
+) -> None:
     """Runs a development webserver enabling you to browse documentation locally
        then opens a web browser pointing to it.
 
@@ -50,7 +50,7 @@ def in_browser(
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
     """
-    return server(directory=directory, config_file=config_file, open_browser=True)
+    server(directory=directory, config_file=config_file, open_browser=True)
 
 
 def server(
@@ -59,7 +59,7 @@ def server(
     open_browser: bool = False,
     port: int = None,
     host: str = None,
-):
+) -> None:
     """Runs a development webserver enabling you to browse documentation locally.
 
        - *directory*: The root folder of your project.
@@ -92,7 +92,9 @@ def server(
         )
 
 
-def project_configuration(directory: str = os.getcwd(), config_file: str = "pyproject.toml"):
+def project_configuration(
+    directory: str = os.getcwd(), config_file: str = "pyproject.toml"
+) -> dict:
     """Returns the configuration associated with a project.
 
         - *directory*: The root folder of your project.
@@ -108,7 +110,7 @@ def on_github_pages(
     message: str = None,
     force: bool = False,
     ignore_version: bool = False,
-):
+) -> None:
     """Regenerates and deploys the documentation to GitHub pages.
 
         - *directory*: The root folder of your project.
