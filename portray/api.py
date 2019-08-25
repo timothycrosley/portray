@@ -13,7 +13,10 @@ from portray import config, render
 
 
 def as_html(
-    directory: str = os.getcwd(), config_file: str = "pyproject.toml", output_dir: str = "site"
+    directory: str = os.getcwd(),
+    config_file: str = "pyproject.toml",
+    output_dir: str = "site",
+    overwrite: bool = False,
 ):
     """Produces HTML documentation for a Python project.
 
@@ -21,7 +24,7 @@ def as_html(
        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)  formatted config file you wish to use.
        - *output_dir*: The directory to place the generated HTML into.
     """
-    render.documentation(project_configuration(directory, config_file))
+    render.documentation(project_configuration(directory, config_file), overwrite=overwrite)
 
 
 def in_browser(

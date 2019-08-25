@@ -84,7 +84,11 @@ def toml(location: str, **overrides) -> dict:
         if not "modules" in config:
             if "poetry" in tools and "name" in tools["poetry"]:
                 config["moudles"] = [tools["poetry"]["name"]]
-            elif "flit" in tools and "metadata" in tools["flit"] and "module" in tools["flit"]["metadata"]:
+            elif (
+                "flit" in tools
+                and "metadata" in tools["flit"]
+                and "module" in tools["flit"]["metadata"]
+            ):
                 config["modules"] = [tools["flit"]["metadata"]["module"]]
 
         return config

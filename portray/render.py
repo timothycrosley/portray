@@ -10,6 +10,8 @@ import mkdocs.exceptions as _mkdocs_exceptions
 import pdoc.cli
 from mkdocs.commands.build import build as mkdocs_build
 
+from portray.exceptions import DocumentationAlreadyExists
+
 
 def pdoc3(config):
     pdoc.cli.main(Namespace(**config))
@@ -32,9 +34,15 @@ def mkdocs(config):
     return mkdocs_build(config_instance)
 
 
-def documentation(config):
+def documentation(config, overwrite: bool = False):
+    if os.path.exists(config["output_dir"]):
+        if overwrite:
+            shutil.rmtree(config["output_dir"])
+        else:
+            raise DocumentationAlreadyExists(config["output_dir"])
+
     with documentation_in_temp_folder(config) as documentation_output:
-        shutil.copytree(temp_output_dir, config["output_dir"])
+        shutil.copytree(documentation_output, config["output_dir"])
 
 
 @contextmanager
