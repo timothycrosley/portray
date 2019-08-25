@@ -6,6 +6,7 @@ from contextlib import contextmanager
 from glob import glob
 
 import mkdocs.config as mkdocs_config
+import mkdocs.exceptions as _mkdocs_exceptions
 import pdoc.cli
 from mkdocs.commands.build import build as mkdocs_build
 
@@ -55,26 +56,30 @@ def documentation_in_temp_folder(config):
                 nav = config["mkdocs"]["nav"] = []
 
                 root_docs = glob(os.path.join(input_dir, "*.md"))
-                if "README.md" in root_docs:
-                    root_docs.remove("README.md")
+                readme_doc = os.path.join(input_dir, "README.md")
+                if readme_doc in root_docs:
+                    root_docs.remove(readme_doc)
                     nav.append({"Home": "README.md"})
                 nav.extend(_doc(doc, input_dir) for doc in root_docs)
 
                 docs_dir_docs = glob(os.path.join(input_dir, config["docs_dir"], "*.md"))
-                nav.extend(_doc(doc, input_dir) for document in docs_dir_docs)
-
-                nested_dirs = glob(os.path.join(input_dir, config["docs_dir"], "*/"))
-                for nested_dir in nested_dirs:
-                    nested_docs = glob(os.path.join(nested_dir, "*.md"))
-                    nav.append(
-                        {_label(nested_dir[:1]): [_doc(doc, input_dir) for doc in nested_docs]}
-                    )
+                nav.extend(_nested_docs(os.path.join(input_dir, config["docs_dir"]), input_dir))
 
                 reference_docs = glob(os.path.join(config["pdoc3"]["output_dir"], "**/*.md"))
-                nav.append({"Reference": [_doc(doc, input_dir) for doc in reference_docs]})
+                nav.append({"Reference": _nested_docs(config["pdoc3"]["output_dir"], input_dir)})
 
             mkdocs(config["mkdocs"])
             yield temp_output_dir
+
+
+def _nested_docs(directory, root_directory, include_docs=True) -> list:
+    nav = [_doc(doc, root_directory) for doc in glob(os.path.join(directory, "*.md"))]
+
+    nested_dirs = glob(os.path.join(directory, "*/"))
+    for nested_dir in nested_dirs:
+        nav.append({_label(nested_dir[:-1]): _nested_docs(nested_dir, root_directory)})
+
+    return nav
 
 
 def _label(path):

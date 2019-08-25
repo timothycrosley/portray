@@ -24,7 +24,14 @@ def (
     ${",\n    ".join(func.params(annotate=show_type_annotations))}
 )${returns}
 ```
-${func.docstring[2:]}
+${func.docstring}
+
+% if show_source_code and func.source and func.obj is not getattr(func.inherits, 'obj', None):
+
+??? example "View Source"
+        ${"\n        ".join(func.source.split("\n"))}
+
+% endif
 </%def>
 
 <%def name="variable(var)" buffered="True">
@@ -42,7 +49,15 @@ class (
     ${",\n    ".join(cls.params(annotate=show_type_annotations))}
 )
 ```
-${cls.docstring | deflist}
+
+${cls.docstring}
+% if show_source_code and cls.source:
+
+??? example "View Source"
+        ${"\n        ".join(cls.source.split("\n"))}
+
+% endif
+
 <%
   class_vars = cls.class_variables(show_inherited_members, sort=sort_identifiers)
   static_methods = cls.functions(show_inherited_members, sort=sort_identifiers)
@@ -108,6 +123,9 @@ ${function(m) | indent}
 ${heading} ${module.name}
 =${'=' * (len(module.name) + len(heading))}
 ${module.docstring}
+
+??? example "View Source"
+        ${"\n        ".join(module.source.split("\n"))}
 
 
 % if submodules:
