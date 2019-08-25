@@ -10,7 +10,7 @@ import webbrowser
 import hug
 from mkdocs.commands.gh_deploy import gh_deploy
 
-from portray import config, render, logo
+from portray import config, logo, render
 
 
 def as_html(

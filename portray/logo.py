@@ -14,4 +14,12 @@ ascii_art = """
 Version: {}
 Copyright Timothy Edmund Crosley 2019 MIT License
 
-""".format(__version__)
+""".format(
+    __version__
+)
+
+__doc__ = """
+```python
+{}
+```
+""".format(ascii_art)

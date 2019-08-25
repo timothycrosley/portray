@@ -1,3 +1,6 @@
+"""Defines how to render the current project and project_config using the
+included documentation generation utilities.
+"""
 import os
 import shutil
 import tempfile
@@ -12,17 +15,21 @@ from mkdocs.commands.build import build as mkdocs_build
 
 from portray.exceptions import DocumentationAlreadyExists
 
-
-def pdoc3(config):
-    pdoc.cli.main(Namespace(**config))
-
-
-def mkdocs(config):
-    config_instance = _mkdocs_config(config)
-    return mkdocs_build(config_instance)
-
-
 def documentation(config, overwrite: bool = False):
+    """Renders the entire project given the project config into the config's
+    specified output directory.
+
+    Behind the scenes:
+
+    - A temporary directory is created and your code is copy and pasted there
+    - pdoc is ran over your code with the output sent into the temporary directory
+        as Markdown documents
+    - MkDocs is ran over all of your projects Markdown documents including those
+        generated py pdoc. MkDocs outputs an HTML representation to a new temporary
+        directory.
+    - The html temporary directory is copied into your specified output location
+    - Both temporary directories are deleted.
+    """
     if os.path.exists(config["output_dir"]):
         if overwrite:
             shutil.rmtree(config["output_dir"])
@@ -33,8 +40,28 @@ def documentation(config, overwrite: bool = False):
         shutil.copytree(documentation_output, config["output_dir"])
 
 
+def pdoc3(config):
+    """Render this project using the specified pdoc config passed into pdoc.
+
+    This rendering is from code definition to Markdown so that
+    it will be compatible with MkDocs.
+    """
+    pdoc.cli.main(Namespace(**config))
+
+
+def mkdocs(config):
+    """Render the project's associated Markdown documentation using the specified
+    MkDocs config passed into the MkDocs `build` command.
+
+    This rendering is from `.md` Markdown documents into HTML
+    """
+    config_instance = _mkdocs_config(config)
+    return mkdocs_build(config_instance)
+
+
 @contextmanager
 def documentation_in_temp_folder(config):
+    """Build documentation within a temp folder, returning that folder name before it is deleted."""
     with tempfile.TemporaryDirectory() as input_dir:
         input_dir = os.path.join(input_dir, "input")
         with tempfile.TemporaryDirectory() as temp_output_dir:
