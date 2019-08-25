@@ -404,6 +404,20 @@
                 
                 
                 <h1 id="module-portraylogo">Module portray.logo</h1>
+<div class="codehilite"><pre><span></span><span class="err">██████╗</span>  <span class="err">██████╗</span> <span class="err">██████╗</span> <span class="err">████████╗██████╗</span>  <span class="err">█████╗</span> <span class="err">██╗</span>   <span class="err">██╗</span>
+<span class="err">██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔══██╗██╔══██╗╚██╗</span> <span class="err">██╔╝</span>
+<span class="err">██████╔╝██║</span>   <span class="err">██║██████╔╝</span>   <span class="err">██║</span>   <span class="err">██████╔╝███████║</span> <span class="err">╚████╔╝</span>
+<span class="err">██╔═══╝</span> <span class="err">██║</span>   <span class="err">██║██╔══██╗</span>   <span class="err">██║</span>   <span class="err">██╔══██╗██╔══██║</span>  <span class="err">╚██╔╝</span>
+<span class="err">██║</span>     <span class="err">╚██████╔╝██║</span>  <span class="err">██║</span>   <span class="err">██║</span>   <span class="err">██║</span>  <span class="err">██║██║</span>  <span class="err">██║</span>   <span class="err">██║</span>
+<span class="err">╚═╝</span>      <span class="err">╚═════╝</span> <span class="err">╚═╝</span>  <span class="err">╚═╝</span>   <span class="err">╚═╝</span>   <span class="err">╚═╝</span>  <span class="err">╚═╝╚═╝</span>  <span class="err">╚═╝</span>   <span class="err">╚═╝</span>
+
+        <span class="n">Your</span> <span class="n">Project</span> <span class="k">with</span> <span class="n">Great</span> <span class="n">Documentation</span><span class="o">.</span>
+
+<span class="n">Version</span><span class="p">:</span> <span class="mf">0.0</span><span class="o">.</span><span class="mi">5</span>
+<span class="n">Copyright</span> <span class="n">Timothy</span> <span class="n">Edmund</span> <span class="n">Crosley</span> <span class="mi">2019</span> <span class="n">MIT</span> <span class="n">License</span>
+</pre></div>
+
+
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">portray._version</span> <span class="kn">import</span> <span class="n">__version__</span>
 
 <span class="n">ascii_art</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
@@ -420,7 +434,15 @@
 <span class="s2">Version: {}</span>
 <span class="s2">Copyright Timothy Edmund Crosley 2019 MIT License</span>
 
-<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__version__</span><span class="p">)</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">__version__</span>
+<span class="p">)</span>
+
+<span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">```python</span>
+<span class="s2">{}</span>
+<span class="s2">```</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ascii_art</span><span class="p">)</span>
 </pre></div>
 
 

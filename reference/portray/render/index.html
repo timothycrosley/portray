@@ -517,7 +517,12 @@
                 
                 
                 <h1 id="module-portrayrender">Module portray.render</h1>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="s s-Atom">import</span> <span class="s s-Atom">os</span>
+<p>Defines how to render the current project and project_config using the
+included documentation generation utilities.</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="s2">&quot;&quot;&quot;Defines how to render the current project and project_config using the</span>
+<span class="s2">included documentation generation utilities.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="s s-Atom">import</span> <span class="s s-Atom">os</span>
 <span class="s s-Atom">import</span> <span class="s s-Atom">shutil</span>
 <span class="s s-Atom">import</span> <span class="s s-Atom">tempfile</span>
 <span class="s s-Atom">from</span> <span class="s s-Atom">argparse</span> <span class="s s-Atom">import</span> <span class="nv">Namespace</span>
@@ -531,14 +536,21 @@
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">portray</span><span class="p">.</span><span class="s s-Atom">exceptions</span> <span class="s s-Atom">import</span> <span class="nv">DocumentationAlreadyExists</span>
 
-<span class="s s-Atom">def</span> <span class="nf">pdoc3</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
-    <span class="s s-Atom">pdoc</span><span class="p">.</span><span class="s s-Atom">cli</span><span class="p">.</span><span class="nf">main</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">(</span><span class="s s-Atom">**config</span><span class="p">))</span>
-
-<span class="s s-Atom">def</span> <span class="nf">mkdocs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
-    <span class="s s-Atom">config_instance</span> <span class="o">=</span> <span class="k">_</span><span class="nf">mkdocs_config</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span>
-    <span class="s s-Atom">return</span> <span class="nf">mkdocs_build</span><span class="p">(</span><span class="s s-Atom">config_instance</span><span class="p">)</span>
-
 <span class="s s-Atom">def</span> <span class="nf">documentation</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">,</span> <span class="nn">overwrite</span><span class="p">:</span> <span class="s s-Atom">bool</span> <span class="o">=</span> <span class="nv">False</span><span class="p">)</span><span class="s s-Atom">:</span>
+    <span class="s2">&quot;&quot;&quot;Renders the entire project given the project config into the config&#39;s</span>
+<span class="s2">    specified output directory.</span>
+
+<span class="s2">    Behind the scenes:</span>
+
+<span class="s2">    - A temporary directory is created and your code is copy and pasted there</span>
+<span class="s2">    - pdoc is ran over your code with the output sent into the temporary directory</span>
+<span class="s2">        as Markdown documents</span>
+<span class="s2">    - MkDocs is ran over all of your projects Markdown documents including those</span>
+<span class="s2">        generated py pdoc. MkDocs outputs an HTML representation to a new temporary</span>
+<span class="s2">        directory.</span>
+<span class="s2">    - The html temporary directory is copied into your specified output location</span>
+<span class="s2">    - Both temporary directories are deleted.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
     <span class="s s-Atom">if</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">])</span><span class="s s-Atom">:</span>
         <span class="s s-Atom">if</span> <span class="nn">overwrite</span><span class="p">:</span>
             <span class="s s-Atom">shutil</span><span class="p">.</span><span class="nf">rmtree</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">])</span>
@@ -548,8 +560,26 @@
     <span class="s s-Atom">with</span> <span class="nf">documentation_in_temp_folder</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span> <span class="s s-Atom">as</span> <span class="s s-Atom">documentation_output:</span>
         <span class="s s-Atom">shutil</span><span class="p">.</span><span class="nf">copytree</span><span class="p">(</span><span class="s s-Atom">documentation_output</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">])</span>
 
+<span class="s s-Atom">def</span> <span class="nf">pdoc3</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
+    <span class="s2">&quot;&quot;&quot;Render this project using the specified pdoc config passed into pdoc.</span>
+
+<span class="s2">    This rendering is from code definition to Markdown so that</span>
+<span class="s2">    it will be compatible with MkDocs.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="s s-Atom">pdoc</span><span class="p">.</span><span class="s s-Atom">cli</span><span class="p">.</span><span class="nf">main</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">(</span><span class="s s-Atom">**config</span><span class="p">))</span>
+
+<span class="s s-Atom">def</span> <span class="nf">mkdocs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
+    <span class="s2">&quot;&quot;&quot;Render the project&#39;s associated Markdown documentation using the specified</span>
+<span class="s2">    MkDocs config passed into the MkDocs `build` command.</span>
+
+<span class="s2">    This rendering is from `.md` Markdown documents into HTML</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="s s-Atom">config_instance</span> <span class="o">=</span> <span class="k">_</span><span class="nf">mkdocs_config</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span>
+    <span class="s s-Atom">return</span> <span class="nf">mkdocs_build</span><span class="p">(</span><span class="s s-Atom">config_instance</span><span class="p">)</span>
+
 <span class="s s-Atom">@contextmanager</span>
 <span class="s s-Atom">def</span> <span class="nf">documentation_in_temp_folder</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
+    <span class="s2">&quot;&quot;&quot;Build documentation within a temp folder, returning that folder name before it is deleted.&quot;&quot;&quot;</span>
     <span class="s s-Atom">with</span> <span class="s s-Atom">tempfile</span><span class="p">.</span><span class="nv">TemporaryDirectory</span><span class="p">()</span> <span class="s s-Atom">as</span> <span class="s s-Atom">input_dir:</span>
         <span class="s s-Atom">input_dir</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;input&quot;</span><span class="p">)</span>
         <span class="s s-Atom">with</span> <span class="s s-Atom">tempfile</span><span class="p">.</span><span class="nv">TemporaryDirectory</span><span class="p">()</span> <span class="s s-Atom">as</span> <span class="s s-Atom">temp_output_dir:</span>
@@ -634,7 +664,34 @@
 </pre></div>
 
 
+<p>Renders the entire project given the project config into the config's
+specified output directory.</p>
+<p>Behind the scenes:</p>
+<ul>
+<li>A temporary directory is created and your code is copy and pasted there</li>
+<li>pdoc is ran over your code with the output sent into the temporary directory
+    as Markdown documents</li>
+<li>MkDocs is ran over all of your projects Markdown documents including those
+    generated py pdoc. MkDocs outputs an HTML representation to a new temporary
+    directory.</li>
+<li>The html temporary directory is copied into your specified output location</li>
+<li>Both temporary directories are deleted.</li>
+</ul>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">documentation</span><span class="ss">(</span><span class="nv">config</span>, <span class="nv">overwrite</span>: <span class="nv">bool</span> <span class="o">=</span> <span class="nv">False</span><span class="ss">)</span>:
+    <span class="s2">&quot;&quot;&quot;</span><span class="s">Renders the entire project given the project config into the config&#39;s</span>
+    <span class="nv">specified</span> <span class="nv">output</span> <span class="nv">directory</span>.
+
+    <span class="nv">Behind</span> <span class="nv">the</span> <span class="nv">scenes</span>:
+
+    <span class="o">-</span> <span class="nv">A</span> <span class="nv">temporary</span> <span class="nv">directory</span> <span class="nv">is</span> <span class="nv">created</span> <span class="nv">and</span> <span class="nv">your</span> <span class="nv">code</span> <span class="nv">is</span> <span class="nv">copy</span> <span class="nv">and</span> <span class="nv">pasted</span> <span class="nv">there</span>
+    <span class="o">-</span> <span class="nv">pdoc</span> <span class="nv">is</span> <span class="nv">ran</span> <span class="nv">over</span> <span class="nv">your</span> <span class="nv">code</span> <span class="nv">with</span> <span class="nv">the</span> <span class="nv">output</span> <span class="nv">sent</span> <span class="nv">into</span> <span class="nv">the</span> <span class="nv">temporary</span> <span class="nv">directory</span>
+        <span class="nv">as</span> <span class="nv">Markdown</span> <span class="nv">documents</span>
+    <span class="o">-</span> <span class="nv">MkDocs</span> <span class="nv">is</span> <span class="nv">ran</span> <span class="nv">over</span> <span class="nv">all</span> <span class="nv">of</span> <span class="nv">your</span> <span class="nv">projects</span> <span class="nv">Markdown</span> <span class="nv">documents</span> <span class="nv">including</span> <span class="nv">those</span>
+        <span class="nv">generated</span> <span class="nv">py</span> <span class="nv">pdoc</span>. <span class="nv">MkDocs</span> <span class="nv">outputs</span> <span class="nv">an</span> <span class="nv">HTML</span> <span class="nv">representation</span> <span class="nv">to</span> <span class="nv">a</span> <span class="nv">new</span> <span class="nv">temporary</span>
+        <span class="nv">directory</span>.
+    <span class="o">-</span> <span class="nv">The</span> <span class="nv">html</span> <span class="nv">temporary</span> <span class="nv">directory</span> <span class="nv">is</span> <span class="nv">copied</span> <span class="nv">into</span> <span class="nv">your</span> <span class="nv">specified</span> <span class="nv">output</span> <span class="nv">location</span>
+    <span class="o">-</span> <span class="nv">Both</span> <span class="nv">temporary</span> <span class="nv">directories</span> <span class="nv">are</span> <span class="nv">deleted</span>.
+    <span class="s2">&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">exists</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>]<span class="ss">)</span>:
         <span class="k">if</span> <span class="nv">overwrite</span>:
             <span class="nv">shutil</span>.<span class="nv">rmtree</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>]<span class="ss">)</span>
@@ -654,8 +711,10 @@
 </pre></div>
 
 
+<p>Build documentation within a temp folder, returning that folder name before it is deleted.</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span>@<span class="nv">contextmanager</span>
 <span class="nv">def</span> <span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">config</span><span class="ss">)</span>:
+    <span class="s2">&quot;&quot;&quot;</span><span class="s">Build documentation within a temp folder, returning that folder name before it is deleted.</span><span class="s2">&quot;&quot;&quot;</span>
     <span class="nv">with</span> <span class="nv">tempfile</span>.<span class="nv">TemporaryDirectory</span><span class="ss">()</span> <span class="nv">as</span> <span class="nv">input_dir</span>:
         <span class="nv">input_dir</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">input</span><span class="s2">&quot;</span><span class="ss">)</span>
         <span class="nv">with</span> <span class="nv">tempfile</span>.<span class="nv">TemporaryDirectory</span><span class="ss">()</span> <span class="nv">as</span> <span class="nv">temp_output_dir</span>:
@@ -702,7 +761,15 @@
 </pre></div>
 
 
+<p>Render the project's associated Markdown documentation using the specified
+MkDocs config passed into the MkDocs <code>build</code> command.</p>
+<p>This rendering is from <code>.md</code> Markdown documents into HTML</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">config</span><span class="ss">)</span>:
+    <span class="s2">&quot;&quot;&quot;</span><span class="s">Render the project&#39;s associated Markdown documentation using the specified</span>
+    <span class="nv">MkDocs</span> <span class="nv">config</span> <span class="nv">passed</span> <span class="nv">into</span> <span class="nv">the</span> <span class="nv">MkDocs</span> `<span class="nv">build</span>` <span class="nv">command</span>.
+
+    <span class="nv">This</span> <span class="nv">rendering</span> <span class="nv">is</span> <span class="nv">from</span> `.<span class="nv">md</span>` <span class="nv">Markdown</span> <span class="nv">documents</span> <span class="nv">into</span> <span class="nv">HTML</span>
+    <span class="s2">&quot;&quot;&quot;</span>
     <span class="nv">config_instance</span> <span class="o">=</span> <span class="nv">_mkdocs_config</span><span class="ss">(</span><span class="nv">config</span><span class="ss">)</span>
     <span class="k">return</span> <span class="nv">mkdocs_build</span><span class="ss">(</span><span class="nv">config_instance</span><span class="ss">)</span>
 </pre></div>
@@ -716,7 +783,15 @@
 </pre></div>
 
 
+<p>Render this project using the specified pdoc config passed into pdoc.</p>
+<p>This rendering is from code definition to Markdown so that
+it will be compatible with MkDocs.</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="n">def</span> <span class="n">pdoc3</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="ss">&quot;&quot;&quot;Render this project using the specified pdoc config passed into pdoc.</span>
+
+<span class="ss">    This rendering is from code definition to Markdown so that</span>
+<span class="ss">    it will be compatible with MkDocs.</span>
+<span class="ss">    &quot;&quot;&quot;</span>
     <span class="n">pdoc</span><span class="p">.</span><span class="n">cli</span><span class="p">.</span><span class="n">main</span><span class="p">(</span><span class="n">Namespace</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">))</span>
 </pre></div>
 
