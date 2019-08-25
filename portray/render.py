@@ -68,15 +68,15 @@ def documentation_in_temp_folder(config):
         with tempfile.TemporaryDirectory() as temp_output_dir:
             shutil.copytree(config["directory"], input_dir)
 
-            if not "output_dir" in config["pdoc3"]:
+            if "output_dir" not in config["pdoc3"]:
                 config["pdoc3"]["output_dir"] = os.path.join(input_dir, "reference")
             pdoc3(config["pdoc3"])
 
-            if not "docs_dir" in config["mkdocs"]:
+            if "docs_dir" not in config["mkdocs"]:
                 config["mkdocs"]["docs_dir"] = input_dir
-            if not "site_dir" in config["mkdocs"]:
+            if "site_dir" not in config["mkdocs"]:
                 config["mkdocs"]["site_dir"] = temp_output_dir
-            if not "nav" in config["mkdocs"]:
+            if "nav" not in config["mkdocs"]:
                 nav = config["mkdocs"]["nav"] = []
 
                 root_docs = glob(os.path.join(input_dir, "*.md"))
@@ -86,12 +86,10 @@ def documentation_in_temp_folder(config):
                     nav.append({"Home": "README.md"})
                 nav.extend(_doc(doc, input_dir, config) for doc in root_docs)
 
-                docs_dir_docs = glob(os.path.join(input_dir, config["docs_dir"], "*.md"))
                 nav.extend(
                     _nested_docs(os.path.join(input_dir, config["docs_dir"]), input_dir, config)
                 )
 
-                reference_docs = glob(os.path.join(config["pdoc3"]["output_dir"], "**/*.md"))
                 nav.append(
                     {"Reference": _nested_docs(config["pdoc3"]["output_dir"], input_dir, config)}
                 )
