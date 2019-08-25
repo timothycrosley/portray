@@ -14,6 +14,7 @@ PORTRAY_DEFAULTS = {"docs_dir": "docs", "output_dir": "site", "port": 8000, "hos
 
 MKDOCS_DEFAULTS = {
     "site_name": os.path.basename(os.getcwd()),
+    "config_file_path": os.getcwd(),
     "theme": {
         "name": "material",
         "palette": {"primary": "green", "accent": "lightgreen"},

@@ -111,8 +111,11 @@ def on_github_pages(
     """
     project_config = project_configuration(directory, config_file)
     with render.documentation_in_temp_folder(project_config):
-        mkdocs.gh_deploy(
-            render._mkdocs_config(project_config),
+        conf = render._mkdocs_config(project_config["mkdocs"])
+        conf.config_file_path = directory
+
+        gh_deploy(
+            conf,
             message=message,
             force=force,
             ignore_version=ignore_version,
