@@ -52,12 +52,15 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     """
     if not (
         os.path.isfile(os.path.join(directory, config_file))
-        or os.path.isfile(os.path.join(directory, config_file))
+        or os.path.isfile(os.path.join(directory, "setup.py"))
     ):
         raise NoProjectFound(directory)
 
     project_config = {**PORTRAY_DEFAULTS, "directory": directory}
     project_config.update(toml(os.path.join(directory, config_file), **overrides))
+    if "modules" in project_config:
+        project_config.setdefault("pdoc3", {}).setdefault("modules", project_config["modules"])
+
     project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
     project_config["pdoc3"] = pdoc3(directory, **project_config.get("pdoc3", {}))
     return project_config
@@ -71,9 +74,19 @@ def toml(location: str, **overrides) -> dict:
        with a `[tool.portray]` section defined.
     """
     try:
-        config = toml_load(location).get("tool", {}).get("portray", {})
+        toml_config = toml_load(location)
+        tools = toml_config.get("tool", {})
+
+        config = tools.get("portray", {})
         config.update(overrides)
         config["file"] = location
+
+        if not "modules" in config:
+            if "poetry" in tools and "name" in tools["poetry"]:
+                config["moudles"] = [tools["poetry"]["name"]]
+            elif "flit" in tools and "metadata" in tools["flit"] and "module" in tools["flit"]["metadata"]:
+                config["modules"] = [tools["flit"]["metadata"]["module"]]
+
         return config
     except Exception:
         print("WARNING: No {} config file found".format(location))
