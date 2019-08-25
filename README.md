@@ -12,7 +12,7 @@ _________________
 [Read Latest Documentation](https://timothycrosley.github.io/portray/) - [Browse GitHub Code Repository](https://github.com/timothycrosley/portray/)
 _________________
 
-> The only thing worse than documentation never written, is documentation written but never read.
+> The only thing worse than documentation never written, is documentation written but never discovered.
 
 **portray** is a Python3 command line tool and library that helps you create great documentation websites for your Python projects with as little effort as possible.
 
