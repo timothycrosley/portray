@@ -18,19 +18,7 @@ def pdoc3(config):
 
 
 def mkdocs(config):
-    config_instance = mkdocs_config.Config(schema=mkdocs_config.DEFAULT_SCHEMA)
-    config_instance.load_dict(config)
-
-    errors, warnings = config_instance.validate()
-    if errors:
-        raise _mkdocs_exceptions.ConfigurationError(
-            "Aborted with {} Configuration Errors!".format(len(errors))
-        )
-    elif config.get("strict", False) and warnings:
-        raise _mkdocs_exceptions.ConfigurationError(
-            "Aborted with {} Configuration Warnings in 'strict' mode!".format(len(warnings))
-        )
-
+    config_instance = _mkdocs_config(config)
     return mkdocs_build(config_instance)
 
 
@@ -78,6 +66,22 @@ def documentation_in_temp_folder(config):
 
             mkdocs(config["mkdocs"])
             yield temp_output_dir
+
+
+def _mkdocs_config(config):
+    config_instance = mkdocs_config.Config(schema=mkdocs_config.DEFAULT_SCHEMA)
+    config_instance.load_dict(config)
+
+    errors, warnings = config_instance.validate()
+    if errors:
+        raise _mkdocs_exceptions.ConfigurationError(
+            "Aborted with {} Configuration Errors!".format(len(errors))
+        )
+    elif config.get("strict", False) and warnings:
+        raise _mkdocs_exceptions.ConfigurationError(
+            "Aborted with {} Configuration Warnings in 'strict' mode!".format(len(warnings))
+        )
+    return config_instance
 
 
 def _nested_docs(directory, root_directory, include_docs=True) -> list:

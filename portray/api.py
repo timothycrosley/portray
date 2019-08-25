@@ -8,6 +8,7 @@ import os
 import webbrowser
 
 import hug
+from mkdocs.commands.gh_deploy import gh_deploy
 
 from portray import config, render
 
@@ -89,3 +90,20 @@ def project_configuration(directory: str = os.getcwd(), config_file: str = "pypr
         - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted config file you wish to use.
     """
     return config.project(directory=directory, config_file=config_file)
+
+
+def on_github_pages(
+    directory: str = os.getcwd(),
+    config_file: str = "pyproject.toml",
+    message: str = None,
+    force: bool = False,
+    ignore_version: bool = False,
+):
+    project_config = project_configuration(directory, config_file)
+    with render.documentation_in_temp_folder(project_config):
+        mkdocs.gh_deploy(
+            render._mkdocs_config(project_config),
+            message=message,
+            force=force,
+            ignore_version=ignore_version,
+        )
