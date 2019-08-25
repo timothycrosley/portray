@@ -1,10 +1,12 @@
 README.md
 setup.py
 portray/__init__.py
+portray/_version.py
 portray/api.py
 portray/cli.py
 portray/config.py
 portray/exceptions.py
+portray/logo.py
 portray/render.py
 portray.egg-info/PKG-INFO
 portray.egg-info/SOURCES.txt

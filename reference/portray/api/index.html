@@ -274,6 +274,66 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../config/" title="Config" class="md-nav__link">
+      Config
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../render/" title="Render" class="md-nav__link">
+      Render
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../logo/" title="Logo" class="md-nav__link">
+      Logo
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Index" class="md-nav__link">
+      Index
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cli/" title="CLI" class="md-nav__link">
+      CLI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -369,66 +429,6 @@
   <li class="md-nav__item">
     <a href="../exceptions/" title="Exceptions" class="md-nav__link">
       Exceptions
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../config/" title="Config" class="md-nav__link">
-      Config
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../cli/" title="CLI" class="md-nav__link">
-      CLI
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../logo/" title="Logo" class="md-nav__link">
-      Logo
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../" title="Index" class="md-nav__link">
-      Index
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../render/" title="Render" class="md-nav__link">
-      Render
     </a>
   </li>
 
@@ -561,6 +561,10 @@ to start.</p>
 <span class="sd">       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)</span>
 <span class="sd">         formatted config file you wish to use.</span>
 <span class="sd">       - *output_dir*: The directory to place the generated HTML into.</span>
+<span class="sd">       - *overwrite*: If set to `True` any existing documentation output will be removed</span>
+<span class="sd">         before generating new documentation. Otherwise, if documentation exists in the</span>
+<span class="sd">         specified `output_dir` the command will fail with a `DocumentationAlreadyExists`</span>
+<span class="sd">         exception.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">render</span><span class="o">.</span><span class="n">documentation</span><span class="p">(</span><span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">ascii_art</span><span class="p">)</span>
@@ -676,6 +680,10 @@ to start.</p>
 <li><em>config_file</em>: The <a href="https://github.com/toml-lang/toml#toml">TOML</a>
   formatted config file you wish to use.</li>
 <li><em>output_dir</em>: The directory to place the generated HTML into.</li>
+<li><em>overwrite</em>: If set to <code>True</code> any existing documentation output will be removed
+  before generating new documentation. Otherwise, if documentation exists in the
+  specified <code>output_dir</code> the command will fail with a <code>DocumentationAlreadyExists</code>
+  exception.</li>
 </ul>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">as_html</span><span class="ss">(</span>
     <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>,
@@ -689,6 +697,10 @@ to start.</p>
        <span class="o">-</span> <span class="o">*</span><span class="nv">config_file</span><span class="o">*</span>: <span class="nv">The</span> [<span class="nv">TOML</span>]<span class="ss">(</span><span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">toml</span><span class="o">-</span><span class="nv">lang</span><span class="o">/</span><span class="nv">toml</span>#<span class="nv">toml</span><span class="ss">)</span>
          <span class="nv">formatted</span> <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
        <span class="o">-</span> <span class="o">*</span><span class="nv">output_dir</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">directory</span> <span class="nv">to</span> <span class="nv">place</span> <span class="nv">the</span> <span class="nv">generated</span> <span class="nv">HTML</span> <span class="nv">into</span>.
+       <span class="o">-</span> <span class="o">*</span><span class="nv">overwrite</span><span class="o">*</span>: <span class="k">If</span> <span class="nv">set</span> <span class="nv">to</span> `<span class="nv">True</span>` <span class="nv">any</span> <span class="nv">existing</span> <span class="nv">documentation</span> <span class="nv">output</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">removed</span>
+         <span class="nv">before</span> <span class="nv">generating</span> <span class="nv">new</span> <span class="nv">documentation</span>. <span class="nv">Otherwise</span>, <span class="k">if</span> <span class="nv">documentation</span> <span class="nv">exists</span> <span class="nv">in</span> <span class="nv">the</span>
+         <span class="nv">specified</span> `<span class="nv">output_dir</span>` <span class="nv">the</span> <span class="nv">command</span> <span class="nv">will</span> <span class="nv">fail</span> <span class="nv">with</span> <span class="nv">a</span> `<span class="nv">DocumentationAlreadyExists</span>`
+         <span class="nv">exception</span>.
     <span class="s2">&quot;&quot;&quot;</span>
     <span class="nv">render</span>.<span class="nv">documentation</span><span class="ss">(</span><span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)</span>, <span class="nv">overwrite</span><span class="o">=</span><span class="nv">overwrite</span><span class="ss">)</span>
     <span class="nv">print</span><span class="ss">(</span><span class="nv">logo</span>.<span class="nv">ascii_art</span><span class="ss">)</span>
@@ -892,7 +904,7 @@ then opens a web browser pointing to it.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../.." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../cli/" title="CLI" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -901,7 +913,7 @@ then opens a web browser pointing to it.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Home
+                CLI
               </span>
             </div>
           </a>
