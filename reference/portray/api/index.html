@@ -31,12 +31,12 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
-      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../../../art/logo_small.png">
       <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.1">
     
     
       
-        <title>Api - portray</title>
+        <title>API - portray</title>
       
     
     
@@ -47,7 +47,7 @@
       
         
         
-        <meta name="theme-color" content="#4caf50">
+        <meta name="theme-color" content="#546e7a">
       
     
     
@@ -71,7 +71,7 @@
   
     
     
-    <body dir="ltr" data-md-color-primary="green" data-md-color-accent="lightgreen">
+    <body dir="ltr" data-md-color-primary="blue-grey" data-md-color-accent="pink">
   
     <svg class="md-svg">
       <defs>
@@ -96,7 +96,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="../../.." title="portray" class="md-header-nav__button md-logo">
           
-            <i class="md-icon"></i>
+            <img src="../../../art/logo_small.png" width="24" height="24">
           
         </a>
       </div>
@@ -111,7 +111,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Api
+                API
               
             </span>
           
@@ -188,7 +188,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="../../.." title="portray" class="md-nav__button md-logo">
       
-        <i class="md-icon"></i>
+        <img src="../../../art/logo_small.png" width="48" height="48">
       
     </a>
     portray
@@ -274,54 +274,6 @@
           
           
 
-
-  <li class="md-nav__item">
-    <a href="../config/" title="Config" class="md-nav__link">
-      Config
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../render/" title="Render" class="md-nav__link">
-      Render
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../" title="Index" class="md-nav__link">
-      Index
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../cli/" title="Cli" class="md-nav__link">
-      Cli
-    </a>
-  </li>
-
-        
-          
-          
-          
-
   
 
 
@@ -333,11 +285,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Api
+        API
       </label>
     
-    <a href="./" title="Api" class="md-nav__link md-nav__link--active">
-      Api
+    <a href="./" title="API" class="md-nav__link md-nav__link--active">
+      API
     </a>
     
       
@@ -417,6 +369,66 @@
   <li class="md-nav__item">
     <a href="../exceptions/" title="Exceptions" class="md-nav__link">
       Exceptions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../config/" title="Config" class="md-nav__link">
+      Config
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cli/" title="CLI" class="md-nav__link">
+      CLI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../logo/" title="Logo" class="md-nav__link">
+      Logo
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Index" class="md-nav__link">
+      Index
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../render/" title="Render" class="md-nav__link">
+      Render
     </a>
   </li>
 
@@ -535,7 +547,7 @@ to start.</p>
 <span class="kn">import</span> <span class="nn">hug</span>
 <span class="kn">from</span> <span class="nn">mkdocs.commands.gh_deploy</span> <span class="kn">import</span> <span class="n">gh_deploy</span>
 
-<span class="kn">from</span> <span class="nn">portray</span> <span class="kn">import</span> <span class="n">config</span><span class="p">,</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">portray</span> <span class="kn">import</span> <span class="n">config</span><span class="p">,</span> <span class="n">render</span><span class="p">,</span> <span class="n">logo</span>
 
 <span class="k">def</span> <span class="nf">as_html</span><span class="p">(</span>
     <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
@@ -546,10 +558,13 @@ to start.</p>
     <span class="sd">&quot;&quot;&quot;Produces HTML documentation for a Python project.</span>
 
 <span class="sd">       - *directory*: The root folder of your project.</span>
-<span class="sd">       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)  formatted config file you wish to use.</span>
+<span class="sd">       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)</span>
+<span class="sd">         formatted config file you wish to use.</span>
 <span class="sd">       - *output_dir*: The directory to place the generated HTML into.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">render</span><span class="o">.</span><span class="n">documentation</span><span class="p">(</span><span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">ascii_art</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Documentation successfully generated into {}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)))</span>
 
 <span class="k">def</span> <span class="nf">in_browser</span><span class="p">(</span>
     <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
@@ -561,7 +576,8 @@ to start.</p>
 <span class="sd">       then opens a web browser pointing to it.</span>
 
 <span class="sd">       - *directory*: The root folder of your project.</span>
-<span class="sd">       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted config file you wish to use.</span>
+<span class="sd">       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted</span>
+<span class="sd">         config file you wish to use.</span>
 <span class="sd">       - *port*: The port to expose your documentation on (defaults to: `8000`)</span>
 <span class="sd">       - *host*: The host to expose your documentation on (defaults to `&quot;127.0.0.1&quot;`)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -577,7 +593,8 @@ to start.</p>
     <span class="sd">&quot;&quot;&quot;Runs a development webserver enabling you to browse documentation locally.</span>
 
 <span class="sd">       - *directory*: The root folder of your project.</span>
-<span class="sd">       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted config file you wish to use.</span>
+<span class="sd">       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted</span>
+<span class="sd">         config file you wish to use.</span>
 <span class="sd">       - *open_browser&quot;: If true a browser will be opened pointing at the documentation server</span>
 <span class="sd">       - *port*: The port to expose your documentation on (defaults to: `8000`)</span>
 <span class="sd">       - *host*: The host to expose your documentation on (defaults to `&quot;127.0.0.1&quot;`)</span>
@@ -591,10 +608,10 @@ to start.</p>
         <span class="k">def</span> <span class="nf">my_static_dirs</span><span class="p">():</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">doc_folder</span><span class="p">,)</span>
 
-        <span class="k">if</span> <span class="n">open_browser</span><span class="p">:</span>
-
-            <span class="nd">@hug.startup</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="n">api</span><span class="p">)</span>
-            <span class="k">def</span> <span class="nf">open_browser_to_docs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nd">@hug.startup</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="n">api</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">custom_startup</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">ascii_art</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">open_browser</span><span class="p">:</span>
                 <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new</span><span class="p">(</span><span class="s2">&quot;{}:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]))</span>
 
         <span class="n">api</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">serve</span><span class="p">(</span>
@@ -634,12 +651,10 @@ to start.</p>
         <span class="n">conf</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">])</span>
         <span class="n">conf</span><span class="o">.</span><span class="n">config_file_path</span> <span class="o">=</span> <span class="n">directory</span>
 
-        <span class="n">gh_deploy</span><span class="p">(</span>
-            <span class="n">conf</span><span class="p">,</span>
-            <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
-            <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
-            <span class="n">ignore_version</span><span class="o">=</span><span class="n">ignore_version</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">gh_deploy</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">ignore_version</span><span class="o">=</span><span class="n">ignore_version</span><span class="p">)</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">ascii_art</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Documentation successfully generated and pushed!&quot;</span><span class="p">)</span>
 </pre></div>
 
 
@@ -658,7 +673,8 @@ to start.</p>
 <p>Produces HTML documentation for a Python project.</p>
 <ul>
 <li><em>directory</em>: The root folder of your project.</li>
-<li><em>config_file</em>: The <a href="https://github.com/toml-lang/toml#toml">TOML</a>  formatted config file you wish to use.</li>
+<li><em>config_file</em>: The <a href="https://github.com/toml-lang/toml#toml">TOML</a>
+  formatted config file you wish to use.</li>
 <li><em>output_dir</em>: The directory to place the generated HTML into.</li>
 </ul>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">as_html</span><span class="ss">(</span>
@@ -670,10 +686,13 @@ to start.</p>
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Produces HTML documentation for a Python project.</span>
 
        <span class="o">-</span> <span class="o">*</span><span class="nv">directory</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">root</span> <span class="nv">folder</span> <span class="nv">of</span> <span class="nv">your</span> <span class="nv">project</span>.
-       <span class="o">-</span> <span class="o">*</span><span class="nv">config_file</span><span class="o">*</span>: <span class="nv">The</span> [<span class="nv">TOML</span>]<span class="ss">(</span><span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">toml</span><span class="o">-</span><span class="nv">lang</span><span class="o">/</span><span class="nv">toml</span>#<span class="nv">toml</span><span class="ss">)</span>  <span class="nv">formatted</span> <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
+       <span class="o">-</span> <span class="o">*</span><span class="nv">config_file</span><span class="o">*</span>: <span class="nv">The</span> [<span class="nv">TOML</span>]<span class="ss">(</span><span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">toml</span><span class="o">-</span><span class="nv">lang</span><span class="o">/</span><span class="nv">toml</span>#<span class="nv">toml</span><span class="ss">)</span>
+         <span class="nv">formatted</span> <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
        <span class="o">-</span> <span class="o">*</span><span class="nv">output_dir</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">directory</span> <span class="nv">to</span> <span class="nv">place</span> <span class="nv">the</span> <span class="nv">generated</span> <span class="nv">HTML</span> <span class="nv">into</span>.
     <span class="s2">&quot;&quot;&quot;</span>
     <span class="nv">render</span>.<span class="nv">documentation</span><span class="ss">(</span><span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)</span>, <span class="nv">overwrite</span><span class="o">=</span><span class="nv">overwrite</span><span class="ss">)</span>
+    <span class="nv">print</span><span class="ss">(</span><span class="nv">logo</span>.<span class="nv">ascii_art</span><span class="ss">)</span>
+    <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Documentation successfully generated into {}!</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">abspath</span><span class="ss">(</span><span class="nv">output_dir</span><span class="ss">)))</span>
 </pre></div>
 
 
@@ -692,7 +711,8 @@ to start.</p>
 then opens a web browser pointing to it.</p>
 <ul>
 <li><em>directory</em>: The root folder of your project.</li>
-<li><em>config_file</em>: The <a href="https://github.com/toml-lang/toml#toml">TOML</a> formatted config file you wish to use.</li>
+<li><em>config_file</em>: The <a href="https://github.com/toml-lang/toml#toml">TOML</a> formatted
+  config file you wish to use.</li>
 <li><em>port</em>: The port to expose your documentation on (defaults to: <code>8000</code>)</li>
 <li><em>host</em>: The host to expose your documentation on (defaults to <code>"127.0.0.1"</code>)</li>
 </ul>
@@ -706,7 +726,8 @@ then opens a web browser pointing to it.</p>
        <span class="k">then</span> <span class="nv">opens</span> <span class="nv">a</span> <span class="nv">web</span> <span class="nv">browser</span> <span class="nv">pointing</span> <span class="nv">to</span> <span class="nv">it</span>.
 
        <span class="o">-</span> <span class="o">*</span><span class="nv">directory</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">root</span> <span class="nv">folder</span> <span class="nv">of</span> <span class="nv">your</span> <span class="nv">project</span>.
-       <span class="o">-</span> <span class="o">*</span><span class="nv">config_file</span><span class="o">*</span>: <span class="nv">The</span> [<span class="nv">TOML</span>]<span class="ss">(</span><span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">toml</span><span class="o">-</span><span class="nv">lang</span><span class="o">/</span><span class="nv">toml</span>#<span class="nv">toml</span><span class="ss">)</span> <span class="nv">formatted</span> <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
+       <span class="o">-</span> <span class="o">*</span><span class="nv">config_file</span><span class="o">*</span>: <span class="nv">The</span> [<span class="nv">TOML</span>]<span class="ss">(</span><span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">toml</span><span class="o">-</span><span class="nv">lang</span><span class="o">/</span><span class="nv">toml</span>#<span class="nv">toml</span><span class="ss">)</span> <span class="nv">formatted</span>
+         <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
        <span class="o">-</span> <span class="o">*</span><span class="nv">port</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">port</span> <span class="nv">to</span> <span class="nv">expose</span> <span class="nv">your</span> <span class="nv">documentation</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">defaults</span> <span class="nv">to</span>: `<span class="mi">8000</span>`<span class="ss">)</span>
        <span class="o">-</span> <span class="o">*</span><span class="nv">host</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">host</span> <span class="nv">to</span> <span class="nv">expose</span> <span class="nv">your</span> <span class="nv">documentation</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">defaults</span> <span class="nv">to</span> `<span class="s2">&quot;</span><span class="s">127.0.0.1</span><span class="s2">&quot;</span>`<span class="ss">)</span>
     <span class="s2">&quot;&quot;&quot;</span>
@@ -756,12 +777,10 @@ then opens a web browser pointing to it.</p>
 <span class="w">        </span><span class="n">conf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">render</span><span class="p">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="o">[</span><span class="n">&quot;mkdocs&quot;</span><span class="o">]</span><span class="p">)</span><span class="w"></span>
 <span class="w">        </span><span class="n">conf</span><span class="p">.</span><span class="n">config_file_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
 
-<span class="w">        </span><span class="n">gh_deploy</span><span class="p">(</span><span class="w"></span>
-<span class="w">            </span><span class="n">conf</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span><span class="w"></span>
-<span class="w">            </span><span class="n">ignore_version</span><span class="o">=</span><span class="n">ignore_version</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">gh_deploy</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span><span class="w"> </span><span class="n">ignore_version</span><span class="o">=</span><span class="n">ignore_version</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="p">.</span><span class="n">ascii_art</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="ss">&quot;Documentation successfully generated and pushed!&quot;</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 
 
@@ -806,7 +825,8 @@ then opens a web browser pointing to it.</p>
 <p>Runs a development webserver enabling you to browse documentation locally.</p>
 <ul>
 <li><em>directory</em>: The root folder of your project.</li>
-<li><em>config_file</em>: The <a href="https://github.com/toml-lang/toml#toml">TOML</a> formatted config file you wish to use.</li>
+<li><em>config_file</em>: The <a href="https://github.com/toml-lang/toml#toml">TOML</a> formatted
+  config file you wish to use.</li>
 <li>*open_browser": If true a browser will be opened pointing at the documentation server</li>
 <li><em>port</em>: The port to expose your documentation on (defaults to: <code>8000</code>)</li>
 <li><em>host</em>: The host to expose your documentation on (defaults to <code>"127.0.0.1"</code>)</li>
@@ -821,7 +841,8 @@ then opens a web browser pointing to it.</p>
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Runs a development webserver enabling you to browse documentation locally.</span>
 
        <span class="o">-</span> <span class="o">*</span><span class="nv">directory</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">root</span> <span class="nv">folder</span> <span class="nv">of</span> <span class="nv">your</span> <span class="nv">project</span>.
-       <span class="o">-</span> <span class="o">*</span><span class="nv">config_file</span><span class="o">*</span>: <span class="nv">The</span> [<span class="nv">TOML</span>]<span class="ss">(</span><span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">toml</span><span class="o">-</span><span class="nv">lang</span><span class="o">/</span><span class="nv">toml</span>#<span class="nv">toml</span><span class="ss">)</span> <span class="nv">formatted</span> <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
+       <span class="o">-</span> <span class="o">*</span><span class="nv">config_file</span><span class="o">*</span>: <span class="nv">The</span> [<span class="nv">TOML</span>]<span class="ss">(</span><span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">toml</span><span class="o">-</span><span class="nv">lang</span><span class="o">/</span><span class="nv">toml</span>#<span class="nv">toml</span><span class="ss">)</span> <span class="nv">formatted</span>
+         <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
        <span class="o">-</span> <span class="o">*</span><span class="nv">open_browser</span><span class="s2">&quot;</span><span class="s">: If true a browser will be opened pointing at the documentation server</span>
        <span class="o">-</span> <span class="o">*</span><span class="nv">port</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">port</span> <span class="nv">to</span> <span class="nv">expose</span> <span class="nv">your</span> <span class="nv">documentation</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">defaults</span> <span class="nv">to</span>: `<span class="mi">8000</span>`<span class="ss">)</span>
        <span class="o">-</span> <span class="o">*</span><span class="nv">host</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">host</span> <span class="nv">to</span> <span class="nv">expose</span> <span class="nv">your</span> <span class="nv">documentation</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">defaults</span> <span class="nv">to</span> `<span class="s2">&quot;</span><span class="s">127.0.0.1</span><span class="s2">&quot;</span>`<span class="ss">)</span>
@@ -835,10 +856,10 @@ then opens a web browser pointing to it.</p>
         <span class="nv">def</span> <span class="nv">my_static_dirs</span><span class="ss">()</span>:
             <span class="k">return</span> <span class="ss">(</span><span class="nv">doc_folder</span>,<span class="ss">)</span>
 
-        <span class="k">if</span> <span class="nv">open_browser</span>:
-
-            @<span class="nv">hug</span>.<span class="nv">startup</span><span class="ss">(</span><span class="nv">api</span><span class="o">=</span><span class="nv">api</span><span class="ss">)</span>
-            <span class="nv">def</span> <span class="nv">open_browser_to_docs</span><span class="ss">(</span><span class="o">*</span><span class="nv">args</span>, <span class="o">**</span><span class="nv">kwargs</span><span class="ss">)</span>:
+        @<span class="nv">hug</span>.<span class="nv">startup</span><span class="ss">(</span><span class="nv">api</span><span class="o">=</span><span class="nv">api</span><span class="ss">)</span>
+        <span class="nv">def</span> <span class="nv">custom_startup</span><span class="ss">(</span><span class="o">*</span><span class="nv">args</span>, <span class="o">**</span><span class="nv">kwargs</span><span class="ss">)</span>:
+            <span class="nv">print</span><span class="ss">(</span><span class="nv">logo</span>.<span class="nv">ascii_art</span><span class="ss">)</span>
+            <span class="k">if</span> <span class="nv">open_browser</span>:
                 <span class="nv">webbrowser</span>.<span class="nv">open_new</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">{}:{}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">host</span><span class="s2">&quot;</span>], <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">port</span><span class="s2">&quot;</span>]<span class="ss">))</span>
 
         <span class="nv">api</span>.<span class="nv">http</span>.<span class="nv">serve</span><span class="ss">(</span>
@@ -871,7 +892,7 @@ then opens a web browser pointing to it.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../cli/" title="Cli" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../../.." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -880,7 +901,7 @@ then opens a web browser pointing to it.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Cli
+                Home
               </span>
             </div>
           </a>
