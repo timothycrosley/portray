@@ -81,6 +81,8 @@ def _mkdocs_config(config):
         raise _mkdocs_exceptions.ConfigurationError(
             "Aborted with {} Configuration Warnings in 'strict' mode!".format(len(warnings))
         )
+
+    config_instance.config_file_path = config["config_file_path"]
     return config_instance
 
 

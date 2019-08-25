@@ -583,6 +583,8 @@
         <span class="s s-Atom">raise</span> <span class="k">_</span><span class="s s-Atom">mkdocs_exceptions</span><span class="p">.</span><span class="nv">ConfigurationError</span><span class="p">(</span>
             <span class="s2">&quot;Aborted with {} Configuration Warnings in &#39;strict&#39; mode!&quot;</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="s s-Atom">warnings</span><span class="p">))</span>
         <span class="p">)</span>
+
+    <span class="s s-Atom">config_instance</span><span class="p">.</span><span class="s s-Atom">config_file_path</span> <span class="o">=</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;config_file_path&quot;</span><span class="p">]</span>
     <span class="s s-Atom">return</span> <span class="s s-Atom">config_instance</span>
 
 <span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">directory</span><span class="p">,</span> <span class="s s-Atom">root_directory</span><span class="p">,</span> <span class="s s-Atom">include_docs</span><span class="o">=</span><span class="nv">True</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nn">list</span><span class="p">:</span>

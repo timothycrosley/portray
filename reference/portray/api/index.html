@@ -631,8 +631,6 @@ to start.</p>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">project_config</span> <span class="o">=</span> <span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">render</span><span class="o">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">):</span>
-        <span class="kn">import</span> <span class="nn">pdb</span>
-
         <span class="n">conf</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">])</span>
         <span class="n">conf</span><span class="o">.</span><span class="n">config_file_path</span> <span class="o">=</span> <span class="n">directory</span>
 
@@ -737,35 +735,33 @@ then opens a web browser pointing to it.</p>
 <li><em>force</em>: Force the push to the repository.</li>
 <li><em>ignore_version</em>: Ignore check that build is not being deployed with an old version.</li>
 </ul>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">on_github_pages</span><span class="p">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
-    <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span>
-    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
-    <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-    <span class="n">ignore_version</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Regenerates and deploys the documentation to GitHub pages.</span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="n">def</span><span class="w"> </span><span class="n">on_github_pages</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="nl">directory</span><span class="p">:</span><span class="w"> </span><span class="nf">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="w"></span>
+<span class="w">    </span><span class="nl">config_file</span><span class="p">:</span><span class="w"> </span><span class="nf">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;pyproject.toml&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nl">message</span><span class="p">:</span><span class="w"> </span><span class="nf">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">None</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nl">force</span><span class="p">:</span><span class="w"> </span><span class="n">bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">False</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nl">ignore_version</span><span class="p">:</span><span class="w"> </span><span class="n">bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">False</span><span class="p">,</span><span class="w"></span>
+<span class="p">)</span><span class="err">:</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;&quot;&quot;Regenerates and deploys the documentation to GitHub pages.</span>
 
-<span class="sd">        - *directory*: The root folder of your project.</span>
-<span class="sd">        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted</span>
-<span class="sd">          config file you wish to use.</span>
-<span class="sd">        - *message*: The commit message to use when uploading your documentation.</span>
-<span class="sd">        - *force*: Force the push to the repository.</span>
-<span class="sd">        - *ignore_version*: Ignore check that build is not being deployed with an old version.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">project_config</span> <span class="o">=</span> <span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">render</span><span class="o">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">):</span>
-        <span class="kn">import</span> <span class="nn">pdb</span>
+<span class="ss">        - *directory*: The root folder of your project.</span>
+<span class="ss">        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted</span>
+<span class="ss">          config file you wish to use.</span>
+<span class="ss">        - *message*: The commit message to use when uploading your documentation.</span>
+<span class="ss">        - *force*: Force the push to the repository.</span>
+<span class="ss">        - *ignore_version*: Ignore check that build is not being deployed with an old version.</span>
+<span class="ss">    &quot;&quot;&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">project_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="w"> </span><span class="n">config_file</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">render</span><span class="p">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">conf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">render</span><span class="p">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="o">[</span><span class="n">&quot;mkdocs&quot;</span><span class="o">]</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="n">conf</span><span class="p">.</span><span class="n">config_file_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
 
-        <span class="n">conf</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">])</span>
-        <span class="n">conf</span><span class="o">.</span><span class="n">config_file_path</span> <span class="o">=</span> <span class="n">directory</span>
-
-        <span class="n">gh_deploy</span><span class="p">(</span>
-            <span class="n">conf</span><span class="p">,</span>
-            <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span>
-            <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
-            <span class="n">ignore_version</span><span class="o">=</span><span class="n">ignore_version</span><span class="p">,</span>
-        <span class="p">)</span>
+<span class="w">        </span><span class="n">gh_deploy</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">conf</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">ignore_version</span><span class="o">=</span><span class="n">ignore_version</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 
 

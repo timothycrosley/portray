@@ -111,8 +111,6 @@ def on_github_pages(
     """
     project_config = project_configuration(directory, config_file)
     with render.documentation_in_temp_folder(project_config):
-        import pdb
-
         conf = render._mkdocs_config(project_config["mkdocs"])
         conf.config_file_path = directory
 
