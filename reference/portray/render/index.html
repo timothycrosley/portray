@@ -528,6 +528,7 @@ included documentation generation utilities.</p>
 <span class="s s-Atom">from</span> <span class="s s-Atom">argparse</span> <span class="s s-Atom">import</span> <span class="nv">Namespace</span>
 <span class="s s-Atom">from</span> <span class="s s-Atom">contextlib</span> <span class="s s-Atom">import</span> <span class="s s-Atom">contextmanager</span>
 <span class="s s-Atom">from</span> <span class="s s-Atom">glob</span> <span class="s s-Atom">import</span> <span class="s s-Atom">glob</span>
+<span class="s s-Atom">from</span> <span class="s s-Atom">typing</span> <span class="s s-Atom">import</span> <span class="nv">Dict</span>
 
 <span class="s s-Atom">import</span> <span class="s s-Atom">mkdocs</span><span class="p">.</span><span class="s s-Atom">config</span> <span class="s s-Atom">as</span> <span class="s s-Atom">mkdocs_config</span>
 <span class="s s-Atom">import</span> <span class="s s-Atom">mkdocs</span><span class="p">.</span><span class="s s-Atom">exceptions</span> <span class="s s-Atom">as</span> <span class="k">_</span><span class="s s-Atom">mkdocs_exceptions</span>
@@ -536,7 +537,7 @@ included documentation generation utilities.</p>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">portray</span><span class="p">.</span><span class="s s-Atom">exceptions</span> <span class="s s-Atom">import</span> <span class="nv">DocumentationAlreadyExists</span>
 
-<span class="s s-Atom">def</span> <span class="nf">documentation</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">,</span> <span class="nn">overwrite</span><span class="p">:</span> <span class="s s-Atom">bool</span> <span class="o">=</span> <span class="nv">False</span><span class="p">)</span><span class="s s-Atom">:</span>
+<span class="s s-Atom">def</span> <span class="nf">documentation</span><span class="p">(</span><span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">,</span> <span class="nn">overwrite</span><span class="p">:</span> <span class="s s-Atom">bool</span> <span class="o">=</span> <span class="nv">False</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nv">None</span><span class="s s-Atom">:</span>
     <span class="s2">&quot;&quot;&quot;Renders the entire project given the project config into the config&#39;s</span>
 <span class="s2">    specified output directory.</span>
 
@@ -557,10 +558,10 @@ included documentation generation utilities.</p>
         <span class="nn">else</span><span class="p">:</span>
             <span class="s s-Atom">raise</span> <span class="nv">DocumentationAlreadyExists</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">])</span>
 
-    <span class="s s-Atom">with</span> <span class="nf">documentation_in_temp_folder</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span> <span class="s s-Atom">as</span> <span class="s s-Atom">documentation_output:</span>
+    <span class="s s-Atom">with</span> <span class="nf">documentation_in_temp_folder</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span> <span class="s s-Atom">as</span> <span class="s s-Atom">documentation_output:</span>  <span class="s s-Atom">#</span> <span class="nn">type</span><span class="p">:</span> <span class="s s-Atom">str</span>
         <span class="s s-Atom">shutil</span><span class="p">.</span><span class="nf">copytree</span><span class="p">(</span><span class="s s-Atom">documentation_output</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">])</span>
 
-<span class="s s-Atom">def</span> <span class="nf">pdoc3</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
+<span class="s s-Atom">def</span> <span class="nf">pdoc3</span><span class="p">(</span><span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nv">None</span><span class="s s-Atom">:</span>
     <span class="s2">&quot;&quot;&quot;Render this project using the specified pdoc config passed into pdoc.</span>
 
 <span class="s2">    This rendering is from code definition to Markdown so that</span>
@@ -568,7 +569,7 @@ included documentation generation utilities.</p>
 <span class="s2">    &quot;&quot;&quot;</span>
     <span class="s s-Atom">pdoc</span><span class="p">.</span><span class="s s-Atom">cli</span><span class="p">.</span><span class="nf">main</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">(</span><span class="s s-Atom">**config</span><span class="p">))</span>
 
-<span class="s s-Atom">def</span> <span class="nf">mkdocs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
+<span class="s s-Atom">def</span> <span class="nf">mkdocs</span><span class="p">(</span><span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span><span class="s s-Atom">:</span>
     <span class="s2">&quot;&quot;&quot;Render the project&#39;s associated Markdown documentation using the specified</span>
 <span class="s2">    MkDocs config passed into the MkDocs `build` command.</span>
 
@@ -578,22 +579,22 @@ included documentation generation utilities.</p>
     <span class="s s-Atom">return</span> <span class="nf">mkdocs_build</span><span class="p">(</span><span class="s s-Atom">config_instance</span><span class="p">)</span>
 
 <span class="s s-Atom">@contextmanager</span>
-<span class="s s-Atom">def</span> <span class="nf">documentation_in_temp_folder</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
+<span class="s s-Atom">def</span> <span class="nf">documentation_in_temp_folder</span><span class="p">(</span><span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span><span class="s s-Atom">:</span>
     <span class="s2">&quot;&quot;&quot;Build documentation within a temp folder, returning that folder name before it is deleted.&quot;&quot;&quot;</span>
     <span class="s s-Atom">with</span> <span class="s s-Atom">tempfile</span><span class="p">.</span><span class="nv">TemporaryDirectory</span><span class="p">()</span> <span class="s s-Atom">as</span> <span class="s s-Atom">input_dir:</span>
         <span class="s s-Atom">input_dir</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;input&quot;</span><span class="p">)</span>
         <span class="s s-Atom">with</span> <span class="s s-Atom">tempfile</span><span class="p">.</span><span class="nv">TemporaryDirectory</span><span class="p">()</span> <span class="s s-Atom">as</span> <span class="s s-Atom">temp_output_dir:</span>
             <span class="s s-Atom">shutil</span><span class="p">.</span><span class="nf">copytree</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s s-Atom">input_dir</span><span class="p">)</span>
 
-            <span class="s s-Atom">if</span> <span class="o">not</span> <span class="s2">&quot;output_dir&quot;</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+            <span class="s s-Atom">if</span> <span class="s2">&quot;output_dir&quot;</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
                 <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">][</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span>
             <span class="nf">pdoc3</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">])</span>
 
-            <span class="s s-Atom">if</span> <span class="o">not</span> <span class="s2">&quot;docs_dir&quot;</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+            <span class="s s-Atom">if</span> <span class="s2">&quot;docs_dir&quot;</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
                 <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">][</span><span class="s2">&quot;docs_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s s-Atom">input_dir</span>
-            <span class="s s-Atom">if</span> <span class="o">not</span> <span class="s2">&quot;site_dir&quot;</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+            <span class="s s-Atom">if</span> <span class="s2">&quot;site_dir&quot;</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
                 <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">][</span><span class="s2">&quot;site_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s s-Atom">temp_output_dir</span>
-            <span class="s s-Atom">if</span> <span class="o">not</span> <span class="s2">&quot;nav&quot;</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+            <span class="s s-Atom">if</span> <span class="s2">&quot;nav&quot;</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
                 <span class="s s-Atom">nav</span> <span class="o">=</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">][</span><span class="s2">&quot;nav&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
                 <span class="s s-Atom">root_docs</span> <span class="o">=</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;*.md&quot;</span><span class="p">))</span>
@@ -603,20 +604,17 @@ included documentation generation utilities.</p>
                     <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span><span class="s2">&quot;Home&quot;</span><span class="s s-Atom">:</span> <span class="s2">&quot;README.md&quot;</span><span class="p">})</span>
                 <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="k">_</span><span class="nf">doc</span><span class="p">(</span><span class="s s-Atom">doc</span><span class="p">,</span> <span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span> <span class="s s-Atom">for</span> <span class="s s-Atom">doc</span> <span class="s s-Atom">in</span> <span class="s s-Atom">root_docs</span><span class="p">)</span>
 
-                <span class="s s-Atom">docs_dir_docs</span> <span class="o">=</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;docs_dir&quot;</span><span class="p">],</span> <span class="s2">&quot;*.md&quot;</span><span class="p">))</span>
                 <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span>
                     <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;docs_dir&quot;</span><span class="p">]),</span> <span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span>
                 <span class="p">)</span>
 
-                <span class="s s-Atom">reference_docs</span> <span class="o">=</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">][</span><span class="s2">&quot;output_dir&quot;</span><span class="p">],</span> <span class="s2">&quot;**/*.md&quot;</span><span class="p">))</span>
-                <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span>
-                    <span class="p">{</span><span class="s2">&quot;Reference&quot;</span><span class="s s-Atom">:</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">][</span><span class="s2">&quot;output_dir&quot;</span><span class="p">],</span> <span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)}</span>
-                <span class="p">)</span>
+                <span class="s s-Atom">reference_docs</span> <span class="o">=</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">][</span><span class="s2">&quot;output_dir&quot;</span><span class="p">],</span> <span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span>
+                <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span><span class="s2">&quot;Reference&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">reference_docs</span><span class="p">})</span>  <span class="s s-Atom">#</span> <span class="nn">type</span><span class="p">:</span> <span class="s s-Atom">ignore</span>
 
             <span class="nf">mkdocs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">])</span>
             <span class="s s-Atom">yield</span> <span class="s s-Atom">temp_output_dir</span>
 
-<span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">mkdocs_config</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
+<span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">mkdocs_config</span><span class="p">(</span><span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="s s-Atom">mkdocs_config</span><span class="p">.</span><span class="nv">Config</span><span class="s s-Atom">:</span>
     <span class="s s-Atom">config_instance</span> <span class="o">=</span> <span class="s s-Atom">mkdocs_config</span><span class="p">.</span><span class="nv">Config</span><span class="p">(</span><span class="s s-Atom">schema</span><span class="o">=</span><span class="s s-Atom">mkdocs_config</span><span class="p">.</span><span class="nv">DEFAULT_SCHEMA</span><span class="p">)</span>
     <span class="s s-Atom">config_instance</span><span class="p">.</span><span class="nf">load_dict</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">)</span>
 
@@ -633,22 +631,23 @@ included documentation generation utilities.</p>
     <span class="s s-Atom">config_instance</span><span class="p">.</span><span class="s s-Atom">config_file_path</span> <span class="o">=</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;config_file_path&quot;</span><span class="p">]</span>
     <span class="s s-Atom">return</span> <span class="s s-Atom">config_instance</span>
 
-<span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">directory</span><span class="p">,</span> <span class="s s-Atom">root_directory</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nn">list</span><span class="p">:</span>
+<span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="nn">directory</span><span class="p">:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="s s-Atom">root_directory:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nn">list</span><span class="p">:</span>
     <span class="s s-Atom">nav</span> <span class="o">=</span> <span class="p">[</span><span class="k">_</span><span class="nf">doc</span><span class="p">(</span><span class="s s-Atom">doc</span><span class="p">,</span> <span class="s s-Atom">root_directory</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span> <span class="s s-Atom">for</span> <span class="s s-Atom">doc</span> <span class="s s-Atom">in</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">directory</span><span class="p">,</span> <span class="s2">&quot;*.md&quot;</span><span class="p">))]</span>
 
     <span class="s s-Atom">nested_dirs</span> <span class="o">=</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">directory</span><span class="p">,</span> <span class="s2">&quot;*/&quot;</span><span class="p">))</span>
     <span class="s s-Atom">for</span> <span class="s s-Atom">nested_dir</span> <span class="s s-Atom">in</span> <span class="s s-Atom">nested_dirs:</span>
-        <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span>
-            <span class="p">{</span><span class="k">_</span><span class="nf">label</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">[:-</span><span class="mi">1</span><span class="p">],</span> <span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">,</span> <span class="s s-Atom">root_directory</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)}</span>
-        <span class="p">)</span>
+        <span class="s s-Atom">dir_nav</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="k">_</span><span class="nf">label</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">[:-</span><span class="mi">1</span><span class="p">],</span> <span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">,</span> <span class="s s-Atom">root_directory</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s s-Atom">dir_nav</span><span class="p">)</span>  <span class="s s-Atom">#</span> <span class="nn">type</span><span class="p">:</span> <span class="s s-Atom">ignore</span>
 
     <span class="s s-Atom">return</span> <span class="s s-Atom">nav</span>
 
-<span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">label</span><span class="p">(</span><span class="s s-Atom">path</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
+<span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">label</span><span class="p">(</span><span class="nn">path</span><span class="p">:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="nn">config</span><span class="p">:</span> <span class="nv">Dict</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nn">str</span><span class="p">:</span>
     <span class="s s-Atom">auto</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">basename</span><span class="p">(</span><span class="s s-Atom">path</span><span class="p">).</span><span class="nf">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nf">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">).</span><span class="nf">title</span><span class="p">()</span>
     <span class="s s-Atom">return</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="s s-Atom">auto</span><span class="p">,</span> <span class="s s-Atom">auto</span><span class="p">)</span>
 
-<span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">doc</span><span class="p">(</span><span class="s s-Atom">path</span><span class="p">,</span> <span class="s s-Atom">root_path</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span>
+<span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">doc</span><span class="p">(</span><span class="nn">path</span><span class="p">:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="s s-Atom">root_path:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nv">Dict</span><span class="p">[</span><span class="s s-Atom">str</span><span class="p">,</span> <span class="s s-Atom">str</span><span class="p">]</span><span class="s s-Atom">:</span>
     <span class="s s-Atom">path</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">relpath</span><span class="p">(</span><span class="s s-Atom">path</span><span class="p">,</span> <span class="s s-Atom">root_path</span><span class="p">)</span>
     <span class="s s-Atom">return</span> <span class="p">{</span><span class="k">_</span><span class="nf">label</span><span class="p">(</span><span class="s s-Atom">path</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span> <span class="s s-Atom">path</span><span class="p">}</span>
 </pre></div>
@@ -658,9 +657,9 @@ included documentation generation utilities.</p>
 <h2 id="functions">Functions</h2>
 <h5 id="documentation">documentation</h5>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
-    <span class="n">config</span><span class="p">,</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoneType</span>
 </pre></div>
 
 
@@ -677,7 +676,7 @@ specified output directory.</p>
 <li>The html temporary directory is copied into your specified output location</li>
 <li>Both temporary directories are deleted.</li>
 </ul>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">documentation</span><span class="ss">(</span><span class="nv">config</span>, <span class="nv">overwrite</span>: <span class="nv">bool</span> <span class="o">=</span> <span class="nv">False</span><span class="ss">)</span>:
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">documentation</span><span class="ss">(</span><span class="nv">config</span>: <span class="nv">dict</span>, <span class="nv">overwrite</span>: <span class="nv">bool</span> <span class="o">=</span> <span class="nv">False</span><span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">None</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Renders the entire project given the project config into the config&#39;s</span>
     <span class="nv">specified</span> <span class="nv">output</span> <span class="nv">directory</span>.
 
@@ -698,7 +697,7 @@ specified output directory.</p>
         <span class="k">else</span>:
             <span class="nv">raise</span> <span class="nv">DocumentationAlreadyExists</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>]<span class="ss">)</span>
 
-    <span class="nv">with</span> <span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">config</span><span class="ss">)</span> <span class="nv">as</span> <span class="nv">documentation_output</span>:
+    <span class="nv">with</span> <span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">config</span><span class="ss">)</span> <span class="nv">as</span> <span class="nv">documentation_output</span>:  # <span class="nv">type</span>: <span class="nv">str</span>
         <span class="nv">shutil</span>.<span class="nv">copytree</span><span class="ss">(</span><span class="nv">documentation_output</span>, <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>]<span class="ss">)</span>
 </pre></div>
 
@@ -706,29 +705,29 @@ specified output directory.</p>
 </details>
 <h5 id="documentation_in_temp_folder">documentation_in_temp_folder</h5>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
-    <span class="n">config</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span>
 <span class="p">)</span>
 </pre></div>
 
 
 <p>Build documentation within a temp folder, returning that folder name before it is deleted.</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span>@<span class="nv">contextmanager</span>
-<span class="nv">def</span> <span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">config</span><span class="ss">)</span>:
+<span class="nv">def</span> <span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">config</span>: <span class="nv">dict</span><span class="ss">)</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Build documentation within a temp folder, returning that folder name before it is deleted.</span><span class="s2">&quot;&quot;&quot;</span>
     <span class="nv">with</span> <span class="nv">tempfile</span>.<span class="nv">TemporaryDirectory</span><span class="ss">()</span> <span class="nv">as</span> <span class="nv">input_dir</span>:
         <span class="nv">input_dir</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">input</span><span class="s2">&quot;</span><span class="ss">)</span>
         <span class="nv">with</span> <span class="nv">tempfile</span>.<span class="nv">TemporaryDirectory</span><span class="ss">()</span> <span class="nv">as</span> <span class="nv">temp_output_dir</span>:
             <span class="nv">shutil</span>.<span class="nv">copytree</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>], <span class="nv">input_dir</span><span class="ss">)</span>
 
-            <span class="k">if</span> <span class="nv">not</span> <span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>]:
+            <span class="k">if</span> <span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>]:
                 <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">reference</span><span class="s2">&quot;</span><span class="ss">)</span>
             <span class="nv">pdoc3</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>]<span class="ss">)</span>
 
-            <span class="k">if</span> <span class="nv">not</span> <span class="s2">&quot;</span><span class="s">docs_dir</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]:
+            <span class="k">if</span> <span class="s2">&quot;</span><span class="s">docs_dir</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]:
                 <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">docs_dir</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">input_dir</span>
-            <span class="k">if</span> <span class="nv">not</span> <span class="s2">&quot;</span><span class="s">site_dir</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]:
+            <span class="k">if</span> <span class="s2">&quot;</span><span class="s">site_dir</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]:
                 <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">site_dir</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">temp_output_dir</span>
-            <span class="k">if</span> <span class="nv">not</span> <span class="s2">&quot;</span><span class="s">nav</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]:
+            <span class="k">if</span> <span class="s2">&quot;</span><span class="s">nav</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]:
                 <span class="nv">nav</span> <span class="o">=</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">nav</span><span class="s2">&quot;</span>] <span class="o">=</span> []
 
                 <span class="nv">root_docs</span> <span class="o">=</span> <span class="nv">glob</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">*.md</span><span class="s2">&quot;</span><span class="ss">))</span>
@@ -738,15 +737,12 @@ specified output directory.</p>
                     <span class="nv">nav</span>.<span class="nv">append</span><span class="ss">(</span>{<span class="s2">&quot;</span><span class="s">Home</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">README.md</span><span class="s2">&quot;</span>}<span class="ss">)</span>
                 <span class="nv">nav</span>.<span class="nv">extend</span><span class="ss">(</span><span class="nv">_doc</span><span class="ss">(</span><span class="nv">doc</span>, <span class="nv">input_dir</span>, <span class="nv">config</span><span class="ss">)</span> <span class="k">for</span> <span class="nv">doc</span> <span class="nv">in</span> <span class="nv">root_docs</span><span class="ss">)</span>
 
-                <span class="nv">docs_dir_docs</span> <span class="o">=</span> <span class="nv">glob</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">docs_dir</span><span class="s2">&quot;</span>], <span class="s2">&quot;</span><span class="s">*.md</span><span class="s2">&quot;</span><span class="ss">))</span>
                 <span class="nv">nav</span>.<span class="nv">extend</span><span class="ss">(</span>
                     <span class="nv">_nested_docs</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">docs_dir</span><span class="s2">&quot;</span>]<span class="ss">)</span>, <span class="nv">input_dir</span>, <span class="nv">config</span><span class="ss">)</span>
                 <span class="ss">)</span>
 
-                <span class="nv">reference_docs</span> <span class="o">=</span> <span class="nv">glob</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>], <span class="s2">&quot;</span><span class="s">**/*.md</span><span class="s2">&quot;</span><span class="ss">))</span>
-                <span class="nv">nav</span>.<span class="nv">append</span><span class="ss">(</span>
-                    {<span class="s2">&quot;</span><span class="s">Reference</span><span class="s2">&quot;</span>: <span class="nv">_nested_docs</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>], <span class="nv">input_dir</span>, <span class="nv">config</span><span class="ss">)</span>}
-                <span class="ss">)</span>
+                <span class="nv">reference_docs</span> <span class="o">=</span> <span class="nv">_nested_docs</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>], <span class="nv">input_dir</span>, <span class="nv">config</span><span class="ss">)</span>
+                <span class="nv">nav</span>.<span class="nv">append</span><span class="ss">(</span>{<span class="s2">&quot;</span><span class="s">Reference</span><span class="s2">&quot;</span>: <span class="nv">reference_docs</span>}<span class="ss">)</span>  # <span class="nv">type</span>: <span class="nv">ignore</span>
 
             <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]<span class="ss">)</span>
             <span class="nv">yield</span> <span class="nv">temp_output_dir</span>
@@ -756,7 +752,7 @@ specified output directory.</p>
 </details>
 <h5 id="mkdocs">mkdocs</h5>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
-    <span class="n">config</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -764,7 +760,7 @@ specified output directory.</p>
 <p>Render the project's associated Markdown documentation using the specified
 MkDocs config passed into the MkDocs <code>build</code> command.</p>
 <p>This rendering is from <code>.md</code> Markdown documents into HTML</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">config</span><span class="ss">)</span>:
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">config</span>: <span class="nv">dict</span><span class="ss">)</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Render the project&#39;s associated Markdown documentation using the specified</span>
     <span class="nv">MkDocs</span> <span class="nv">config</span> <span class="nv">passed</span> <span class="nv">into</span> <span class="nv">the</span> <span class="nv">MkDocs</span> `<span class="nv">build</span>` <span class="nv">command</span>.
 
@@ -778,15 +774,15 @@ MkDocs config passed into the MkDocs <code>build</code> command.</p>
 </details>
 <h5 id="pdoc3">pdoc3</h5>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
-    <span class="n">config</span>
-<span class="p">)</span>
+    <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoneType</span>
 </pre></div>
 
 
 <p>Render this project using the specified pdoc config passed into pdoc.</p>
 <p>This rendering is from code definition to Markdown so that
 it will be compatible with MkDocs.</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="n">def</span> <span class="n">pdoc3</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="n">def</span> <span class="n">pdoc3</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">None</span><span class="p">:</span>
     <span class="ss">&quot;&quot;&quot;Render this project using the specified pdoc config passed into pdoc.</span>
 
 <span class="ss">    This rendering is from code definition to Markdown so that</span>

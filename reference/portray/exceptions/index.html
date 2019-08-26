@@ -514,7 +514,7 @@
 <span class="nv">class</span> <span class="nv">NoProjectFound</span><span class="ss">(</span><span class="nv">PortrayError</span><span class="ss">)</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Thrown when portray is ran in a directory with no Python project</span><span class="s2">&quot;&quot;&quot;</span>
 
-    <span class="nv">def</span> <span class="nv">__init__</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">directory</span><span class="ss">)</span>:
+    <span class="nv">def</span> <span class="nv">__init__</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">directory</span>: <span class="nv">str</span><span class="ss">)</span>:
         <span class="nv">super</span><span class="ss">()</span>.<span class="nv">__init__</span><span class="ss">(</span>
             <span class="nv">self</span>, <span class="s2">&quot;</span><span class="s">No Python project found in the given directory: &#39;{}&#39;</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>
         <span class="ss">)</span>
@@ -523,7 +523,7 @@
 <span class="nv">class</span> <span class="nv">DocumentationAlreadyExists</span><span class="ss">(</span><span class="nv">PortrayError</span><span class="ss">)</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Thrown when portray has been told to output documentation where it already exists</span><span class="s2">&quot;&quot;&quot;</span>
 
-    <span class="nv">def</span> <span class="nv">__init__</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">directory</span><span class="ss">)</span>:
+    <span class="nv">def</span> <span class="nv">__init__</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">directory</span>: <span class="nv">str</span><span class="ss">)</span>:
         <span class="nv">super</span><span class="ss">()</span>.<span class="nv">__init__</span><span class="ss">(</span>
             <span class="nv">self</span>,
             <span class="s2">&quot;</span><span class="s">Documentation already exists in &#39;{}&#39;. Use --overwrite to ignore</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>,
@@ -536,7 +536,7 @@
 <h2 id="classes">Classes</h2>
 <h5 id="documentationalreadyexists">DocumentationAlreadyExists</h5>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="err">(</span>
-    <span class="n">directory</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -553,7 +553,7 @@
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="k">class</span> <span class="n">DocumentationAlreadyExists</span>(<span class="n">PortrayError</span>):
     <span class="s">&quot;&quot;&quot;Thrown when portray has been told to output documentation where it already exists&quot;&quot;&quot;</span>
 
-    <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">directory</span>):
+    <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">directory:</span> <span class="n">str</span>):
         <span class="n">super</span>().<span class="n">__init__</span>(
             <span class="k">self</span>,
             <span class="s">&quot;Documentation already exists in &#39;{}&#39;. Use --overwrite to ignore&quot;</span>.<span class="n">format</span>(<span class="n">directory</span>),
@@ -566,7 +566,7 @@
 <hr />
 <h5 id="noprojectfound">NoProjectFound</h5>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="err">(</span>
-    <span class="n">directory</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -583,7 +583,7 @@
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="k">class</span> <span class="n">NoProjectFound</span>(<span class="n">PortrayError</span>):
     <span class="s">&quot;&quot;&quot;Thrown when portray is ran in a directory with no Python project&quot;&quot;&quot;</span>
 
-    <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">directory</span>):
+    <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">directory:</span> <span class="n">str</span>):
         <span class="n">super</span>().<span class="n">__init__</span>(
             <span class="k">self</span>, <span class="s">&quot;No Python project found in the given directory: &#39;{}&#39;&quot;</span>.<span class="n">format</span>(<span class="n">directory</span>)
         )

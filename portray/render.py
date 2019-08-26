@@ -7,6 +7,7 @@ import tempfile
 from argparse import Namespace
 from contextlib import contextmanager
 from glob import glob
+from typing import Dict
 
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
@@ -15,7 +16,8 @@ from mkdocs.commands.build import build as mkdocs_build
 
 from portray.exceptions import DocumentationAlreadyExists
 
-def documentation(config, overwrite: bool = False):
+
+def documentation(config: dict, overwrite: bool = False) -> None:
     """Renders the entire project given the project config into the config's
     specified output directory.
 
@@ -36,11 +38,11 @@ def documentation(config, overwrite: bool = False):
         else:
             raise DocumentationAlreadyExists(config["output_dir"])
 
-    with documentation_in_temp_folder(config) as documentation_output:
+    with documentation_in_temp_folder(config) as documentation_output:  # type: str
         shutil.copytree(documentation_output, config["output_dir"])
 
 
-def pdoc3(config):
+def pdoc3(config: dict) -> None:
     """Render this project using the specified pdoc config passed into pdoc.
 
     This rendering is from code definition to Markdown so that
@@ -49,7 +51,7 @@ def pdoc3(config):
     pdoc.cli.main(Namespace(**config))
 
 
-def mkdocs(config):
+def mkdocs(config: dict):
     """Render the project's associated Markdown documentation using the specified
     MkDocs config passed into the MkDocs `build` command.
 
@@ -60,22 +62,22 @@ def mkdocs(config):
 
 
 @contextmanager
-def documentation_in_temp_folder(config):
+def documentation_in_temp_folder(config: dict):
     """Build documentation within a temp folder, returning that folder name before it is deleted."""
     with tempfile.TemporaryDirectory() as input_dir:
         input_dir = os.path.join(input_dir, "input")
         with tempfile.TemporaryDirectory() as temp_output_dir:
             shutil.copytree(config["directory"], input_dir)
 
-            if not "output_dir" in config["pdoc3"]:
+            if "output_dir" not in config["pdoc3"]:
                 config["pdoc3"]["output_dir"] = os.path.join(input_dir, "reference")
             pdoc3(config["pdoc3"])
 
-            if not "docs_dir" in config["mkdocs"]:
+            if "docs_dir" not in config["mkdocs"]:
                 config["mkdocs"]["docs_dir"] = input_dir
-            if not "site_dir" in config["mkdocs"]:
+            if "site_dir" not in config["mkdocs"]:
                 config["mkdocs"]["site_dir"] = temp_output_dir
-            if not "nav" in config["mkdocs"]:
+            if "nav" not in config["mkdocs"]:
                 nav = config["mkdocs"]["nav"] = []
 
                 root_docs = glob(os.path.join(input_dir, "*.md"))
@@ -85,21 +87,18 @@ def documentation_in_temp_folder(config):
                     nav.append({"Home": "README.md"})
                 nav.extend(_doc(doc, input_dir, config) for doc in root_docs)
 
-                docs_dir_docs = glob(os.path.join(input_dir, config["docs_dir"], "*.md"))
                 nav.extend(
                     _nested_docs(os.path.join(input_dir, config["docs_dir"]), input_dir, config)
                 )
 
-                reference_docs = glob(os.path.join(config["pdoc3"]["output_dir"], "**/*.md"))
-                nav.append(
-                    {"Reference": _nested_docs(config["pdoc3"]["output_dir"], input_dir, config)}
-                )
+                reference_docs = _nested_docs(config["pdoc3"]["output_dir"], input_dir, config)
+                nav.append({"Reference": reference_docs})  # type: ignore
 
             mkdocs(config["mkdocs"])
             yield temp_output_dir
 
 
-def _mkdocs_config(config):
+def _mkdocs_config(config: dict) -> mkdocs_config.Config:
     config_instance = mkdocs_config.Config(schema=mkdocs_config.DEFAULT_SCHEMA)
     config_instance.load_dict(config)
 
@@ -117,23 +116,24 @@ def _mkdocs_config(config):
     return config_instance
 
 
-def _nested_docs(directory, root_directory, config) -> list:
+def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
     nav = [_doc(doc, root_directory, config) for doc in glob(os.path.join(directory, "*.md"))]
 
     nested_dirs = glob(os.path.join(directory, "*/"))
     for nested_dir in nested_dirs:
-        nav.append(
-            {_label(nested_dir[:-1], config): _nested_docs(nested_dir, root_directory, config)}
-        )
+        dir_nav = {
+            _label(nested_dir[:-1], config): _nested_docs(nested_dir, root_directory, config)
+        }
+        nav.append(dir_nav)  # type: ignore
 
     return nav
 
 
-def _label(path, config):
+def _label(path: str, config: Dict) -> str:
     auto = os.path.basename(path).split(".")[0].replace("-", " ").replace("_", " ").title()
     return config["labels"].get(auto, auto)
 
 
-def _doc(path, root_path, config):
+def _doc(path: str, root_path: str, config: dict) -> Dict[str, str]:
     path = os.path.relpath(path, root_path)
     return {_label(path, config): path}

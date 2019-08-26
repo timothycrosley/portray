@@ -22,4 +22,6 @@ __doc__ = """
 ```python
 {}
 ```
-""".format(ascii_art)
+""".format(
+    ascii_art
+)

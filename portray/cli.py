@@ -1,7 +1,8 @@
 """This module defines CLI interaction when using `portray`.
 
 This is powered by [hug](https://github.com/hugapi/hug) which means unless necessary
-it should maintain 1:1 compatibility with the programmatic API definition in the [API module](/reference/portray/api)
+it should maintain 1:1 compatibility with the programmatic API definition in the
+[API module](/reference/portray/api)
 
 - `portray as_html`: Renders the project as HTML into the `site` or other specified output directory
 - `portray in_browser`: Runs a server with the rendered documentation pointing a browser to it

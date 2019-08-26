@@ -1,6 +1,6 @@
 """Defines the configuration defaults and load functions used by `portray`"""
 import os
-from typing import Dict, List, Union, cast
+from typing import Any, Dict, List, Union, cast
 from urllib import parse
 
 import mkdocs.config as _mkdocs_config
@@ -33,7 +33,7 @@ MKDOCS_DEFAULTS = {
         "pymdownx.details",
         "pymdownx.highlight",
     ],
-}
+}  # type: Dict[str, Any]
 
 PDOC3_DEFAULTS = {
     "modules": [os.path.basename(os.getcwd())],
@@ -54,8 +54,8 @@ PDOC3_DEFAULTS = {
 
 
 def project(directory: str, config_file: str, **overrides) -> dict:
-    """Returns back the complete configuration - including all sub configuration components defined below
-       that `portray` was able to determine for the project
+    """Returns back the complete configuration - including all sub configuration components
+       defined below that `portray` was able to determine for the project
     """
     if not (
         os.path.isfile(os.path.join(directory, config_file))
@@ -63,7 +63,7 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     ):
         raise NoProjectFound(directory)
 
-    project_config = {**PORTRAY_DEFAULTS, "directory": directory}
+    project_config = {**PORTRAY_DEFAULTS, "directory": directory}  # type: Dict[str, Any]
     project_config.update(toml(os.path.join(directory, config_file), **overrides))
     if "modules" in project_config:
         project_config.setdefault("pdoc3", {}).setdefault("modules", project_config["modules"])
@@ -88,7 +88,7 @@ def toml(location: str, **overrides) -> dict:
         config.update(overrides)
         config["file"] = location
 
-        if not "modules" in config:
+        if "modules" not in config:
             if "poetry" in tools and "name" in tools["poetry"]:
                 config["moudles"] = [tools["poetry"]["name"]]
             elif (
@@ -121,9 +121,13 @@ def repository(directory: str) -> dict:
 
 def mkdocs(directory: str, **overrides) -> dict:
     """Returns back the configuration that will be used when running mkdocs"""
-    mkdocs_config = {**MKDOCS_DEFAULTS, **repository(directory), **overrides}
+    mkdocs_config = {
+        **MKDOCS_DEFAULTS,
+        **repository(directory),
+        **overrides,
+    }  # type: Dict[str, Any]
     theme = mkdocs_config["theme"]
-    if theme["name"].lower() == "material" and not "custom_dir" in theme:
+    if theme["name"].lower() == "material" and "custom_dir" not in theme:
         theme["custom_dir"] = MKDOCS_DEFAULTS["theme"]["custom_dir"]
 
     return mkdocs_config
@@ -133,7 +137,8 @@ def pdoc3(directory: str, **overrides) -> dict:
     """Returns back the configuration that will be used when running pdoc3"""
     defaults = {**PDOC3_DEFAULTS}
     defaults["config"] = [
-        "{}={}".format(key, value) for key, value in PDOC3_DEFAULTS["config"].items()
+        "{}={}".format(key, value)
+        for key, value in PDOC3_DEFAULTS["config"].items()  # type: ignore
     ]
     defaults.update(overrides)
     return defaults

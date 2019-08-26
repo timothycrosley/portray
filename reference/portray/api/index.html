@@ -543,6 +543,7 @@ to start.</p>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">webbrowser</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">hug</span>
 <span class="kn">from</span> <span class="nn">mkdocs.commands.gh_deploy</span> <span class="kn">import</span> <span class="n">gh_deploy</span>
@@ -550,11 +551,11 @@ to start.</p>
 <span class="kn">from</span> <span class="nn">portray</span> <span class="kn">import</span> <span class="n">config</span><span class="p">,</span> <span class="n">logo</span><span class="p">,</span> <span class="n">render</span>
 
 <span class="k">def</span> <span class="nf">as_html</span><span class="p">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Produces HTML documentation for a Python project.</span>
 
 <span class="sd">       - *directory*: The root folder of your project.</span>
@@ -566,16 +567,14 @@ to start.</p>
 <span class="sd">         specified `output_dir` the command will fail with a `DocumentationAlreadyExists`</span>
 <span class="sd">         exception.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span> <span class="k">if</span> <span class="n">directory</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
     <span class="n">render</span><span class="o">.</span><span class="n">documentation</span><span class="p">(</span><span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">ascii_art</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Documentation successfully generated into {}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)))</span>
 
 <span class="k">def</span> <span class="nf">in_browser</span><span class="p">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
-    <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span>
-    <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
-    <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
-<span class="p">):</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Runs a development webserver enabling you to browse documentation locally</span>
 <span class="sd">       then opens a web browser pointing to it.</span>
 
@@ -585,15 +584,16 @@ to start.</p>
 <span class="sd">       - *port*: The port to expose your documentation on (defaults to: `8000`)</span>
 <span class="sd">       - *host*: The host to expose your documentation on (defaults to `&quot;127.0.0.1&quot;`)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">server</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="n">config_file</span><span class="p">,</span> <span class="n">open_browser</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span> <span class="k">if</span> <span class="n">directory</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">server</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="n">config_file</span><span class="p">,</span> <span class="n">open_browser</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">server</span><span class="p">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span>
     <span class="n">open_browser</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
     <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
     <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Runs a development webserver enabling you to browse documentation locally.</span>
 
 <span class="sd">       - *directory*: The root folder of your project.</span>
@@ -603,6 +603,7 @@ to start.</p>
 <span class="sd">       - *port*: The port to expose your documentation on (defaults to: `8000`)</span>
 <span class="sd">       - *host*: The host to expose your documentation on (defaults to `&quot;127.0.0.1&quot;`)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span> <span class="k">if</span> <span class="n">directory</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
     <span class="n">api</span> <span class="o">=</span> <span class="n">hug</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="s2">&quot;Doc Server&quot;</span><span class="p">)</span>
 
     <span class="n">project_config</span> <span class="o">=</span> <span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">)</span>
@@ -625,22 +626,23 @@ to start.</p>
             <span class="n">display_intro</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
         <span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns the configuration associated with a project.</span>
 
 <span class="sd">        - *directory*: The root folder of your project.</span>
 <span class="sd">        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted</span>
 <span class="sd">          config file you wish to use.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span> <span class="k">if</span> <span class="n">directory</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="n">directory</span><span class="o">=</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="n">config_file</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">on_github_pages</span><span class="p">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
     <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span>
     <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
     <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
     <span class="n">ignore_version</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Regenerates and deploys the documentation to GitHub pages.</span>
 
 <span class="sd">        - *directory*: The root folder of your project.</span>
@@ -650,6 +652,7 @@ to start.</p>
 <span class="sd">        - *force*: Force the push to the repository.</span>
 <span class="sd">        - *ignore_version*: Ignore check that build is not being deployed with an old version.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span> <span class="k">if</span> <span class="n">directory</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
     <span class="n">project_config</span> <span class="o">=</span> <span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">render</span><span class="o">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">):</span>
         <span class="n">conf</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">])</span>
@@ -666,11 +669,11 @@ to start.</p>
 <h2 id="functions">Functions</h2>
 <h5 id="as_html">as_html</h5>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;/home/timothyedmundcrosley/Projects/portray&#39;</span><span class="p">,</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;pyproject.toml&#39;</span><span class="p">,</span>
     <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;site&#39;</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoneType</span>
 </pre></div>
 
 
@@ -686,11 +689,11 @@ to start.</p>
   exception.</li>
 </ul>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">as_html</span><span class="ss">(</span>
-    <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>,
+    <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>,
     <span class="nv">config_file</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">pyproject.toml</span><span class="s2">&quot;</span>,
     <span class="nv">output_dir</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">site</span><span class="s2">&quot;</span>,
     <span class="nv">overwrite</span>: <span class="nv">bool</span> <span class="o">=</span> <span class="nv">False</span>,
-<span class="ss">)</span>:
+<span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">None</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Produces HTML documentation for a Python project.</span>
 
        <span class="o">-</span> <span class="o">*</span><span class="nv">directory</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">root</span> <span class="nv">folder</span> <span class="nv">of</span> <span class="nv">your</span> <span class="nv">project</span>.
@@ -702,6 +705,7 @@ to start.</p>
          <span class="nv">specified</span> `<span class="nv">output_dir</span>` <span class="nv">the</span> <span class="nv">command</span> <span class="nv">will</span> <span class="nv">fail</span> <span class="nv">with</span> <span class="nv">a</span> `<span class="nv">DocumentationAlreadyExists</span>`
          <span class="nv">exception</span>.
     <span class="s2">&quot;&quot;&quot;</span>
+    <span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span> <span class="k">if</span> <span class="nv">directory</span> <span class="k">else</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>
     <span class="nv">render</span>.<span class="nv">documentation</span><span class="ss">(</span><span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)</span>, <span class="nv">overwrite</span><span class="o">=</span><span class="nv">overwrite</span><span class="ss">)</span>
     <span class="nv">print</span><span class="ss">(</span><span class="nv">logo</span>.<span class="nv">ascii_art</span><span class="ss">)</span>
     <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Documentation successfully generated into {}!</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">abspath</span><span class="ss">(</span><span class="nv">output_dir</span><span class="ss">)))</span>
@@ -711,11 +715,11 @@ to start.</p>
 </details>
 <h5 id="in_browser">in_browser</h5>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;/home/timothyedmundcrosley/Projects/portray&#39;</span><span class="p">,</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;pyproject.toml&#39;</span><span class="p">,</span>
     <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoneType</span>
 </pre></div>
 
 
@@ -729,11 +733,8 @@ then opens a web browser pointing to it.</p>
 <li><em>host</em>: The host to expose your documentation on (defaults to <code>"127.0.0.1"</code>)</li>
 </ul>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">in_browser</span><span class="ss">(</span>
-    <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>,
-    <span class="nv">config_file</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">pyproject.toml</span><span class="s2">&quot;</span>,
-    <span class="nv">port</span>: <span class="nv">int</span> <span class="o">=</span> <span class="nv">None</span>,
-    <span class="nv">host</span>: <span class="nv">str</span> <span class="o">=</span> <span class="nv">None</span>,
-<span class="ss">)</span>:
+    <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>, <span class="nv">config_file</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">pyproject.toml</span><span class="s2">&quot;</span>, <span class="nv">port</span>: <span class="nv">int</span> <span class="o">=</span> <span class="nv">None</span>, <span class="nv">host</span>: <span class="nv">str</span> <span class="o">=</span> <span class="nv">None</span>
+<span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">None</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Runs a development webserver enabling you to browse documentation locally</span>
        <span class="k">then</span> <span class="nv">opens</span> <span class="nv">a</span> <span class="nv">web</span> <span class="nv">browser</span> <span class="nv">pointing</span> <span class="nv">to</span> <span class="nv">it</span>.
 
@@ -743,19 +744,20 @@ then opens a web browser pointing to it.</p>
        <span class="o">-</span> <span class="o">*</span><span class="nv">port</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">port</span> <span class="nv">to</span> <span class="nv">expose</span> <span class="nv">your</span> <span class="nv">documentation</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">defaults</span> <span class="nv">to</span>: `<span class="mi">8000</span>`<span class="ss">)</span>
        <span class="o">-</span> <span class="o">*</span><span class="nv">host</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">host</span> <span class="nv">to</span> <span class="nv">expose</span> <span class="nv">your</span> <span class="nv">documentation</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">defaults</span> <span class="nv">to</span> `<span class="s2">&quot;</span><span class="s">127.0.0.1</span><span class="s2">&quot;</span>`<span class="ss">)</span>
     <span class="s2">&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nv">server</span><span class="ss">(</span><span class="nv">directory</span><span class="o">=</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="o">=</span><span class="nv">config_file</span>, <span class="nv">open_browser</span><span class="o">=</span><span class="nv">True</span><span class="ss">)</span>
+    <span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span> <span class="k">if</span> <span class="nv">directory</span> <span class="k">else</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>
+    <span class="nv">server</span><span class="ss">(</span><span class="nv">directory</span><span class="o">=</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="o">=</span><span class="nv">config_file</span>, <span class="nv">open_browser</span><span class="o">=</span><span class="nv">True</span><span class="ss">)</span>
 </pre></div>
 
 
 </details>
 <h5 id="on_github_pages">on_github_pages</h5>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;/home/timothyedmundcrosley/Projects/portray&#39;</span><span class="p">,</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;pyproject.toml&#39;</span><span class="p">,</span>
     <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">ignore_version</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoneType</span>
 </pre></div>
 
 
@@ -768,40 +770,41 @@ then opens a web browser pointing to it.</p>
 <li><em>force</em>: Force the push to the repository.</li>
 <li><em>ignore_version</em>: Ignore check that build is not being deployed with an old version.</li>
 </ul>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="n">def</span><span class="w"> </span><span class="n">on_github_pages</span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="nl">directory</span><span class="p">:</span><span class="w"> </span><span class="nf">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="w"></span>
-<span class="w">    </span><span class="nl">config_file</span><span class="p">:</span><span class="w"> </span><span class="nf">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;pyproject.toml&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nl">message</span><span class="p">:</span><span class="w"> </span><span class="nf">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">None</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nl">force</span><span class="p">:</span><span class="w"> </span><span class="n">bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">False</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nl">ignore_version</span><span class="p">:</span><span class="w"> </span><span class="n">bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">False</span><span class="p">,</span><span class="w"></span>
-<span class="p">)</span><span class="err">:</span><span class="w"></span>
-<span class="w">    </span><span class="ss">&quot;&quot;&quot;Regenerates and deploys the documentation to GitHub pages.</span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">on_github_pages</span><span class="ss">(</span>
+    <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>,
+    <span class="nv">config_file</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">pyproject.toml</span><span class="s2">&quot;</span>,
+    <span class="nv">message</span>: <span class="nv">str</span> <span class="o">=</span> <span class="nv">None</span>,
+    <span class="nv">force</span>: <span class="nv">bool</span> <span class="o">=</span> <span class="nv">False</span>,
+    <span class="nv">ignore_version</span>: <span class="nv">bool</span> <span class="o">=</span> <span class="nv">False</span>,
+<span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">None</span>:
+    <span class="s2">&quot;&quot;&quot;</span><span class="s">Regenerates and deploys the documentation to GitHub pages.</span>
 
-<span class="ss">        - *directory*: The root folder of your project.</span>
-<span class="ss">        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted</span>
-<span class="ss">          config file you wish to use.</span>
-<span class="ss">        - *message*: The commit message to use when uploading your documentation.</span>
-<span class="ss">        - *force*: Force the push to the repository.</span>
-<span class="ss">        - *ignore_version*: Ignore check that build is not being deployed with an old version.</span>
-<span class="ss">    &quot;&quot;&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="n">project_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="w"> </span><span class="n">config_file</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">render</span><span class="p">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
-<span class="w">        </span><span class="n">conf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">render</span><span class="p">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="o">[</span><span class="n">&quot;mkdocs&quot;</span><span class="o">]</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="n">conf</span><span class="p">.</span><span class="n">config_file_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">directory</span><span class="w"></span>
+        <span class="o">-</span> <span class="o">*</span><span class="nv">directory</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">root</span> <span class="nv">folder</span> <span class="nv">of</span> <span class="nv">your</span> <span class="nv">project</span>.
+        <span class="o">-</span> <span class="o">*</span><span class="nv">config_file</span><span class="o">*</span>: <span class="nv">The</span> [<span class="nv">TOML</span>]<span class="ss">(</span><span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">toml</span><span class="o">-</span><span class="nv">lang</span><span class="o">/</span><span class="nv">toml</span>#<span class="nv">toml</span><span class="ss">)</span> <span class="nv">formatted</span>
+          <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
+        <span class="o">-</span> <span class="o">*</span><span class="nv">message</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">commit</span> <span class="nv">message</span> <span class="nv">to</span> <span class="nv">use</span> <span class="nv">when</span> <span class="nv">uploading</span> <span class="nv">your</span> <span class="nv">documentation</span>.
+        <span class="o">-</span> <span class="o">*</span><span class="nv">force</span><span class="o">*</span>: <span class="nv">Force</span> <span class="nv">the</span> <span class="nv">push</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">repository</span>.
+        <span class="o">-</span> <span class="o">*</span><span class="nv">ignore_version</span><span class="o">*</span>: <span class="nv">Ignore</span> <span class="nv">check</span> <span class="nv">that</span> <span class="nv">build</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">being</span> <span class="nv">deployed</span> <span class="nv">with</span> <span class="nv">an</span> <span class="nv">old</span> <span class="nv">version</span>.
+    <span class="s2">&quot;&quot;&quot;</span>
+    <span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span> <span class="k">if</span> <span class="nv">directory</span> <span class="k">else</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>
+    <span class="nv">project_config</span> <span class="o">=</span> <span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)</span>
+    <span class="nv">with</span> <span class="nv">render</span>.<span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">project_config</span><span class="ss">)</span>:
+        <span class="nv">conf</span> <span class="o">=</span> <span class="nv">render</span>.<span class="nv">_mkdocs_config</span><span class="ss">(</span><span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]<span class="ss">)</span>
+        <span class="nv">conf</span>.<span class="nv">config_file_path</span> <span class="o">=</span> <span class="nv">directory</span>
 
-<span class="w">        </span><span class="n">gh_deploy</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span><span class="w"> </span><span class="n">ignore_version</span><span class="o">=</span><span class="n">ignore_version</span><span class="p">)</span><span class="w"></span>
+        <span class="nv">gh_deploy</span><span class="ss">(</span><span class="nv">conf</span>, <span class="nv">message</span><span class="o">=</span><span class="nv">message</span>, <span class="nv">force</span><span class="o">=</span><span class="nv">force</span>, <span class="nv">ignore_version</span><span class="o">=</span><span class="nv">ignore_version</span><span class="ss">)</span>
 
-<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="p">.</span><span class="n">ascii_art</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="k">print</span><span class="p">(</span><span class="ss">&quot;Documentation successfully generated and pushed!&quot;</span><span class="p">)</span><span class="w"></span>
+        <span class="nv">print</span><span class="ss">(</span><span class="nv">logo</span>.<span class="nv">ascii_art</span><span class="ss">)</span>
+        <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Documentation successfully generated and pushed!</span><span class="s2">&quot;</span><span class="ss">)</span>
 </pre></div>
 
 
 </details>
 <h5 id="project_configuration">project_configuration</h5>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;/home/timothyedmundcrosley/Projects/portray&#39;</span><span class="p">,</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;pyproject.toml&#39;</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
 </pre></div>
 
 
@@ -811,13 +814,14 @@ then opens a web browser pointing to it.</p>
 <li><em>config_file</em>: The <a href="https://github.com/toml-lang/toml#toml">TOML</a> formatted
   config file you wish to use.</li>
 </ul>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>, <span class="nv">config_file</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">pyproject.toml</span><span class="s2">&quot;</span><span class="ss">)</span>:
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>, <span class="nv">config_file</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">pyproject.toml</span><span class="s2">&quot;</span><span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">dict</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns the configuration associated with a project.</span>
 
         <span class="o">-</span> <span class="o">*</span><span class="nv">directory</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">root</span> <span class="nv">folder</span> <span class="nv">of</span> <span class="nv">your</span> <span class="nv">project</span>.
         <span class="o">-</span> <span class="o">*</span><span class="nv">config_file</span><span class="o">*</span>: <span class="nv">The</span> [<span class="nv">TOML</span>]<span class="ss">(</span><span class="nv">https</span>:<span class="o">//</span><span class="nv">github</span>.<span class="nv">com</span><span class="o">/</span><span class="nv">toml</span><span class="o">-</span><span class="nv">lang</span><span class="o">/</span><span class="nv">toml</span>#<span class="nv">toml</span><span class="ss">)</span> <span class="nv">formatted</span>
           <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
     <span class="s2">&quot;&quot;&quot;</span>
+    <span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span> <span class="k">if</span> <span class="nv">directory</span> <span class="k">else</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>
     <span class="k">return</span> <span class="nv">config</span>.<span class="nv">project</span><span class="ss">(</span><span class="nv">directory</span><span class="o">=</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="o">=</span><span class="nv">config_file</span><span class="ss">)</span>
 </pre></div>
 
@@ -825,12 +829,12 @@ then opens a web browser pointing to it.</p>
 </details>
 <h5 id="server">server</h5>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;/home/timothyedmundcrosley/Projects/portray&#39;</span><span class="p">,</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;pyproject.toml&#39;</span><span class="p">,</span>
     <span class="n">open_browser</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="p">)</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoneType</span>
 </pre></div>
 
 
@@ -844,12 +848,12 @@ then opens a web browser pointing to it.</p>
 <li><em>host</em>: The host to expose your documentation on (defaults to <code>"127.0.0.1"</code>)</li>
 </ul>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">server</span><span class="ss">(</span>
-    <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>,
+    <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>,
     <span class="nv">config_file</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">pyproject.toml</span><span class="s2">&quot;</span>,
     <span class="nv">open_browser</span>: <span class="nv">bool</span> <span class="o">=</span> <span class="nv">False</span>,
     <span class="nv">port</span>: <span class="nv">int</span> <span class="o">=</span> <span class="nv">None</span>,
     <span class="nv">host</span>: <span class="nv">str</span> <span class="o">=</span> <span class="nv">None</span>,
-<span class="ss">)</span>:
+<span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">None</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Runs a development webserver enabling you to browse documentation locally.</span>
 
        <span class="o">-</span> <span class="o">*</span><span class="nv">directory</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">root</span> <span class="nv">folder</span> <span class="nv">of</span> <span class="nv">your</span> <span class="nv">project</span>.
@@ -859,6 +863,7 @@ then opens a web browser pointing to it.</p>
        <span class="o">-</span> <span class="o">*</span><span class="nv">port</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">port</span> <span class="nv">to</span> <span class="nv">expose</span> <span class="nv">your</span> <span class="nv">documentation</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">defaults</span> <span class="nv">to</span>: `<span class="mi">8000</span>`<span class="ss">)</span>
        <span class="o">-</span> <span class="o">*</span><span class="nv">host</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">host</span> <span class="nv">to</span> <span class="nv">expose</span> <span class="nv">your</span> <span class="nv">documentation</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">defaults</span> <span class="nv">to</span> `<span class="s2">&quot;</span><span class="s">127.0.0.1</span><span class="s2">&quot;</span>`<span class="ss">)</span>
     <span class="s2">&quot;&quot;&quot;</span>
+    <span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span> <span class="k">if</span> <span class="nv">directory</span> <span class="k">else</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>
     <span class="nv">api</span> <span class="o">=</span> <span class="nv">hug</span>.<span class="nv">API</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Doc Server</span><span class="s2">&quot;</span><span class="ss">)</span>
 
     <span class="nv">project_config</span> <span class="o">=</span> <span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)</span>

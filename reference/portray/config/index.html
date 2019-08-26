@@ -534,7 +534,7 @@
 <p>Defines the configuration defaults and load functions used by <code>portray</code></p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;Defines the configuration defaults and load functions used by `portray`&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
 <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">parse</span>
 
 <span class="kn">import</span> <span class="nn">mkdocs.config</span> <span class="kn">as</span> <span class="nn">_mkdocs_config</span>
@@ -567,7 +567,7 @@
         <span class="s2">&quot;pymdownx.details&quot;</span><span class="p">,</span>
         <span class="s2">&quot;pymdownx.highlight&quot;</span><span class="p">,</span>
     <span class="p">],</span>
-<span class="p">}</span>
+<span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
 
 <span class="n">PDOC3_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;modules&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())],</span>
@@ -587,8 +587,8 @@
 <span class="p">}</span>  <span class="c1"># type: Dict[str, Union[str, str, bool, None, Dict, List]]</span>
 
 <span class="k">def</span> <span class="nf">project</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Returns back the complete configuration - including all sub configuration components defined below</span>
-<span class="sd">       that `portray` was able to determine for the project</span>
+    <span class="sd">&quot;&quot;&quot;Returns back the complete configuration - including all sub configuration components</span>
+<span class="sd">       defined below that `portray` was able to determine for the project</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">))</span>
@@ -596,7 +596,7 @@
     <span class="p">):</span>
         <span class="k">raise</span> <span class="n">NoProjectFound</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
 
-    <span class="n">project_config</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">PORTRAY_DEFAULTS</span><span class="p">,</span> <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="n">directory</span><span class="p">}</span>
+    <span class="n">project_config</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">PORTRAY_DEFAULTS</span><span class="p">,</span> <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="n">directory</span><span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
     <span class="n">project_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">toml</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">),</span> <span class="o">**</span><span class="n">overrides</span><span class="p">))</span>
     <span class="k">if</span> <span class="s2">&quot;modules&quot;</span> <span class="ow">in</span> <span class="n">project_config</span><span class="p">:</span>
         <span class="n">project_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">,</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;modules&quot;</span><span class="p">])</span>
@@ -620,7 +620,7 @@
         <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">overrides</span><span class="p">)</span>
         <span class="n">config</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;modules&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;modules&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
             <span class="k">if</span> <span class="s2">&quot;poetry&quot;</span> <span class="ow">in</span> <span class="n">tools</span> <span class="ow">and</span> <span class="s2">&quot;name&quot;</span> <span class="ow">in</span> <span class="n">tools</span><span class="p">[</span><span class="s2">&quot;poetry&quot;</span><span class="p">]:</span>
                 <span class="n">config</span><span class="p">[</span><span class="s2">&quot;moudles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">tools</span><span class="p">[</span><span class="s2">&quot;poetry&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span>
             <span class="k">elif</span> <span class="p">(</span>
@@ -651,9 +651,13 @@
 
 <span class="k">def</span> <span class="nf">mkdocs</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns back the configuration that will be used when running mkdocs&quot;&quot;&quot;</span>
-    <span class="n">mkdocs_config</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">MKDOCS_DEFAULTS</span><span class="p">,</span> <span class="o">**</span><span class="n">repository</span><span class="p">(</span><span class="n">directory</span><span class="p">),</span> <span class="o">**</span><span class="n">overrides</span><span class="p">}</span>
+    <span class="n">mkdocs_config</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="o">**</span><span class="n">MKDOCS_DEFAULTS</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">repository</span><span class="p">(</span><span class="n">directory</span><span class="p">),</span>
+        <span class="o">**</span><span class="n">overrides</span><span class="p">,</span>
+    <span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
     <span class="n">theme</span> <span class="o">=</span> <span class="n">mkdocs_config</span><span class="p">[</span><span class="s2">&quot;theme&quot;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">theme</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;material&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="s2">&quot;custom_dir&quot;</span> <span class="ow">in</span> <span class="n">theme</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">theme</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;material&quot;</span> <span class="ow">and</span> <span class="s2">&quot;custom_dir&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">theme</span><span class="p">:</span>
         <span class="n">theme</span><span class="p">[</span><span class="s2">&quot;custom_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MKDOCS_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;theme&quot;</span><span class="p">][</span><span class="s2">&quot;custom_dir&quot;</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">mkdocs_config</span>
@@ -662,7 +666,8 @@
     <span class="sd">&quot;&quot;&quot;Returns back the configuration that will be used when running pdoc3&quot;&quot;&quot;</span>
     <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">PDOC3_DEFAULTS</span><span class="p">}</span>
     <span class="n">defaults</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s2">&quot;{}={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">PDOC3_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="s2">&quot;{}={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">PDOC3_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
     <span class="p">]</span>
     <span class="n">defaults</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">overrides</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">defaults</span>
@@ -682,9 +687,13 @@
 <p>Returns back the configuration that will be used when running mkdocs</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">directory</span>: <span class="nv">str</span>, <span class="o">**</span><span class="nv">overrides</span><span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">dict</span>:
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns back the configuration that will be used when running mkdocs</span><span class="s2">&quot;&quot;&quot;</span>
-    <span class="nv">mkdocs_config</span> <span class="o">=</span> {<span class="o">**</span><span class="nv">MKDOCS_DEFAULTS</span>, <span class="o">**</span><span class="nv">repository</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>, <span class="o">**</span><span class="nv">overrides</span>}
+    <span class="nv">mkdocs_config</span> <span class="o">=</span> {
+        <span class="o">**</span><span class="nv">MKDOCS_DEFAULTS</span>,
+        <span class="o">**</span><span class="nv">repository</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>,
+        <span class="o">**</span><span class="nv">overrides</span>,
+    }  # <span class="nv">type</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>]
     <span class="nv">theme</span> <span class="o">=</span> <span class="nv">mkdocs_config</span>[<span class="s2">&quot;</span><span class="s">theme</span><span class="s2">&quot;</span>]
-    <span class="k">if</span> <span class="nv">theme</span>[<span class="s2">&quot;</span><span class="s">name</span><span class="s2">&quot;</span>].<span class="nv">lower</span><span class="ss">()</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="s">material</span><span class="s2">&quot;</span> <span class="nv">and</span> <span class="nv">not</span> <span class="s2">&quot;</span><span class="s">custom_dir</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">theme</span>:
+    <span class="k">if</span> <span class="nv">theme</span>[<span class="s2">&quot;</span><span class="s">name</span><span class="s2">&quot;</span>].<span class="nv">lower</span><span class="ss">()</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="s">material</span><span class="s2">&quot;</span> <span class="nv">and</span> <span class="s2">&quot;</span><span class="s">custom_dir</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">theme</span>:
         <span class="nv">theme</span>[<span class="s2">&quot;</span><span class="s">custom_dir</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">MKDOCS_DEFAULTS</span>[<span class="s2">&quot;</span><span class="s">theme</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">custom_dir</span><span class="s2">&quot;</span>]
 
     <span class="k">return</span> <span class="nv">mkdocs_config</span>
@@ -705,7 +714,8 @@
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns back the configuration that will be used when running pdoc3</span><span class="s2">&quot;&quot;&quot;</span>
     <span class="nv">defaults</span> <span class="o">=</span> {<span class="o">**</span><span class="nv">PDOC3_DEFAULTS</span>}
     <span class="nv">defaults</span>[<span class="s2">&quot;</span><span class="s">config</span><span class="s2">&quot;</span>] <span class="o">=</span> [
-        <span class="s2">&quot;</span><span class="s">{}={}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">key</span>, <span class="nv">value</span><span class="ss">)</span> <span class="k">for</span> <span class="nv">key</span>, <span class="nv">value</span> <span class="nv">in</span> <span class="nv">PDOC3_DEFAULTS</span>[<span class="s2">&quot;</span><span class="s">config</span><span class="s2">&quot;</span>].<span class="nv">items</span><span class="ss">()</span>
+        <span class="s2">&quot;</span><span class="s">{}={}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">key</span>, <span class="nv">value</span><span class="ss">)</span>
+        <span class="k">for</span> <span class="nv">key</span>, <span class="nv">value</span> <span class="nv">in</span> <span class="nv">PDOC3_DEFAULTS</span>[<span class="s2">&quot;</span><span class="s">config</span><span class="s2">&quot;</span>].<span class="nv">items</span><span class="ss">()</span>  # <span class="nv">type</span>: <span class="nv">ignore</span>
     ]
     <span class="nv">defaults</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">overrides</span><span class="ss">)</span>
     <span class="k">return</span> <span class="nv">defaults</span>
@@ -722,11 +732,11 @@
 </pre></div>
 
 
-<p>Returns back the complete configuration - including all sub configuration components defined below
-that <code>portray</code> was able to determine for the project</p>
+<p>Returns back the complete configuration - including all sub configuration components
+defined below that <code>portray</code> was able to determine for the project</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">project</span><span class="ss">(</span><span class="nv">directory</span>: <span class="nv">str</span>, <span class="nv">config_file</span>: <span class="nv">str</span>, <span class="o">**</span><span class="nv">overrides</span><span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">dict</span>:
-    <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns back the complete configuration - including all sub configuration components defined below</span>
-       <span class="nv">that</span> `<span class="nv">portray</span>` <span class="nv">was</span> <span class="nv">able</span> <span class="nv">to</span> <span class="nv">determine</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">project</span>
+    <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns back the complete configuration - including all sub configuration components</span>
+       <span class="nv">defined</span> <span class="nv">below</span> <span class="nv">that</span> `<span class="nv">portray</span>` <span class="nv">was</span> <span class="nv">able</span> <span class="nv">to</span> <span class="nv">determine</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">project</span>
     <span class="s2">&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nv">not</span> <span class="ss">(</span>
         <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">isfile</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">))</span>
@@ -734,7 +744,7 @@ that <code>portray</code> was able to determine for the project</p>
     <span class="ss">)</span>:
         <span class="nv">raise</span> <span class="nv">NoProjectFound</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>
 
-    <span class="nv">project_config</span> <span class="o">=</span> {<span class="o">**</span><span class="nv">PORTRAY_DEFAULTS</span>, <span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>: <span class="nv">directory</span>}
+    <span class="nv">project_config</span> <span class="o">=</span> {<span class="o">**</span><span class="nv">PORTRAY_DEFAULTS</span>, <span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>: <span class="nv">directory</span>}  # <span class="nv">type</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>]
     <span class="nv">project_config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">toml</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)</span>, <span class="o">**</span><span class="nv">overrides</span><span class="ss">))</span>
     <span class="k">if</span> <span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">project_config</span>:
         <span class="nv">project_config</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>, {}<span class="ss">)</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>, <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>]<span class="ss">)</span>
@@ -798,7 +808,7 @@ with a <code>[tool.portray]</code> section defined.</p>
         <span class="nv">config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">overrides</span><span class="ss">)</span>
         <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">file</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">location</span>
 
-        <span class="k">if</span> <span class="nv">not</span> <span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">config</span>:
+        <span class="k">if</span> <span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>:
             <span class="k">if</span> <span class="s2">&quot;</span><span class="s">poetry</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">tools</span> <span class="nv">and</span> <span class="s2">&quot;</span><span class="s">name</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">tools</span>[<span class="s2">&quot;</span><span class="s">poetry</span><span class="s2">&quot;</span>]:
                 <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">moudles</span><span class="s2">&quot;</span>] <span class="o">=</span> [<span class="nv">tools</span>[<span class="s2">&quot;</span><span class="s">poetry</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">name</span><span class="s2">&quot;</span>]]
             <span class="nv">elif</span> <span class="ss">(</span>
