@@ -111,9 +111,14 @@ def repository(directory: str) -> dict:
     """
     config = {}
     try:
-        config["repo_url"] = Repo(directory).remotes.origin.url
-        config["repo_name"] = parse.urlsplit(config["repo_url"]).path.rstrip(".git").lstrip("/")
+        repo_url = Repo(directory).remotes.origin.url
+        if "http" in repo_url:
+            config["repo_url"] = repo_url
+            config["repo_name"] = parse.urlsplit(config["repo_url"]).path.rstrip(".git").lstrip("/")
     except Exception:
+        pass
+
+    if not "repo_url" in config:
         print("WARNING: Unable to identify `repo_name` and `repo_url` automatically")
 
     return config

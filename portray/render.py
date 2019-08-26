@@ -104,10 +104,12 @@ def _mkdocs_config(config: dict) -> mkdocs_config.Config:
 
     errors, warnings = config_instance.validate()
     if errors:
+        print(errors)
         raise _mkdocs_exceptions.ConfigurationError(
             "Aborted with {} Configuration Errors!".format(len(errors))
         )
     elif config.get("strict", False) and warnings:
+        print(warnings)
         raise _mkdocs_exceptions.ConfigurationError(
             "Aborted with {} Configuration Warnings in 'strict' mode!".format(len(warnings))
         )
