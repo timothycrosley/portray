@@ -16,7 +16,7 @@ _________________
 
 **portray** is a Python3 command line tool and library that helps you create great documentation websites for your Python projects with as little effort as possible.
 
-[![Example Usage Gif](https://raw.githubusercontent.com/timothycrosley/portray/master/art/example.gif)](https://raw.githubusercontent.com/timothycrosley/portray/master/art/example.gif)
+[![Example Usage Gif](https://raw.githubusercontent.com/timothycrosley/portray/master/art/example.gif)](https://raw.githubusercontent.com/timothycrosley/portray/master/art/example.gif) [![Join the chat at https://gitter.im/timothycrosley/portray](https://badges.gitter.im/timothycrosley/portray.svg)](https://gitter.im/timothycrosley/portray?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Key Features:
 
