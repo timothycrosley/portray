@@ -54,6 +54,6 @@ def test_in_browser(mocker, project_dir, chdir):
 
 def test_on_github_pages(mocker, project_dir, chdir):
     with chdir(project_dir):
-        mocker.patch("mkdocs.commands.gh_deploy")
+        mocker.patch("mkdocs.commands.gh_deploy.gh_deploy")
         api.on_github_pages()
-        mkdocs.commands.gh_deploy.assert_called_once()
+        mkdocs.commands.gh_deploy.gh_deploy.assert_called_once()

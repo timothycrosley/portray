@@ -9,7 +9,7 @@ import webbrowser
 from typing import Optional
 
 import hug
-from mkdocs.commands.gh_deploy import gh_deploy
+import mkdocs.commands.gh_deploy
 
 from portray import config, logo, render
 
@@ -76,11 +76,11 @@ def server(
     with render.documentation_in_temp_folder(project_config) as doc_folder:
 
         @hug.static("/", api=api)
-        def my_static_dirs():
+        def my_static_dirs():  # pragma: no cover
             return (doc_folder,)
 
         @hug.startup(api=api)
-        def custom_startup(*args, **kwargs):
+        def custom_startup(*args, **kwargs):  # pragma: no cover
             print(logo.ascii_art)
             if open_browser:
                 webbrowser.open_new("{}:{}".format(project_config["host"], project_config["port"]))
@@ -125,8 +125,8 @@ def on_github_pages(
     with render.documentation_in_temp_folder(project_config):
         conf = render._mkdocs_config(project_config["mkdocs"])
         conf.config_file_path = directory
-
-        gh_deploy(conf, message=message, force=force, ignore_version=ignore_version)
-
+        mkdocs.commands.gh_deploy.gh_deploy(
+            conf, message=message, force=force, ignore_version=ignore_version
+        )
         print(logo.ascii_art)
         print("Documentation successfully generated and pushed!")

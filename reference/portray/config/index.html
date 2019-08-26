@@ -232,18 +232,54 @@
       
       
 
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Quick Start
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Quick Start
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../docs/quick_start/1.-installation/" title="1. Installation" class="md-nav__link">
+      1. Installation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
-    <label class="md-nav__link" for="nav-2">
+    <label class="md-nav__link" for="nav-3">
       Reference
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         Reference
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -258,17 +294,41 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1" checked>
     
-    <label class="md-nav__link" for="nav-2-1">
+    <label class="md-nav__link" for="nav-3-1">
       Portray
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-2-1">
+      <label class="md-nav__title" for="nav-3-1">
         Portray
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../api/" title="API" class="md-nav__link">
+      API
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cli/" title="CLI" class="md-nav__link">
+      CLI
+    </a>
+  </li>
+
         
           
           
@@ -367,20 +427,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../render/" title="Render" class="md-nav__link">
-      Render
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../logo/" title="Logo" class="md-nav__link">
-      Logo
+    <a href="../exceptions/" title="Exceptions" class="md-nav__link">
+      Exceptions
     </a>
   </li>
 
@@ -403,8 +451,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../cli/" title="CLI" class="md-nav__link">
-      CLI
+    <a href="../logo/" title="Logo" class="md-nav__link">
+      Logo
     </a>
   </li>
 
@@ -415,20 +463,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../api/" title="API" class="md-nav__link">
-      API
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../exceptions/" title="Exceptions" class="md-nav__link">
-      Exceptions
+    <a href="../render/" title="Render" class="md-nav__link">
+      Render
     </a>
   </li>
 
@@ -570,7 +606,6 @@
 <span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
 
 <span class="n">PDOC3_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;modules&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())],</span>
     <span class="s2">&quot;filter&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
     <span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
     <span class="s2">&quot;html&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
@@ -598,8 +633,9 @@
 
     <span class="n">project_config</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">PORTRAY_DEFAULTS</span><span class="p">,</span> <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="n">directory</span><span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
     <span class="n">project_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">toml</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">),</span> <span class="o">**</span><span class="n">overrides</span><span class="p">))</span>
-    <span class="k">if</span> <span class="s2">&quot;modules&quot;</span> <span class="ow">in</span> <span class="n">project_config</span><span class="p">:</span>
-        <span class="n">project_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">,</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;modules&quot;</span><span class="p">])</span>
+
+    <span class="n">project_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())])</span>
+    <span class="n">project_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">,</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;modules&quot;</span><span class="p">])</span>
 
     <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mkdocs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">project_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">,</span> <span class="p">{}))</span>
     <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdoc3</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">project_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">,</span> <span class="p">{}))</span>
@@ -622,7 +658,7 @@
 
         <span class="k">if</span> <span class="s2">&quot;modules&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
             <span class="k">if</span> <span class="s2">&quot;poetry&quot;</span> <span class="ow">in</span> <span class="n">tools</span> <span class="ow">and</span> <span class="s2">&quot;name&quot;</span> <span class="ow">in</span> <span class="n">tools</span><span class="p">[</span><span class="s2">&quot;poetry&quot;</span><span class="p">]:</span>
-                <span class="n">config</span><span class="p">[</span><span class="s2">&quot;moudles&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">tools</span><span class="p">[</span><span class="s2">&quot;poetry&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span>
+                <span class="n">config</span><span class="p">[</span><span class="s2">&quot;modules&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">tools</span><span class="p">[</span><span class="s2">&quot;poetry&quot;</span><span class="p">][</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span>
             <span class="k">elif</span> <span class="p">(</span>
                 <span class="s2">&quot;flit&quot;</span> <span class="ow">in</span> <span class="n">tools</span>
                 <span class="ow">and</span> <span class="s2">&quot;metadata&quot;</span> <span class="ow">in</span> <span class="n">tools</span><span class="p">[</span><span class="s2">&quot;flit&quot;</span><span class="p">]</span>
@@ -746,8 +782,9 @@ defined below that <code>portray</code> was able to determine for the project</p
 
     <span class="nv">project_config</span> <span class="o">=</span> {<span class="o">**</span><span class="nv">PORTRAY_DEFAULTS</span>, <span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>: <span class="nv">directory</span>}  # <span class="nv">type</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>]
     <span class="nv">project_config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">toml</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)</span>, <span class="o">**</span><span class="nv">overrides</span><span class="ss">))</span>
-    <span class="k">if</span> <span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">project_config</span>:
-        <span class="nv">project_config</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>, {}<span class="ss">)</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>, <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>]<span class="ss">)</span>
+
+    <span class="nv">project_config</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>, [<span class="nv">os</span>.<span class="nv">path</span>.<span class="k">basename</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">())</span>]<span class="ss">)</span>
+    <span class="nv">project_config</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>, {}<span class="ss">)</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>, <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>]<span class="ss">)</span>
 
     <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">directory</span>, <span class="o">**</span><span class="nv">project_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>, {}<span class="ss">))</span>
     <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">pdoc3</span><span class="ss">(</span><span class="nv">directory</span>, <span class="o">**</span><span class="nv">project_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span>, {}<span class="ss">))</span>
@@ -810,7 +847,7 @@ with a <code>[tool.portray]</code> section defined.</p>
 
         <span class="k">if</span> <span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>:
             <span class="k">if</span> <span class="s2">&quot;</span><span class="s">poetry</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">tools</span> <span class="nv">and</span> <span class="s2">&quot;</span><span class="s">name</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">tools</span>[<span class="s2">&quot;</span><span class="s">poetry</span><span class="s2">&quot;</span>]:
-                <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">moudles</span><span class="s2">&quot;</span>] <span class="o">=</span> [<span class="nv">tools</span>[<span class="s2">&quot;</span><span class="s">poetry</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">name</span><span class="s2">&quot;</span>]]
+                <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>] <span class="o">=</span> [<span class="nv">tools</span>[<span class="s2">&quot;</span><span class="s">poetry</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">name</span><span class="s2">&quot;</span>]]
             <span class="nv">elif</span> <span class="ss">(</span>
                 <span class="s2">&quot;</span><span class="s">flit</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">tools</span>
                 <span class="nv">and</span> <span class="s2">&quot;</span><span class="s">metadata</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">tools</span>[<span class="s2">&quot;</span><span class="s">flit</span><span class="s2">&quot;</span>]
@@ -847,7 +884,7 @@ with a <code>[tool.portray]</code> section defined.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../.." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../cli/" title="CLI" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -856,19 +893,19 @@ with a <code>[tool.portray]</code> section defined.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Home
+                CLI
               </span>
             </div>
           </a>
         
         
-          <a href="../render/" title="Render" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../exceptions/" title="Exceptions" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Render
+                Exceptions
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

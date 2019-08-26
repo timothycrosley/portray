@@ -232,18 +232,54 @@
       
       
 
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Quick Start
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Quick Start
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../docs/quick_start/1.-installation/" title="1. Installation" class="md-nav__link">
+      1. Installation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
-    <label class="md-nav__link" for="nav-2">
+    <label class="md-nav__link" for="nav-3">
       Reference
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         Reference
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -258,13 +294,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1" checked>
     
-    <label class="md-nav__link" for="nav-2-1">
+    <label class="md-nav__link" for="nav-3-1">
       Portray
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-2-1">
+      <label class="md-nav__title" for="nav-3-1">
         Portray
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -276,8 +312,68 @@
 
 
   <li class="md-nav__item">
+    <a href="../api/" title="API" class="md-nav__link">
+      API
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../cli/" title="CLI" class="md-nav__link">
+      CLI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../config/" title="Config" class="md-nav__link">
       Config
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../exceptions/" title="Exceptions" class="md-nav__link">
+      Exceptions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Index" class="md-nav__link">
+      Index
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../logo/" title="Logo" class="md-nav__link">
+      Logo
     </a>
   </li>
 
@@ -363,66 +459,6 @@
   
 </nav>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../logo/" title="Logo" class="md-nav__link">
-      Logo
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../" title="Index" class="md-nav__link">
-      Index
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../cli/" title="CLI" class="md-nav__link">
-      CLI
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../api/" title="API" class="md-nav__link">
-      API
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../exceptions/" title="Exceptions" class="md-nav__link">
-      Exceptions
-    </a>
   </li>
 
         
@@ -597,7 +633,7 @@ included documentation generation utilities.</p>
             <span class="s s-Atom">if</span> <span class="s2">&quot;nav&quot;</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
                 <span class="s s-Atom">nav</span> <span class="o">=</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">][</span><span class="s2">&quot;nav&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-                <span class="s s-Atom">root_docs</span> <span class="o">=</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;*.md&quot;</span><span class="p">))</span>
+                <span class="s s-Atom">root_docs</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;*.md&quot;</span><span class="p">)))</span>
                 <span class="s s-Atom">readme_doc</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">)</span>
                 <span class="s s-Atom">if</span> <span class="s s-Atom">readme_doc</span> <span class="s s-Atom">in</span> <span class="s s-Atom">root_docs:</span>
                     <span class="s s-Atom">root_docs</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="s s-Atom">readme_doc</span><span class="p">)</span>
@@ -632,9 +668,11 @@ included documentation generation utilities.</p>
     <span class="s s-Atom">return</span> <span class="s s-Atom">config_instance</span>
 
 <span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="nn">directory</span><span class="p">:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="s s-Atom">root_directory:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nn">list</span><span class="p">:</span>
-    <span class="s s-Atom">nav</span> <span class="o">=</span> <span class="p">[</span><span class="k">_</span><span class="nf">doc</span><span class="p">(</span><span class="s s-Atom">doc</span><span class="p">,</span> <span class="s s-Atom">root_directory</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span> <span class="s s-Atom">for</span> <span class="s s-Atom">doc</span> <span class="s s-Atom">in</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">directory</span><span class="p">,</span> <span class="s2">&quot;*.md&quot;</span><span class="p">))]</span>
+    <span class="s s-Atom">nav</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="k">_</span><span class="nf">doc</span><span class="p">(</span><span class="s s-Atom">doc</span><span class="p">,</span> <span class="s s-Atom">root_directory</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span> <span class="s s-Atom">for</span> <span class="s s-Atom">doc</span> <span class="s s-Atom">in</span> <span class="nf">sorted</span><span class="p">(</span><span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">directory</span><span class="p">,</span> <span class="s2">&quot;*.md&quot;</span><span class="p">)))</span>
+    <span class="p">]</span>
 
-    <span class="s s-Atom">nested_dirs</span> <span class="o">=</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">directory</span><span class="p">,</span> <span class="s2">&quot;*/&quot;</span><span class="p">))</span>
+    <span class="s s-Atom">nested_dirs</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">directory</span><span class="p">,</span> <span class="s2">&quot;*/&quot;</span><span class="p">)))</span>
     <span class="s s-Atom">for</span> <span class="s s-Atom">nested_dir</span> <span class="s s-Atom">in</span> <span class="s s-Atom">nested_dirs:</span>
         <span class="s s-Atom">dir_nav</span> <span class="o">=</span> <span class="p">{</span>
             <span class="k">_</span><span class="nf">label</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">[:-</span><span class="mi">1</span><span class="p">],</span> <span class="s s-Atom">config</span><span class="p">)</span><span class="s s-Atom">:</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">,</span> <span class="s s-Atom">root_directory</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span>
@@ -644,8 +682,11 @@ included documentation generation utilities.</p>
     <span class="s s-Atom">return</span> <span class="s s-Atom">nav</span>
 
 <span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">label</span><span class="p">(</span><span class="nn">path</span><span class="p">:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="nn">config</span><span class="p">:</span> <span class="nv">Dict</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nn">str</span><span class="p">:</span>
-    <span class="s s-Atom">auto</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">basename</span><span class="p">(</span><span class="s s-Atom">path</span><span class="p">).</span><span class="nf">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nf">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">).</span><span class="nf">title</span><span class="p">()</span>
-    <span class="s s-Atom">return</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="s s-Atom">auto</span><span class="p">,</span> <span class="s s-Atom">auto</span><span class="p">)</span>
+    <span class="s s-Atom">label</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">basename</span><span class="p">(</span><span class="s s-Atom">path</span><span class="p">)</span>
+    <span class="s s-Atom">if</span> <span class="s2">&quot;.&quot;</span> <span class="s s-Atom">in</span> <span class="nn">label</span><span class="p">:</span>
+        <span class="s s-Atom">label</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">label</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[:-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="s s-Atom">label</span> <span class="o">=</span> <span class="s s-Atom">label</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">).</span><span class="nf">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">).</span><span class="nf">title</span><span class="p">()</span>
+    <span class="s s-Atom">return</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">].</span><span class="nf">get</span><span class="p">(</span><span class="s s-Atom">label</span><span class="p">,</span> <span class="s s-Atom">label</span><span class="p">)</span>
 
 <span class="s s-Atom">def</span> <span class="k">_</span><span class="nf">doc</span><span class="p">(</span><span class="nn">path</span><span class="p">:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="s s-Atom">root_path:</span> <span class="s s-Atom">str</span><span class="p">,</span> <span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nv">Dict</span><span class="p">[</span><span class="s s-Atom">str</span><span class="p">,</span> <span class="s s-Atom">str</span><span class="p">]</span><span class="s s-Atom">:</span>
     <span class="s s-Atom">path</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">relpath</span><span class="p">(</span><span class="s s-Atom">path</span><span class="p">,</span> <span class="s s-Atom">root_path</span><span class="p">)</span>
@@ -730,7 +771,7 @@ specified output directory.</p>
             <span class="k">if</span> <span class="s2">&quot;</span><span class="s">nav</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]:
                 <span class="nv">nav</span> <span class="o">=</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">nav</span><span class="s2">&quot;</span>] <span class="o">=</span> []
 
-                <span class="nv">root_docs</span> <span class="o">=</span> <span class="nv">glob</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">*.md</span><span class="s2">&quot;</span><span class="ss">))</span>
+                <span class="nv">root_docs</span> <span class="o">=</span> <span class="nv">sorted</span><span class="ss">(</span><span class="nv">glob</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">*.md</span><span class="s2">&quot;</span><span class="ss">)))</span>
                 <span class="nv">readme_doc</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">README.md</span><span class="s2">&quot;</span><span class="ss">)</span>
                 <span class="k">if</span> <span class="nv">readme_doc</span> <span class="nv">in</span> <span class="nv">root_docs</span>:
                     <span class="nv">root_docs</span>.<span class="nv">remove</span><span class="ss">(</span><span class="nv">readme_doc</span><span class="ss">)</span>
@@ -813,7 +854,7 @@ it will be compatible with MkDocs.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../config/" title="Config" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../logo/" title="Logo" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -822,25 +863,11 @@ it will be compatible with MkDocs.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Config
-              </span>
-            </div>
-          </a>
-        
-        
-          <a href="../logo/" title="Logo" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
                 Logo
               </span>
             </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
           </a>
+        
         
       </nav>
     </div>

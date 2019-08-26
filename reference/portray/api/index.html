@@ -232,18 +232,54 @@
       
       
 
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Quick Start
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Quick Start
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../docs/quick_start/1.-installation/" title="1. Installation" class="md-nav__link">
+      1. Installation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
-    <label class="md-nav__link" for="nav-2">
+    <label class="md-nav__link" for="nav-3">
       Reference
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         Reference
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -258,77 +294,17 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-1" type="checkbox" id="nav-3-1" checked>
     
-    <label class="md-nav__link" for="nav-2-1">
+    <label class="md-nav__link" for="nav-3-1">
       Portray
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-2-1">
+      <label class="md-nav__title" for="nav-3-1">
         Portray
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../config/" title="Config" class="md-nav__link">
-      Config
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../render/" title="Render" class="md-nav__link">
-      Render
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../logo/" title="Logo" class="md-nav__link">
-      Logo
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../" title="Index" class="md-nav__link">
-      Index
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../cli/" title="CLI" class="md-nav__link">
-      CLI
-    </a>
-  </li>
-
         
           
           
@@ -427,8 +403,68 @@
 
 
   <li class="md-nav__item">
+    <a href="../cli/" title="CLI" class="md-nav__link">
+      CLI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../config/" title="Config" class="md-nav__link">
+      Config
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../exceptions/" title="Exceptions" class="md-nav__link">
       Exceptions
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Index" class="md-nav__link">
+      Index
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../logo/" title="Logo" class="md-nav__link">
+      Logo
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../render/" title="Render" class="md-nav__link">
+      Render
     </a>
   </li>
 
@@ -546,7 +582,7 @@ to start.</p>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">hug</span>
-<span class="kn">from</span> <span class="nn">mkdocs.commands.gh_deploy</span> <span class="kn">import</span> <span class="n">gh_deploy</span>
+<span class="kn">import</span> <span class="nn">mkdocs.commands.gh_deploy</span>
 
 <span class="kn">from</span> <span class="nn">portray</span> <span class="kn">import</span> <span class="n">config</span><span class="p">,</span> <span class="n">logo</span><span class="p">,</span> <span class="n">render</span>
 
@@ -610,11 +646,11 @@ to start.</p>
     <span class="k">with</span> <span class="n">render</span><span class="o">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">)</span> <span class="k">as</span> <span class="n">doc_folder</span><span class="p">:</span>
 
         <span class="nd">@hug.static</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">api</span><span class="o">=</span><span class="n">api</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">my_static_dirs</span><span class="p">():</span>
+        <span class="k">def</span> <span class="nf">my_static_dirs</span><span class="p">():</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">doc_folder</span><span class="p">,)</span>
 
         <span class="nd">@hug.startup</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="n">api</span><span class="p">)</span>
-        <span class="k">def</span> <span class="nf">custom_startup</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">custom_startup</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">ascii_art</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">open_browser</span><span class="p">:</span>
                 <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new</span><span class="p">(</span><span class="s2">&quot;{}:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]))</span>
@@ -657,9 +693,9 @@ to start.</p>
     <span class="k">with</span> <span class="n">render</span><span class="o">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">):</span>
         <span class="n">conf</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">])</span>
         <span class="n">conf</span><span class="o">.</span><span class="n">config_file_path</span> <span class="o">=</span> <span class="n">directory</span>
-
-        <span class="n">gh_deploy</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">ignore_version</span><span class="o">=</span><span class="n">ignore_version</span><span class="p">)</span>
-
+        <span class="n">mkdocs</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">gh_deploy</span><span class="o">.</span><span class="n">gh_deploy</span><span class="p">(</span>
+            <span class="n">conf</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">ignore_version</span><span class="o">=</span><span class="n">ignore_version</span>
+        <span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">ascii_art</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Documentation successfully generated and pushed!&quot;</span><span class="p">)</span>
 </pre></div>
@@ -791,9 +827,9 @@ then opens a web browser pointing to it.</p>
     <span class="nv">with</span> <span class="nv">render</span>.<span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">project_config</span><span class="ss">)</span>:
         <span class="nv">conf</span> <span class="o">=</span> <span class="nv">render</span>.<span class="nv">_mkdocs_config</span><span class="ss">(</span><span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]<span class="ss">)</span>
         <span class="nv">conf</span>.<span class="nv">config_file_path</span> <span class="o">=</span> <span class="nv">directory</span>
-
-        <span class="nv">gh_deploy</span><span class="ss">(</span><span class="nv">conf</span>, <span class="nv">message</span><span class="o">=</span><span class="nv">message</span>, <span class="nv">force</span><span class="o">=</span><span class="nv">force</span>, <span class="nv">ignore_version</span><span class="o">=</span><span class="nv">ignore_version</span><span class="ss">)</span>
-
+        <span class="nv">mkdocs</span>.<span class="nv">commands</span>.<span class="nv">gh_deploy</span>.<span class="nv">gh_deploy</span><span class="ss">(</span>
+            <span class="nv">conf</span>, <span class="nv">message</span><span class="o">=</span><span class="nv">message</span>, <span class="nv">force</span><span class="o">=</span><span class="nv">force</span>, <span class="nv">ignore_version</span><span class="o">=</span><span class="nv">ignore_version</span>
+        <span class="ss">)</span>
         <span class="nv">print</span><span class="ss">(</span><span class="nv">logo</span>.<span class="nv">ascii_art</span><span class="ss">)</span>
         <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Documentation successfully generated and pushed!</span><span class="s2">&quot;</span><span class="ss">)</span>
 </pre></div>
@@ -870,11 +906,11 @@ then opens a web browser pointing to it.</p>
     <span class="nv">with</span> <span class="nv">render</span>.<span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">project_config</span><span class="ss">)</span> <span class="nv">as</span> <span class="nv">doc_folder</span>:
 
         @<span class="nv">hug</span>.<span class="nv">static</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">/</span><span class="s2">&quot;</span>, <span class="nv">api</span><span class="o">=</span><span class="nv">api</span><span class="ss">)</span>
-        <span class="nv">def</span> <span class="nv">my_static_dirs</span><span class="ss">()</span>:
+        <span class="nv">def</span> <span class="nv">my_static_dirs</span><span class="ss">()</span>:  # <span class="nv">pragma</span>: <span class="nv">no</span> <span class="nv">cover</span>
             <span class="k">return</span> <span class="ss">(</span><span class="nv">doc_folder</span>,<span class="ss">)</span>
 
         @<span class="nv">hug</span>.<span class="nv">startup</span><span class="ss">(</span><span class="nv">api</span><span class="o">=</span><span class="nv">api</span><span class="ss">)</span>
-        <span class="nv">def</span> <span class="nv">custom_startup</span><span class="ss">(</span><span class="o">*</span><span class="nv">args</span>, <span class="o">**</span><span class="nv">kwargs</span><span class="ss">)</span>:
+        <span class="nv">def</span> <span class="nv">custom_startup</span><span class="ss">(</span><span class="o">*</span><span class="nv">args</span>, <span class="o">**</span><span class="nv">kwargs</span><span class="ss">)</span>:  # <span class="nv">pragma</span>: <span class="nv">no</span> <span class="nv">cover</span>
             <span class="nv">print</span><span class="ss">(</span><span class="nv">logo</span>.<span class="nv">ascii_art</span><span class="ss">)</span>
             <span class="k">if</span> <span class="nv">open_browser</span>:
                 <span class="nv">webbrowser</span>.<span class="nv">open_new</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">{}:{}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">host</span><span class="s2">&quot;</span>], <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">port</span><span class="s2">&quot;</span>]<span class="ss">))</span>
@@ -909,7 +945,7 @@ then opens a web browser pointing to it.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../cli/" title="CLI" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../../../docs/quick_start/1.-installation/" title="1. Installation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -918,19 +954,19 @@ then opens a web browser pointing to it.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                CLI
+                1. Installation
               </span>
             </div>
           </a>
         
         
-          <a href="../exceptions/" title="Exceptions" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../cli/" title="CLI" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Exceptions
+                CLI
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
