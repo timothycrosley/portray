@@ -30,26 +30,30 @@ def test_as_html(temporary_dir, project_dir, chdir):
             api.as_html(overwrite=True)
 
 
-def test_server(mocker):
-    mocker.patch("hug.api.HTTPInterfaceAPI.serve")
-    api.server()
-    hug.api.HTTPInterfaceAPI.serve.assert_called_once()
+def test_server(mocker, project_dir, chdir):
+    with chdir(project_dir):
+        mocker.patch("hug.api.HTTPInterfaceAPI.serve")
+        api.server()
+        hug.api.HTTPInterfaceAPI.serve.assert_called_once()
 
 
-def project_configuration():
-    config = api.project_configuration()
-    assert config
-    assert isinstance(config, dict)
+def project_configuration(project_dir, chdir):
+    with chdir(project_dir):
+        config = api.project_configuration()
+        assert config
+        assert isinstance(config, dict)
 
 
-def test_in_browser(mocker):
-    mocker.patch("hug.api.HTTPInterfaceAPI.serve")
-    mocker.patch("webbrowser.open_new")
-    api.in_browser()
-    hug.api.HTTPInterfaceAPI.serve.assert_called_once()
+def test_in_browser(mocker, project_dir, chdir):
+    with chdir(project_dir):
+        mocker.patch("hug.api.HTTPInterfaceAPI.serve")
+        mocker.patch("webbrowser.open_new")
+        api.in_browser()
+        hug.api.HTTPInterfaceAPI.serve.assert_called_once()
 
 
-def test_on_github_pages(mocker):
-    mocker.patch("mkdocs.commands.gh_deploy")
-    api.on_github_pages()
-    mkdocs.commands.gh_deploy.assert_called_once()
+def test_on_github_pages(mocker, project_dir, chdir):
+    with chdir(project_dir):
+        mocker.patch("mkdocs.commands.gh_deploy")
+        api.on_github_pages()
+        mkdocs.commands.gh_deploy.assert_called_once()
