@@ -786,14 +786,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">repo_url</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">url</span>
-        <span class="k">if</span> <span class="s2">&quot;http&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span><span class="p">:</span>
-            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;repo_url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">repo_url</span>
-            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;repo_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">repo_url</span><span class="p">)</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.git&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;repo_url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">url</span>
+        <span class="n">config</span><span class="p">[</span><span class="s2">&quot;repo_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;repo_url&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.git&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;WARNING: Unable to identify `repo_name` and `repo_url` automatically&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">config</span>
@@ -921,14 +916,9 @@ defined below that <code>portray</code> was able to determine for the project</p
     <span class="s2">&quot;&quot;&quot;</span>
     <span class="nv">config</span> <span class="o">=</span> {}
     <span class="nv">try</span>:
-        <span class="nv">repo_url</span> <span class="o">=</span> <span class="nv">Repo</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>.<span class="nv">remotes</span>.<span class="nv">origin</span>.<span class="nv">url</span>
-        <span class="k">if</span> <span class="s2">&quot;</span><span class="s">http</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">repo_url</span>:
-            <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">repo_url</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">repo_url</span>
-            <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">repo_name</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">parse</span>.<span class="nv">urlsplit</span><span class="ss">(</span><span class="nv">repo_url</span><span class="ss">)</span>.<span class="nv">path</span>.<span class="nv">rstrip</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">.git</span><span class="s2">&quot;</span><span class="ss">)</span>.<span class="nv">lstrip</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">/</span><span class="s2">&quot;</span><span class="ss">)</span>
+        <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">repo_url</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">Repo</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>.<span class="nv">remotes</span>.<span class="nv">origin</span>.<span class="nv">url</span>
+        <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">repo_name</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">parse</span>.<span class="nv">urlsplit</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">repo_url</span><span class="s2">&quot;</span>]<span class="ss">)</span>.<span class="nv">path</span>.<span class="nv">rstrip</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">.git</span><span class="s2">&quot;</span><span class="ss">)</span>.<span class="nv">lstrip</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">/</span><span class="s2">&quot;</span><span class="ss">)</span>
     <span class="nv">except</span> <span class="nv">Exception</span>:
-        <span class="nv">config</span> <span class="o">=</span> {}
-
-    <span class="k">if</span> <span class="nv">not</span> <span class="nv">config</span>:
         <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">WARNING: Unable to identify `repo_name` and `repo_url` automatically</span><span class="s2">&quot;</span><span class="ss">)</span>
 
     <span class="k">return</span> <span class="nv">config</span>
