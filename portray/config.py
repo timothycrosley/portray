@@ -109,13 +109,12 @@ def repository(directory: str) -> dict:
     """Returns back any information that can be determined by introspecting the projects git repo
        (if there is one).
     """
+    config = {}
     try:
         repo_url = Repo(directory).remotes.origin.url
         if "http" in repo_url:
-            config = {
-                "repo_url": repo_url,
-                "repo_name": parse.urlsplit(repo_url).path.rstrip(".git").lstrip("/"),
-            }
+            config["repo_url"] = repo_url
+            config["repo_name"] = parse.urlsplit(repo_url).path.rstrip(".git").lstrip("/")
     except Exception:
         config = {}
 
