@@ -136,7 +136,7 @@ ${module.docstring}
 Sub-modules
 -----------
     % for m in submodules:
-* [${m.name}](${m.name.split(".")[-1]})
+* [${m.name}](${m.name.split(".")[-1]}/)
     % endfor
 % endif
 
