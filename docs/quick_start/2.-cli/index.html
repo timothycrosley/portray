@@ -85,7 +85,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#serving-documentation-locally" tabindex="1" class="md-skip">
+      <a href="#command-line-usage" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -347,9 +347,59 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        2. Cli
+      </label>
+    
     <a href="./" title="2. Cli" class="md-nav__link md-nav__link--active">
       2. Cli
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#serving-documentation-locally" title="Serving Documentation Locally" class="md-nav__link">
+    Serving Documentation Locally
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outputting-documentation-locally" title="Outputting Documentation Locally" class="md-nav__link">
+    Outputting Documentation Locally
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pushing-documentation-to-github-pages" title="Pushing Documentation to GitHub Pages" class="md-nav__link">
+    Pushing Documentation to GitHub Pages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifying-project-configuration" title="Verifying Project Configuration" class="md-nav__link">
+    Verifying Project Configuration
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -508,6 +558,43 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#serving-documentation-locally" title="Serving Documentation Locally" class="md-nav__link">
+    Serving Documentation Locally
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outputting-documentation-locally" title="Outputting Documentation Locally" class="md-nav__link">
+    Outputting Documentation Locally
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pushing-documentation-to-github-pages" title="Pushing Documentation to GitHub Pages" class="md-nav__link">
+    Pushing Documentation to GitHub Pages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifying-project-configuration" title="Verifying Project Configuration" class="md-nav__link">
+    Verifying Project Configuration
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -521,19 +608,32 @@
                   <a href="https://github.com/timothycrosley/portray.git/edit/master/docs/docs/quick_start/2.-cli.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <p>Once installed, <code>portray</code> exposes a simple command line utility for generating documentation.</p>
+                <h1 id="command-line-usage">Command Line Usage</h1>
+<p>Once installed, <code>portray</code> exposes a simple command line utility for generating documentation.</p>
 <p>To verify the tool is installed correctly, run <code>portray</code> from the command line and you should be given the available commands and the version of portray installed.
 To get help for any individual subcommand run <code>portray SUBCOMMAND --help</code>:</p>
 <script id="asciicast-lcOTpO7GDNKv2NDBQLfQ1WszM" src="https://asciinema.org/a/lcOTpO7GDNKv2NDBQLfQ1WszM.js" async></script>
 
-<h1 id="serving-documentation-locally">Serving Documentation Locally</h1>
+<h2 id="serving-documentation-locally">Serving Documentation Locally</h2>
 <p>Before you push documentation out publicly, it's a good idea to test it locally and ensure it looks as desired.</p>
 <p>Running <code>portray server</code> will generate a new static website for your project in a temporary directory and start a local server to allow you to browse it (at localhost:8000 by default).</p>
 <script id="asciicast-264247" src="https://asciinema.org/a/264247.js" async></script>
 
 <p>Running <code>portray in_browser</code> will do the same as <code>portray server</code> but also open up the generated website in your environments default web browser for you.</p>
 <p>Both commands take an optional <code>--port</code> and <code>--host</code> argument.</p>
-<h1 id="outputting-documentation-locally">Outputting Documentation Locally</h1>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>portray</code> does its best to auto determine package modules in order to generate documentation. It does this by looking at <code>pyproject.toml</code> and your directory name.
+If it can't auto determine the Python modules used by your project, you can set them manually in your <code>pyproject.toml</code> file:</p>
+<div class="codehilite"><pre><span></span><span class="k">[tool.portray]</span>
+<span class="na">modules</span> <span class="o">=</span> <span class="s">[&quot;portray&quot;]</span>
+</pre></div>
+
+
+<p>Finally, portray pulls .md files from the root of your project and one dedicated documentation directory (defaulting to <code>docs</code>) by default.
+You can change the directory where docs are located by setting the <code>tool.portray.docs_dir</code> setting in <code>pyproject.toml</code>.</p>
+</div>
+<h2 id="outputting-documentation-locally">Outputting Documentation Locally</h2>
 <p>You can also output <code>portray</code>'s generated documentation to a local directory.
 To do so run <code>portray as_html</code>:</p>
 <script id="asciicast-264248" src="https://asciinema.org/a/264248.js" async></script>
@@ -541,7 +641,16 @@ To do so run <code>portray as_html</code>:</p>
 <p>By default the generated documentation is outputted into a <code>site</code> subdirectory.
 If this directory exists for any reason, including previous documentation generation,
 the command will fail. Passing in <code>--overwrite</code> will delete any existing directory
-before output to ensure the command passes. You change the output directory using <code>-o DIRECTORY</code>.</p>
+before output to ensure the command passes. You can change the output directory using <code>-o DIRECTORY</code>.</p>
+<h2 id="pushing-documentation-to-github-pages">Pushing Documentation to GitHub Pages</h2>
+<p>If you are using GitHub Pages to share your generated documentation you can use <code>portray on_github_pages</code> to automate the process:</p>
+<script id="asciicast-264249" src="https://asciinema.org/a/264249.js" async></script>
+
+<h2 id="verifying-project-configuration">Verifying Project Configuration</h2>
+<p>You can verify the configuration auto determined by <code>portray</code> using <code>portray project_configuration</code> in the root of your project:</p>
+<script id="asciicast-264250" src="https://asciinema.org/a/264250.js" async></script>
+
+<p>If anything seems incorrect, or you would want to modify any values, you can override any config option by setting it in the <code>[tool.portray]</code> section of your <code>pyproject.toml</code> file.</p>
                 
                   
                 
