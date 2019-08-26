@@ -1,0 +1,7 @@
+GitPython<4.0,>=3.0
+hug<3.0,>=2.5
+mkdocs-material<5.0,>=4.4
+mkdocs<2.0,>=1.0
+pdoc3<0.7.0,>=0.6.3
+pymdown-extensions<7.0,>=6.0
+toml<0.11.0,>=0.10.0

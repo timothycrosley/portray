@@ -711,7 +711,17 @@ included documentation generation utilities.</p>
 <span class="s2">    This rendering is from code definition to Markdown so that</span>
 <span class="s2">    it will be compatible with MkDocs.</span>
 <span class="s2">    &quot;&quot;&quot;</span>
-    <span class="s s-Atom">pdoc</span><span class="p">.</span><span class="s s-Atom">cli</span><span class="p">.</span><span class="nf">main</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">(</span><span class="s s-Atom">**config</span><span class="p">))</span>
+    <span class="nn">try</span><span class="p">:</span>
+        <span class="s s-Atom">pdoc</span><span class="p">.</span><span class="s s-Atom">cli</span><span class="p">.</span><span class="nf">main</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">(</span><span class="s s-Atom">**config</span><span class="p">))</span>
+    <span class="s s-Atom">except</span> <span class="nv">TypeError</span> <span class="s s-Atom">as</span> <span class="s s-Atom">type_error:</span>
+        <span class="s s-Atom">if</span> <span class="o">not</span> <span class="s2">&quot;show_type_annotations=True&quot;</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+            <span class="s s-Atom">raise</span>
+
+        <span class="nf">print</span><span class="p">(</span><span class="s s-Atom">type_error</span><span class="p">)</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s2">&quot;WARNING: A type error was thrown. Attempting graceful degradation to no type hints&quot;</span><span class="p">)</span>
+        <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">].</span><span class="nf">remove</span><span class="p">(</span><span class="s2">&quot;show_type_annotations=True&quot;</span><span class="p">)</span>
+        <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="s2">&quot;show_type_annotations=False&quot;</span><span class="p">)</span>
+        <span class="s s-Atom">pdoc</span><span class="p">.</span><span class="s s-Atom">cli</span><span class="p">.</span><span class="nf">main</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">(</span><span class="s s-Atom">**config</span><span class="p">))</span>
 
 <span class="s s-Atom">def</span> <span class="nf">mkdocs</span><span class="p">(</span><span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span><span class="s s-Atom">:</span>
     <span class="s2">&quot;&quot;&quot;Render the project&#39;s associated Markdown documentation using the specified</span>
@@ -764,10 +774,12 @@ included documentation generation utilities.</p>
 
     <span class="s s-Atom">errors</span><span class="p">,</span> <span class="s s-Atom">warnings</span> <span class="o">=</span> <span class="s s-Atom">config_instance</span><span class="p">.</span><span class="nf">validate</span><span class="p">()</span>
     <span class="s s-Atom">if</span> <span class="nn">errors</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s s-Atom">errors</span><span class="p">)</span>
         <span class="s s-Atom">raise</span> <span class="k">_</span><span class="s s-Atom">mkdocs_exceptions</span><span class="p">.</span><span class="nv">ConfigurationError</span><span class="p">(</span>
             <span class="s2">&quot;Aborted with {} Configuration Errors!&quot;</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="s s-Atom">errors</span><span class="p">))</span>
         <span class="p">)</span>
     <span class="s s-Atom">elif</span> <span class="s s-Atom">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span> <span class="nv">False</span><span class="p">)</span> <span class="s s-Atom">and</span> <span class="nn">warnings</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s s-Atom">warnings</span><span class="p">)</span>
         <span class="s s-Atom">raise</span> <span class="k">_</span><span class="s s-Atom">mkdocs_exceptions</span><span class="p">.</span><span class="nv">ConfigurationError</span><span class="p">(</span>
             <span class="s2">&quot;Aborted with {} Configuration Warnings in &#39;strict&#39; mode!&quot;</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="s s-Atom">warnings</span><span class="p">))</span>
         <span class="p">)</span>
@@ -931,13 +943,23 @@ MkDocs config passed into the MkDocs <code>build</code> command.</p>
 <p>Render this project using the specified pdoc config passed into pdoc.</p>
 <p>This rendering is from code definition to Markdown so that
 it will be compatible with MkDocs.</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="n">def</span> <span class="n">pdoc3</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">None</span><span class="p">:</span>
-    <span class="ss">&quot;&quot;&quot;Render this project using the specified pdoc config passed into pdoc.</span>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">pdoc3</span><span class="ss">(</span><span class="nv">config</span>: <span class="nv">dict</span><span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">None</span>:
+    <span class="s2">&quot;&quot;&quot;</span><span class="s">Render this project using the specified pdoc config passed into pdoc.</span>
 
-<span class="ss">    This rendering is from code definition to Markdown so that</span>
-<span class="ss">    it will be compatible with MkDocs.</span>
-<span class="ss">    &quot;&quot;&quot;</span>
-    <span class="n">pdoc</span><span class="p">.</span><span class="n">cli</span><span class="p">.</span><span class="n">main</span><span class="p">(</span><span class="n">Namespace</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">))</span>
+    <span class="nv">This</span> <span class="nv">rendering</span> <span class="nv">is</span> <span class="nv">from</span> <span class="nv">code</span> <span class="nv">definition</span> <span class="nv">to</span> <span class="nv">Markdown</span> <span class="nv">so</span> <span class="nv">that</span>
+    <span class="nv">it</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">compatible</span> <span class="nv">with</span> <span class="nv">MkDocs</span>.
+    <span class="s2">&quot;&quot;&quot;</span>
+    <span class="nv">try</span>:
+        <span class="nv">pdoc</span>.<span class="nv">cli</span>.<span class="nv">main</span><span class="ss">(</span><span class="nv">Namespace</span><span class="ss">(</span><span class="o">**</span><span class="nv">config</span><span class="ss">))</span>
+    <span class="nv">except</span> <span class="nv">TypeError</span> <span class="nv">as</span> <span class="nv">type_error</span>:
+        <span class="k">if</span> <span class="nv">not</span> <span class="s2">&quot;</span><span class="s">show_type_annotations=True</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">config</span><span class="s2">&quot;</span>]:
+            <span class="nv">raise</span>
+
+        <span class="nv">print</span><span class="ss">(</span><span class="nv">type_error</span><span class="ss">)</span>
+        <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">WARNING: A type error was thrown. Attempting graceful degradation to no type hints</span><span class="s2">&quot;</span><span class="ss">)</span>
+        <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">config</span><span class="s2">&quot;</span>].<span class="nv">remove</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">show_type_annotations=True</span><span class="s2">&quot;</span><span class="ss">)</span>
+        <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">config</span><span class="s2">&quot;</span>].<span class="nv">append</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">show_type_annotations=False</span><span class="s2">&quot;</span><span class="ss">)</span>
+        <span class="nv">pdoc</span>.<span class="nv">cli</span>.<span class="nv">main</span><span class="ss">(</span><span class="nv">Namespace</span><span class="ss">(</span><span class="o">**</span><span class="nv">config</span><span class="ss">))</span>
 </pre></div>
 
 

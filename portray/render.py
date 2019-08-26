@@ -48,7 +48,17 @@ def pdoc3(config: dict) -> None:
     This rendering is from code definition to Markdown so that
     it will be compatible with MkDocs.
     """
-    pdoc.cli.main(Namespace(**config))
+    try:
+        pdoc.cli.main(Namespace(**config))
+    except TypeError as type_error:
+        if not "show_type_annotations=True" in config["config"]:
+            raise
+
+        print(type_error)
+        print("WARNING: A type error was thrown. Attempting graceful degradation to no type hints")
+        config["config"].remove("show_type_annotations=True")
+        config["config"].append("show_type_annotations=False")
+        pdoc.cli.main(Namespace(**config))
 
 
 def mkdocs(config: dict):
@@ -104,10 +114,12 @@ def _mkdocs_config(config: dict) -> mkdocs_config.Config:
 
     errors, warnings = config_instance.validate()
     if errors:
+        print(errors)
         raise _mkdocs_exceptions.ConfigurationError(
             "Aborted with {} Configuration Errors!".format(len(errors))
         )
     elif config.get("strict", False) and warnings:
+        print(warnings)
         raise _mkdocs_exceptions.ConfigurationError(
             "Aborted with {} Configuration Warnings in 'strict' mode!".format(len(warnings))
         )
