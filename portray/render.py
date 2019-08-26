@@ -80,7 +80,7 @@ def documentation_in_temp_folder(config: dict):
             if "nav" not in config["mkdocs"]:
                 nav = config["mkdocs"]["nav"] = []
 
-                root_docs = glob(os.path.join(input_dir, "*.md"))
+                root_docs = sorted(glob(os.path.join(input_dir, "*.md")))
                 readme_doc = os.path.join(input_dir, "README.md")
                 if readme_doc in root_docs:
                     root_docs.remove(readme_doc)
@@ -117,9 +117,11 @@ def _mkdocs_config(config: dict) -> mkdocs_config.Config:
 
 
 def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
-    nav = [_doc(doc, root_directory, config) for doc in glob(os.path.join(directory, "*.md"))]
+    nav = [
+        _doc(doc, root_directory, config) for doc in sorted(glob(os.path.join(directory, "*.md")))
+    ]
 
-    nested_dirs = glob(os.path.join(directory, "*/"))
+    nested_dirs = sorted(glob(os.path.join(directory, "*/")))
     for nested_dir in nested_dirs:
         dir_nav = {
             _label(nested_dir[:-1], config): _nested_docs(nested_dir, root_directory, config)
