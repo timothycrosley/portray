@@ -233,15 +233,27 @@
       
 
 
+  <li class="md-nav__item">
+    <a href="../../../CHANGELOG/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
     
-    <label class="md-nav__link" for="nav-2">
+    <label class="md-nav__link" for="nav-3">
       Contributing
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-2">
+      <label class="md-nav__title" for="nav-3">
         Contributing
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -307,13 +319,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-4">
       Quick Start
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         Quick Start
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -381,13 +393,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-5">
       Reference
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-5">
         Reference
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -402,13 +414,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-1" type="checkbox" id="nav-4-1" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1" checked>
     
-    <label class="md-nav__link" for="nav-4-1">
+    <label class="md-nav__link" for="nav-5-1">
       Portray
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-4-1">
+      <label class="md-nav__title" for="nav-5-1">
         Portray
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -761,7 +773,7 @@ to start.</p>
         <span class="k">def</span> <span class="nf">custom_startup</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  <span class="c1"># pragma: no cover</span>
             <span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">ascii_art</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">open_browser</span><span class="p">:</span>
-                <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new</span><span class="p">(</span><span class="s2">&quot;{}:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]))</span>
+                <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new</span><span class="p">(</span><span class="s2">&quot;http://{}:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">]))</span>
 
         <span class="n">api</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">serve</span><span class="p">(</span>
             <span class="n">host</span><span class="o">=</span><span class="n">host</span> <span class="ow">or</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span>
@@ -1021,7 +1033,7 @@ then opens a web browser pointing to it.</p>
         <span class="nv">def</span> <span class="nv">custom_startup</span><span class="ss">(</span><span class="o">*</span><span class="nv">args</span>, <span class="o">**</span><span class="nv">kwargs</span><span class="ss">)</span>:  # <span class="nv">pragma</span>: <span class="nv">no</span> <span class="nv">cover</span>
             <span class="nv">print</span><span class="ss">(</span><span class="nv">logo</span>.<span class="nv">ascii_art</span><span class="ss">)</span>
             <span class="k">if</span> <span class="nv">open_browser</span>:
-                <span class="nv">webbrowser</span>.<span class="nv">open_new</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">{}:{}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">host</span><span class="s2">&quot;</span>], <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">port</span><span class="s2">&quot;</span>]<span class="ss">))</span>
+                <span class="nv">webbrowser</span>.<span class="nv">open_new</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">http://{}:{}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">host</span><span class="s2">&quot;</span>], <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">port</span><span class="s2">&quot;</span>]<span class="ss">))</span>
 
         <span class="nv">api</span>.<span class="nv">http</span>.<span class="nv">serve</span><span class="ss">(</span>
             <span class="nv">host</span><span class="o">=</span><span class="nv">host</span> <span class="nv">or</span> <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">host</span><span class="s2">&quot;</span>],
