@@ -48,7 +48,13 @@ def pdoc3(config: dict) -> None:
     This rendering is from code definition to Markdown so that
     it will be compatible with MkDocs.
     """
-    pdoc.cli.main(Namespace(**config))
+    try:
+        pdoc.cli.main(Namespace(**config))
+    except TypeError as type_error:
+        print(type_error)
+        print("WARNING: A type error was thrown. Attempting graceful degradation to no type hints")
+        config["config"]["show_type_annotations"] = False
+        pdoc.cli.main(Namespace(**config))
 
 
 def mkdocs(config: dict):
@@ -57,15 +63,8 @@ def mkdocs(config: dict):
 
     This rendering is from `.md` Markdown documents into HTML
     """
-    try:
-        config_instance = _mkdocs_config(config)
-        return mkdocs_build(config_instance)
-    except TypeError:
-        print("WARNING: A type error was thrown. Attempting graceful degradation to no type hints")
-        config = config.copy()
-        config["config"]["show_type_annotations"] = False
-        config_instance = _mkdocs_config(config)
-        return mkdocs_build(config_instance)
+    config_instance = _mkdocs_config(config)
+    return mkdocs_build(config_instance)
 
 
 @contextmanager
