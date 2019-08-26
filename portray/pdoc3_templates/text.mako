@@ -61,46 +61,48 @@ ${cls.docstring}
   subclasses = cls.subclasses()
 %>
 % if mro:
-    ${h3('Ancestors (in MRO)')}
+${h3('Ancestors (in MRO)')}
     % for c in mro:
-    * ${c.refname}
+* ${c.refname}
     % endfor
-
 % endif
+
 % if subclasses:
-    ${h3('Descendants')}
+${h3('Descendants')}
     % for c in subclasses:
-    * ${c.refname}
+* ${c.refname}
     % endfor
-
 % endif
+
 % if class_vars:
-    ${h3('Class variables')}
+${h3('Class variables')}
     % for v in class_vars:
 ${variable(v) | indent}
 
     % endfor
 % endif
+
 % if static_methods:
-    ${h3('Static methods')}
+${h3('Static methods')}
     % for f in static_methods:
 ${function(f) | indent}
 
     % endfor
 % endif
+
 % if inst_vars:
-    ${h3('Instance variables')}
-    % for v in inst_vars:
+${h3('Instance variables')}
+% for v in inst_vars:
 ${variable(v) | indent}
 
-    % endfor
+% endfor
 % endif
 % if methods:
-    ${h3('Methods')}
-    % for m in methods:
+${h3('Methods')}
+% for m in methods:
 ${function(m) | indent}
 
-    % endfor
+% endfor
 % endif
 
 % if show_source_code and cls.source:
