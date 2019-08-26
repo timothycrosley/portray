@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "portray"
-version = "0.0.5"
+version = "0.0.6"
 description = "Your Project with Great Documentation"
 authors = ["Timothy Crosley <timothy.crosley@gmail.com>"]
 license = "MIT"
