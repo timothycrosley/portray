@@ -83,7 +83,7 @@ def server(
         def custom_startup(*args, **kwargs):  # pragma: no cover
             print(logo.ascii_art)
             if open_browser:
-                webbrowser.open_new("{}:{}".format(project_config["host"], project_config["port"]))
+                webbrowser.open_new("http://{}:{}".format(project_config["host"], project_config["port"]))
 
         api.http.serve(
             host=host or project_config["host"],
