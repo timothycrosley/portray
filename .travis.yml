@@ -3,7 +3,7 @@ language: python
 cache: pip
 install:
 - pip3 install poetry
-- poetry --python 3 install
+- poetry install
 matrix:
   include:
   - os: linux
