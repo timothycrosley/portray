@@ -36,7 +36,6 @@ MKDOCS_DEFAULTS = {
 }  # type: Dict[str, Any]
 
 PDOC3_DEFAULTS = {
-    "modules": [os.path.basename(os.getcwd())],
     "filter": None,
     "force": True,
     "html": False,
@@ -65,8 +64,9 @@ def project(directory: str, config_file: str, **overrides) -> dict:
 
     project_config = {**PORTRAY_DEFAULTS, "directory": directory}  # type: Dict[str, Any]
     project_config.update(toml(os.path.join(directory, config_file), **overrides))
-    if "modules" in project_config:
-        project_config.setdefault("pdoc3", {}).setdefault("modules", project_config["modules"])
+
+    project_config.setdefault("modules", [os.path.basename(os.getcwd())])
+    project_config.setdefault("pdoc3", {}).setdefault("modules", project_config["modules"])
 
     project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
     project_config["pdoc3"] = pdoc3(directory, **project_config.get("pdoc3", {}))
@@ -90,7 +90,7 @@ def toml(location: str, **overrides) -> dict:
 
         if "modules" not in config:
             if "poetry" in tools and "name" in tools["poetry"]:
-                config["moudles"] = [tools["poetry"]["name"]]
+                config["modules"] = [tools["poetry"]["name"]]
             elif (
                 "flit" in tools
                 and "metadata" in tools["flit"]

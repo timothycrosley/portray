@@ -6,15 +6,16 @@
 """
 import os
 import webbrowser
+from typing import Optional
 
 import hug
-from mkdocs.commands.gh_deploy import gh_deploy
+import mkdocs.commands.gh_deploy
 
 from portray import config, logo, render
 
 
 def as_html(
-    directory: str = os.getcwd(),
+    directory: str = "",
     config_file: str = "pyproject.toml",
     output_dir: str = "site",
     overwrite: bool = False,
@@ -30,16 +31,14 @@ def as_html(
          specified `output_dir` the command will fail with a `DocumentationAlreadyExists`
          exception.
     """
+    directory = directory if directory else os.getcwd()
     render.documentation(project_configuration(directory, config_file), overwrite=overwrite)
     print(logo.ascii_art)
     print("Documentation successfully generated into {}!".format(os.path.abspath(output_dir)))
 
 
 def in_browser(
-    directory: str = os.getcwd(),
-    config_file: str = "pyproject.toml",
-    port: int = None,
-    host: str = None,
+    directory: str = "", config_file: str = "pyproject.toml", port: int = None, host: str = None
 ) -> None:
     """Runs a development webserver enabling you to browse documentation locally
        then opens a web browser pointing to it.
@@ -50,11 +49,12 @@ def in_browser(
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
     """
+    directory = directory if directory else os.getcwd()
     server(directory=directory, config_file=config_file, open_browser=True)
 
 
 def server(
-    directory: str = os.getcwd(),
+    directory: str = "",
     config_file: str = "pyproject.toml",
     open_browser: bool = False,
     port: int = None,
@@ -69,17 +69,18 @@ def server(
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
     """
+    directory = directory if directory else os.getcwd()
     api = hug.API("Doc Server")
 
     project_config = project_configuration(directory, config_file)
     with render.documentation_in_temp_folder(project_config) as doc_folder:
 
         @hug.static("/", api=api)
-        def my_static_dirs():
+        def my_static_dirs():  # pragma: no cover
             return (doc_folder,)
 
         @hug.startup(api=api)
-        def custom_startup(*args, **kwargs):
+        def custom_startup(*args, **kwargs):  # pragma: no cover
             print(logo.ascii_art)
             if open_browser:
                 webbrowser.open_new("{}:{}".format(project_config["host"], project_config["port"]))
@@ -92,20 +93,19 @@ def server(
         )
 
 
-def project_configuration(
-    directory: str = os.getcwd(), config_file: str = "pyproject.toml"
-) -> dict:
+def project_configuration(directory: str = "", config_file: str = "pyproject.toml") -> dict:
     """Returns the configuration associated with a project.
 
         - *directory*: The root folder of your project.
         - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
           config file you wish to use.
     """
+    directory = directory if directory else os.getcwd()
     return config.project(directory=directory, config_file=config_file)
 
 
 def on_github_pages(
-    directory: str = os.getcwd(),
+    directory: str = "",
     config_file: str = "pyproject.toml",
     message: str = None,
     force: bool = False,
@@ -120,12 +120,13 @@ def on_github_pages(
         - *force*: Force the push to the repository.
         - *ignore_version*: Ignore check that build is not being deployed with an old version.
     """
+    directory = directory if directory else os.getcwd()
     project_config = project_configuration(directory, config_file)
     with render.documentation_in_temp_folder(project_config):
         conf = render._mkdocs_config(project_config["mkdocs"])
         conf.config_file_path = directory
-
-        gh_deploy(conf, message=message, force=force, ignore_version=ignore_version)
-
+        mkdocs.commands.gh_deploy.gh_deploy(
+            conf, message=message, force=force, ignore_version=ignore_version
+        )
         print(logo.ascii_art)
         print("Documentation successfully generated and pushed!")
