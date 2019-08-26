@@ -57,8 +57,15 @@ def mkdocs(config: dict):
 
     This rendering is from `.md` Markdown documents into HTML
     """
-    config_instance = _mkdocs_config(config)
-    return mkdocs_build(config_instance)
+    try:
+        config_instance = _mkdocs_config(config)
+        return mkdocs_build(config_instance)
+    except TypeError:
+        print("WARNING: A type error was thrown. Attempting graceful degradation to no type hints")
+        config = config.copy()
+        config["config"]["show_type_annotations"] = False
+        config_instance = _mkdocs_config(config)
+        return mkdocs_build(config_instance)
 
 
 @contextmanager
