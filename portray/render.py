@@ -132,8 +132,11 @@ def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
 
 
 def _label(path: str, config: Dict) -> str:
-    auto = os.path.basename(path).split(".")[0].replace("-", " ").replace("_", " ").title()
-    return config["labels"].get(auto, auto)
+    label = os.path.basename(path)
+    if "." in label:
+        label = ".".join(label.split(".")[:-1])
+    label = label.replace("-", " ").replace("_", " ").title()
+    return config["labels"].get(label, label)
 
 
 def _doc(path: str, root_path: str, config: dict) -> Dict[str, str]:
