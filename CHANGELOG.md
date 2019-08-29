@@ -18,6 +18,17 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 Changelog
 =========
 
+## 1.1.0 - August 29
+Minor Feature release w/ Bug Fixes
+
+- Added support for specifying modules directly from the CLI and API.
+- Added auto module detect for simple setup.py files.
+- Improved CLI subcommand documentation.
+- Implemented [Issue12](https://github.com/timothycrosley/portray/issues/12) - Clarify what a "project" is in documentation.
+- Fixed [Issue2](https://github.com/timothycrosley/portray/issues/2) - UnicodeEncodeError except when running portray.
+- Fixed [Issue10](https://github.com/timothycrosley/portray/issues/10) - Class methods rendered incorrectly.
+- Fixed [Issue17](https://github.com/timothycrosley/portray/issues/17) - Portray silently requires README.md file.
+
 ## 1.0.5 - August 26 PM
 Bug fix release
 
