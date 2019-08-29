@@ -16,6 +16,13 @@ from mkdocs.commands.build import build as mkdocs_build
 
 from portray.exceptions import DocumentationAlreadyExists
 
+NO_HOME_PAGE = """
+# Nothing here
+
+`portray` uses README.md as your projects home page.
+It appears you do not yet have a README.md file created.
+"""
+
 
 def documentation(config: dict, overwrite: bool = False) -> None:
     """Renders the entire project given the project config into the config's
@@ -94,7 +101,12 @@ def documentation_in_temp_folder(config: dict):
                 readme_doc = os.path.join(input_dir, "README.md")
                 if readme_doc in root_docs:
                     root_docs.remove(readme_doc)
-                    nav.append({"Home": "README.md"})
+                else:
+                    with open(readme_doc, "w") as readme_doc_file:
+                        readme_doc_file.write(NO_HOME_PAGE)
+
+                nav.append({"Home": "README.md"})
+
                 nav.extend(_doc(doc, input_dir, config) for doc in root_docs)
 
                 nav.extend(
