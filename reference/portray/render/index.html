@@ -705,6 +705,13 @@ included documentation generation utilities.</p>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">portray</span><span class="p">.</span><span class="s s-Atom">exceptions</span> <span class="s s-Atom">import</span> <span class="nv">DocumentationAlreadyExists</span>
 
+<span class="nv">NO_HOME_PAGE</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2"># Nothing here</span>
+
+<span class="s2">`portray` uses README.md as your projects home page.</span>
+<span class="s2">It appears you do not yet have a README.md file created.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
 <span class="s s-Atom">def</span> <span class="nf">documentation</span><span class="p">(</span><span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">,</span> <span class="nn">overwrite</span><span class="p">:</span> <span class="s s-Atom">bool</span> <span class="o">=</span> <span class="nv">False</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nv">None</span><span class="s s-Atom">:</span>
     <span class="s2">&quot;&quot;&quot;Renders the entire project given the project config into the config&#39;s</span>
 <span class="s2">    specified output directory.</span>
@@ -779,7 +786,12 @@ included documentation generation utilities.</p>
                 <span class="s s-Atom">readme_doc</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;README.md&quot;</span><span class="p">)</span>
                 <span class="s s-Atom">if</span> <span class="s s-Atom">readme_doc</span> <span class="s s-Atom">in</span> <span class="s s-Atom">root_docs:</span>
                     <span class="s s-Atom">root_docs</span><span class="p">.</span><span class="nf">remove</span><span class="p">(</span><span class="s s-Atom">readme_doc</span><span class="p">)</span>
-                    <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span><span class="s2">&quot;Home&quot;</span><span class="s s-Atom">:</span> <span class="s2">&quot;README.md&quot;</span><span class="p">})</span>
+                <span class="nn">else</span><span class="p">:</span>
+                    <span class="s s-Atom">with</span> <span class="nf">open</span><span class="p">(</span><span class="s s-Atom">readme_doc</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="s s-Atom">as</span> <span class="s s-Atom">readme_doc_file:</span>
+                        <span class="s s-Atom">readme_doc_file</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="nv">NO_HOME_PAGE</span><span class="p">)</span>
+
+                <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span><span class="s2">&quot;Home&quot;</span><span class="s s-Atom">:</span> <span class="s2">&quot;README.md&quot;</span><span class="p">})</span>
+
                 <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span><span class="k">_</span><span class="nf">doc</span><span class="p">(</span><span class="s s-Atom">doc</span><span class="p">,</span> <span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span> <span class="s s-Atom">for</span> <span class="s s-Atom">doc</span> <span class="s s-Atom">in</span> <span class="s s-Atom">root_docs</span><span class="p">)</span>
 
                 <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">extend</span><span class="p">(</span>
@@ -919,7 +931,12 @@ specified output directory.</p>
                 <span class="nv">readme_doc</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">README.md</span><span class="s2">&quot;</span><span class="ss">)</span>
                 <span class="k">if</span> <span class="nv">readme_doc</span> <span class="nv">in</span> <span class="nv">root_docs</span>:
                     <span class="nv">root_docs</span>.<span class="nv">remove</span><span class="ss">(</span><span class="nv">readme_doc</span><span class="ss">)</span>
-                    <span class="nv">nav</span>.<span class="nv">append</span><span class="ss">(</span>{<span class="s2">&quot;</span><span class="s">Home</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">README.md</span><span class="s2">&quot;</span>}<span class="ss">)</span>
+                <span class="k">else</span>:
+                    <span class="nv">with</span> <span class="nv">open</span><span class="ss">(</span><span class="nv">readme_doc</span>, <span class="s2">&quot;</span><span class="s">w</span><span class="s2">&quot;</span><span class="ss">)</span> <span class="nv">as</span> <span class="nv">readme_doc_file</span>:
+                        <span class="nv">readme_doc_file</span>.<span class="nv">write</span><span class="ss">(</span><span class="nv">NO_HOME_PAGE</span><span class="ss">)</span>
+
+                <span class="nv">nav</span>.<span class="nv">append</span><span class="ss">(</span>{<span class="s2">&quot;</span><span class="s">Home</span><span class="s2">&quot;</span>: <span class="s2">&quot;</span><span class="s">README.md</span><span class="s2">&quot;</span>}<span class="ss">)</span>
+
                 <span class="nv">nav</span>.<span class="nv">extend</span><span class="ss">(</span><span class="nv">_doc</span><span class="ss">(</span><span class="nv">doc</span>, <span class="nv">input_dir</span>, <span class="nv">config</span><span class="ss">)</span> <span class="k">for</span> <span class="nv">doc</span> <span class="nv">in</span> <span class="nv">root_docs</span><span class="ss">)</span>
 
                 <span class="nv">nav</span>.<span class="nv">extend</span><span class="ss">(</span>

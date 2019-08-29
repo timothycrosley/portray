@@ -764,7 +764,9 @@
 
     <span class="nv">def</span> <span class="nv">__init__</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">directory</span>: <span class="nv">str</span><span class="ss">)</span>:
         <span class="nv">super</span><span class="ss">()</span>.<span class="nv">__init__</span><span class="ss">(</span>
-            <span class="nv">self</span>, <span class="s2">&quot;</span><span class="s">No Python project found in the given directory: &#39;{}&#39;</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>
+            <span class="nv">self</span>,
+            <span class="s2">&quot;</span><span class="s">No Python project found in the given directory: &#39;{}&#39;</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>
+            <span class="o">+</span> <span class="s2">&quot;</span><span class="s"> See: https://timothycrosley.github.io/portray/TROUBLESHOOTING/#noprojectfound</span><span class="s2">&quot;</span>,
         <span class="ss">)</span>
         <span class="nv">self</span>.<span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span>
 
@@ -823,7 +825,9 @@
 
     <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">directory:</span> <span class="n">str</span>):
         <span class="n">super</span>().<span class="n">__init__</span>(
-            <span class="k">self</span>, <span class="s">&quot;No Python project found in the given directory: &#39;{}&#39;&quot;</span>.<span class="n">format</span>(<span class="n">directory</span>)
+            <span class="k">self</span>,
+            <span class="s">&quot;No Python project found in the given directory: &#39;{}&#39;&quot;</span>.<span class="n">format</span>(<span class="n">directory</span>)
+            + <span class="s">&quot; See: https://timothycrosley.github.io/portray/TROUBLESHOOTING/#noprojectfound&quot;</span>,
         )
         <span class="k">self</span>.<span class="n">directory</span> = <span class="n">directory</span>
 </pre></div>
