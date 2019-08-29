@@ -12,7 +12,9 @@ class NoProjectFound(PortrayError):
 
     def __init__(self, directory: str):
         super().__init__(
-            self, "No Python project found in the given directory: '{}'".format(directory)
+            self,
+            "No Python project found in the given directory: '{}'".format(directory)
+            + " See: https://timothycrosley.github.io/portray/TROUBLESHOOTING/#noprojectfound",
         )
         self.directory = directory
 
