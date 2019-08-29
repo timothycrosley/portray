@@ -19,8 +19,9 @@ def as_html(
     config_file: str = "pyproject.toml",
     output_dir: str = "site",
     overwrite: bool = False,
+    modules: list = None,
 ) -> None:
-    """Produces HTML documentation for a Python project.
+    """Produces HTML documentation for a Python project placing it into output_dir.
 
        - *directory*: The root folder of your project.
        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)
@@ -30,27 +31,35 @@ def as_html(
          before generating new documentation. Otherwise, if documentation exists in the
          specified `output_dir` the command will fail with a `DocumentationAlreadyExists`
          exception.
+       - *modules*: One or more modules to render reference documentation for
     """
     directory = directory if directory else os.getcwd()
-    render.documentation(project_configuration(directory, config_file), overwrite=overwrite)
+    render.documentation(
+        project_configuration(directory, config_file, modules), overwrite=overwrite
+    )
     print(logo.ascii_art)
     print("Documentation successfully generated into {}!".format(os.path.abspath(output_dir)))
 
 
 def in_browser(
-    directory: str = "", config_file: str = "pyproject.toml", port: int = None, host: str = None
+    directory: str = "",
+    config_file: str = "pyproject.toml",
+    port: int = None,
+    host: str = None,
+    modules: list = None,
 ) -> None:
-    """Runs a development webserver enabling you to browse documentation locally
-       then opens a web browser pointing to it.
+    """Opens your default webbrowser pointing to a locally started development webserver enabling
+       you to browse documentation locally
 
        - *directory*: The root folder of your project.
        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
          config file you wish to use.
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
+       - *modules*: One or more modules to render reference documentation for
     """
     directory = directory if directory else os.getcwd()
-    server(directory=directory, config_file=config_file, open_browser=True)
+    server(directory=directory, config_file=config_file, open_browser=True, modules=modules)
 
 
 def server(
@@ -59,6 +68,7 @@ def server(
     open_browser: bool = False,
     port: int = None,
     host: str = None,
+    modules: list = None,
 ) -> None:
     """Runs a development webserver enabling you to browse documentation locally.
 
@@ -68,11 +78,12 @@ def server(
        - *open_browser": If true a browser will be opened pointing at the documentation server
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
+       - *modules*: One or more modules to render reference documentation for
     """
     directory = directory if directory else os.getcwd()
     api = hug.API("Doc Server")
 
-    project_config = project_configuration(directory, config_file)
+    project_config = project_configuration(directory, config_file, modules)
     with render.documentation_in_temp_folder(project_config) as doc_folder:
 
         @hug.static("/", api=api)
@@ -83,7 +94,9 @@ def server(
         def custom_startup(*args, **kwargs):  # pragma: no cover
             print(logo.ascii_art)
             if open_browser:
-                webbrowser.open_new("http://{}:{}".format(project_config["host"], project_config["port"]))
+                webbrowser.open_new(
+                    "http://{}:{}".format(project_config["host"], project_config["port"])
+                )
 
         api.http.serve(
             host=host or project_config["host"],
@@ -93,15 +106,21 @@ def server(
         )
 
 
-def project_configuration(directory: str = "", config_file: str = "pyproject.toml") -> dict:
+def project_configuration(
+    directory: str = "", config_file: str = "pyproject.toml", modules: list = None
+) -> dict:
     """Returns the configuration associated with a project.
 
         - *directory*: The root folder of your project.
         - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
           config file you wish to use.
+        - *modules*: One or more modules to include in the configuration for reference rendering
     """
+    overrides = {}
+    if modules:
+        overrides["modules"] = modules
     directory = directory if directory else os.getcwd()
-    return config.project(directory=directory, config_file=config_file)
+    return config.project(directory=directory, config_file=config_file, **overrides)
 
 
 def on_github_pages(
@@ -110,6 +129,7 @@ def on_github_pages(
     message: str = None,
     force: bool = False,
     ignore_version: bool = False,
+    modules: list = None,
 ) -> None:
     """Regenerates and deploys the documentation to GitHub pages.
 
@@ -119,9 +139,10 @@ def on_github_pages(
         - *message*: The commit message to use when uploading your documentation.
         - *force*: Force the push to the repository.
         - *ignore_version*: Ignore check that build is not being deployed with an old version.
+        - *modules*: One or more modules to render reference documentation for
     """
     directory = directory if directory else os.getcwd()
-    project_config = project_configuration(directory, config_file)
+    project_config = project_configuration(directory, config_file, modules)
     with render.documentation_in_temp_folder(project_config):
         conf = render._mkdocs_config(project_config["mkdocs"])
         conf.config_file_path = directory

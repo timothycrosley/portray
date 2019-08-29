@@ -1,4 +1,5 @@
 """Defines the configuration defaults and load functions used by `portray`"""
+import ast
 import os
 from typing import Any, Dict, List, Union, cast
 from urllib import parse
@@ -8,6 +9,7 @@ import mkdocs.exceptions as _mkdocs_exceptions
 from git import Repo
 from toml import load as toml_load
 
+import _ast
 from portray.exceptions import NoProjectFound
 
 PORTRAY_DEFAULTS = {
@@ -59,10 +61,14 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     if not (
         os.path.isfile(os.path.join(directory, config_file))
         or os.path.isfile(os.path.join(directory, "setup.py"))
+        or "modules" in overrides
     ):
         raise NoProjectFound(directory)
 
     project_config = {**PORTRAY_DEFAULTS, "directory": directory}  # type: Dict[str, Any]
+    if os.path.isfile(os.path.join(directory, "setup.py")):
+        project_config.update(setup_py(os.path.join(directory, "setup.py")))
+
     project_config.update(toml(os.path.join(directory, config_file), **overrides))
 
     project_config.setdefault("modules", [os.path.basename(os.getcwd())])
@@ -71,6 +77,30 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
     project_config["pdoc3"] = pdoc3(directory, **project_config.get("pdoc3", {}))
     return project_config
+
+
+def setup_py(location: str) -> dict:
+    """Returns back any configuration info we are able to determine from a setup.py file"""
+    setup_config = {}
+    try:
+        with open(location) as setup_py_file:
+            for node in ast.walk(ast.parse(setup_py_file.read())):
+                if (
+                    type(node) == _ast.Call
+                    and type(getattr(node, "func", None)) == _ast.Name
+                    and node.func.id == "setup"  # type: ignore
+                ):
+                    for keyword in node.keywords:  # type: ignore
+                        if keyword.arg == "packages":
+                            setup_config["modules"] = ast.literal_eval(keyword.value)
+                            break
+                    break
+    except Exception as error:
+        print(
+            "WARNING: Error ({}) occurred trying to parse setup.py file: {}".format(error, location)
+        )
+
+    return setup_config
 
 
 def toml(location: str, **overrides) -> dict:

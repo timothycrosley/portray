@@ -245,15 +245,27 @@
       
 
 
+  <li class="md-nav__item">
+    <a href="../../../TROUBLESHOOTING/" title="Troubleshooting" class="md-nav__link">
+      Troubleshooting
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-4">
       Contributing
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         Contributing
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -319,13 +331,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-5">
       Quick Start
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-5">
         Quick Start
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -393,13 +405,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Reference
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Reference
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -414,13 +426,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-1" type="checkbox" id="nav-6-1" checked>
     
-    <label class="md-nav__link" for="nav-5-1">
+    <label class="md-nav__link" for="nav-6-1">
       Portray
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-5-1">
+      <label class="md-nav__title" for="nav-6-1">
         Portray
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -726,7 +738,7 @@ included documentation generation utilities.</p>
     <span class="nn">try</span><span class="p">:</span>
         <span class="s s-Atom">pdoc</span><span class="p">.</span><span class="s s-Atom">cli</span><span class="p">.</span><span class="nf">main</span><span class="p">(</span><span class="nv">Namespace</span><span class="p">(</span><span class="s s-Atom">**config</span><span class="p">))</span>
     <span class="s s-Atom">except</span> <span class="nv">TypeError</span> <span class="s s-Atom">as</span> <span class="s s-Atom">type_error:</span>
-        <span class="s s-Atom">if</span> <span class="o">not</span> <span class="s2">&quot;show_type_annotations=True&quot;</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+        <span class="s s-Atom">if</span> <span class="s2">&quot;show_type_annotations=True&quot;</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
             <span class="s s-Atom">raise</span>
 
         <span class="nf">print</span><span class="p">(</span><span class="s s-Atom">type_error</span><span class="p">)</span>
@@ -964,7 +976,7 @@ it will be compatible with MkDocs.</p>
     <span class="nv">try</span>:
         <span class="nv">pdoc</span>.<span class="nv">cli</span>.<span class="nv">main</span><span class="ss">(</span><span class="nv">Namespace</span><span class="ss">(</span><span class="o">**</span><span class="nv">config</span><span class="ss">))</span>
     <span class="nv">except</span> <span class="nv">TypeError</span> <span class="nv">as</span> <span class="nv">type_error</span>:
-        <span class="k">if</span> <span class="nv">not</span> <span class="s2">&quot;</span><span class="s">show_type_annotations=True</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">config</span><span class="s2">&quot;</span>]:
+        <span class="k">if</span> <span class="s2">&quot;</span><span class="s">show_type_annotations=True</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">config</span><span class="s2">&quot;</span>]:
             <span class="nv">raise</span>
 
         <span class="nv">print</span><span class="ss">(</span><span class="nv">type_error</span><span class="ss">)</span>

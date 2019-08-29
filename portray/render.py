@@ -51,7 +51,7 @@ def pdoc3(config: dict) -> None:
     try:
         pdoc.cli.main(Namespace(**config))
     except TypeError as type_error:
-        if not "show_type_annotations=True" in config["config"]:
+        if "show_type_annotations=True" not in config["config"]:
             raise
 
         print(type_error)

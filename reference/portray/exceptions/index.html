@@ -245,15 +245,27 @@
       
 
 
+  <li class="md-nav__item">
+    <a href="../../../TROUBLESHOOTING/" title="Troubleshooting" class="md-nav__link">
+      Troubleshooting
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-4">
       Contributing
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         Contributing
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -319,13 +331,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-5">
       Quick Start
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-5">
         Quick Start
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -393,13 +405,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Reference
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Reference
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -414,13 +426,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-1" type="checkbox" id="nav-6-1" checked>
     
-    <label class="md-nav__link" for="nav-5-1">
+    <label class="md-nav__link" for="nav-6-1">
       Portray
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-5-1">
+      <label class="md-nav__title" for="nav-6-1">
         Portray
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -778,12 +790,6 @@
 
 
 <p>Thrown when portray has been told to output documentation where it already exists</p>
-<h3 id="ancestors-in-mro">Ancestors (in MRO)</h3>
-<ul>
-<li>portray.exceptions.PortrayError</li>
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="k">class</span> <span class="n">DocumentationAlreadyExists</span>(<span class="n">PortrayError</span>):
     <span class="s">&quot;&quot;&quot;Thrown when portray has been told to output documentation where it already exists&quot;&quot;&quot;</span>
 
@@ -798,6 +804,12 @@
 
 </details>
 <hr />
+<h3 id="ancestors-in-mro">Ancestors (in MRO)</h3>
+<ul>
+<li>portray.exceptions.PortrayError</li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
 <h5 id="noprojectfound">NoProjectFound</h5>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="err">(</span>
     <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span>
@@ -806,12 +818,6 @@
 
 
 <p>Thrown when portray is ran in a directory with no Python project</p>
-<h3 id="ancestors-in-mro_1">Ancestors (in MRO)</h3>
-<ul>
-<li>portray.exceptions.PortrayError</li>
-<li>builtins.Exception</li>
-<li>builtins.BaseException</li>
-</ul>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="k">class</span> <span class="n">NoProjectFound</span>(<span class="n">PortrayError</span>):
     <span class="s">&quot;&quot;&quot;Thrown when portray is ran in a directory with no Python project&quot;&quot;&quot;</span>
 
@@ -825,6 +831,12 @@
 
 </details>
 <hr />
+<h3 id="ancestors-in-mro_1">Ancestors (in MRO)</h3>
+<ul>
+<li>portray.exceptions.PortrayError</li>
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
 <h5 id="portrayerror">PortrayError</h5>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="err">(</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
@@ -834,6 +846,15 @@
 
 
 <p>Base class for all exceptions returned from portray</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">class</span> <span class="nv">PortrayError</span><span class="ss">(</span><span class="nv">Exception</span><span class="ss">)</span>:
+    <span class="s2">&quot;&quot;&quot;</span><span class="s">Base class for all exceptions returned from portray</span><span class="s2">&quot;&quot;&quot;</span>
+
+    <span class="nv">pass</span>
+</pre></div>
+
+
+</details>
+<hr />
 <h3 id="ancestors-in-mro_2">Ancestors (in MRO)</h3>
 <ul>
 <li>builtins.Exception</li>
@@ -844,15 +865,6 @@
 <li>portray.exceptions.NoProjectFound</li>
 <li>portray.exceptions.DocumentationAlreadyExists</li>
 </ul>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">class</span> <span class="nv">PortrayError</span><span class="ss">(</span><span class="nv">Exception</span><span class="ss">)</span>:
-    <span class="s2">&quot;&quot;&quot;</span><span class="s">Base class for all exceptions returned from portray</span><span class="s2">&quot;&quot;&quot;</span>
-
-    <span class="nv">pass</span>
-</pre></div>
-
-
-</details>
-<hr />
                 
                   
                 

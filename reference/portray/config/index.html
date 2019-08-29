@@ -245,15 +245,27 @@
       
 
 
+  <li class="md-nav__item">
+    <a href="../../../TROUBLESHOOTING/" title="Troubleshooting" class="md-nav__link">
+      Troubleshooting
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
-    <label class="md-nav__link" for="nav-3">
+    <label class="md-nav__link" for="nav-4">
       Contributing
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-3">
+      <label class="md-nav__title" for="nav-4">
         Contributing
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -319,13 +331,13 @@
 
   <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
     
-    <label class="md-nav__link" for="nav-4">
+    <label class="md-nav__link" for="nav-5">
       Quick Start
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
+      <label class="md-nav__title" for="nav-5">
         Quick Start
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -393,13 +405,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
     
-    <label class="md-nav__link" for="nav-5">
+    <label class="md-nav__link" for="nav-6">
       Reference
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
+      <label class="md-nav__title" for="nav-6">
         Reference
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -414,13 +426,13 @@
 
   <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-1" type="checkbox" id="nav-5-1" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-1" type="checkbox" id="nav-6-1" checked>
     
-    <label class="md-nav__link" for="nav-5-1">
+    <label class="md-nav__link" for="nav-6-1">
       Portray
     </label>
     <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
-      <label class="md-nav__title" for="nav-5-1">
+      <label class="md-nav__title" for="nav-6-1">
         Portray
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
@@ -514,6 +526,13 @@
           <li class="md-nav__item">
   <a href="#repository" title="repository" class="md-nav__link">
     repository
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setup_py" title="setup_py" class="md-nav__link">
+    setup_py
   </a>
   
 </li>
@@ -656,6 +675,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#setup_py" title="setup_py" class="md-nav__link">
+    setup_py
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#toml" title="toml" class="md-nav__link">
     toml
   </a>
@@ -689,6 +715,7 @@
                 <h1 id="module-portrayconfig">Module portray.config</h1>
 <p>Defines the configuration defaults and load functions used by <code>portray</code></p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="sd">&quot;&quot;&quot;Defines the configuration defaults and load functions used by `portray`&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">ast</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
 <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">parse</span>
@@ -698,6 +725,7 @@
 <span class="kn">from</span> <span class="nn">git</span> <span class="kn">import</span> <span class="n">Repo</span>
 <span class="kn">from</span> <span class="nn">toml</span> <span class="kn">import</span> <span class="n">load</span> <span class="k">as</span> <span class="n">toml_load</span>
 
+<span class="kn">import</span> <span class="nn">_ast</span>
 <span class="kn">from</span> <span class="nn">portray.exceptions</span> <span class="kn">import</span> <span class="n">NoProjectFound</span>
 
 <span class="n">PORTRAY_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
@@ -748,10 +776,14 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">))</span>
         <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s2">&quot;setup.py&quot;</span><span class="p">))</span>
+        <span class="ow">or</span> <span class="s2">&quot;modules&quot;</span> <span class="ow">in</span> <span class="n">overrides</span>
     <span class="p">):</span>
         <span class="k">raise</span> <span class="n">NoProjectFound</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
 
     <span class="n">project_config</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">PORTRAY_DEFAULTS</span><span class="p">,</span> <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="n">directory</span><span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s2">&quot;setup.py&quot;</span><span class="p">)):</span>
+        <span class="n">project_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">setup_py</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s2">&quot;setup.py&quot;</span><span class="p">)))</span>
+
     <span class="n">project_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">toml</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">),</span> <span class="o">**</span><span class="n">overrides</span><span class="p">))</span>
 
     <span class="n">project_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())])</span>
@@ -760,6 +792,29 @@
     <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mkdocs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">project_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">,</span> <span class="p">{}))</span>
     <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdoc3</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">project_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pdoc3&quot;</span><span class="p">,</span> <span class="p">{}))</span>
     <span class="k">return</span> <span class="n">project_config</span>
+
+<span class="k">def</span> <span class="nf">setup_py</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns back any configuration info we are able to determine from a setup.py file&quot;&quot;&quot;</span>
+    <span class="n">setup_config</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">location</span><span class="p">)</span> <span class="k">as</span> <span class="n">setup_py_file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">ast</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">setup_py_file</span><span class="o">.</span><span class="n">read</span><span class="p">())):</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="o">==</span> <span class="n">_ast</span><span class="o">.</span><span class="n">Call</span>
+                    <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;func&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span> <span class="o">==</span> <span class="n">_ast</span><span class="o">.</span><span class="n">Name</span>
+                    <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;setup&quot;</span>  <span class="c1"># type: ignore</span>
+                <span class="p">):</span>
+                    <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">keywords</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+                        <span class="k">if</span> <span class="n">keyword</span><span class="o">.</span><span class="n">arg</span> <span class="o">==</span> <span class="s2">&quot;packages&quot;</span><span class="p">:</span>
+                            <span class="n">setup_config</span><span class="p">[</span><span class="s2">&quot;modules&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">keyword</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                            <span class="k">break</span>
+                    <span class="k">break</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span>
+            <span class="s2">&quot;WARNING: Error ({}) occurred trying to parse setup.py file: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">setup_config</span>
 
 <span class="k">def</span> <span class="nf">toml</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns back the configuration found within the projects</span>
@@ -902,10 +957,14 @@ defined below that <code>portray</code> was able to determine for the project</p
     <span class="k">if</span> <span class="nv">not</span> <span class="ss">(</span>
         <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">isfile</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">))</span>
         <span class="nv">or</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">isfile</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="s2">&quot;</span><span class="s">setup.py</span><span class="s2">&quot;</span><span class="ss">))</span>
+        <span class="nv">or</span> <span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">overrides</span>
     <span class="ss">)</span>:
         <span class="nv">raise</span> <span class="nv">NoProjectFound</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>
 
     <span class="nv">project_config</span> <span class="o">=</span> {<span class="o">**</span><span class="nv">PORTRAY_DEFAULTS</span>, <span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>: <span class="nv">directory</span>}  # <span class="nv">type</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>]
+    <span class="k">if</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">isfile</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="s2">&quot;</span><span class="s">setup.py</span><span class="s2">&quot;</span><span class="ss">))</span>:
+        <span class="nv">project_config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">setup_py</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="s2">&quot;</span><span class="s">setup.py</span><span class="s2">&quot;</span><span class="ss">)))</span>
+
     <span class="nv">project_config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">toml</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)</span>, <span class="o">**</span><span class="nv">overrides</span><span class="ss">))</span>
 
     <span class="nv">project_config</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>, [<span class="nv">os</span>.<span class="nv">path</span>.<span class="k">basename</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">())</span>]<span class="ss">)</span>
@@ -944,6 +1003,40 @@ defined below that <code>portray</code> was able to determine for the project</p
         <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">WARNING: Unable to identify `repo_name` and `repo_url` automatically</span><span class="s2">&quot;</span><span class="ss">)</span>
 
     <span class="k">return</span> <span class="nv">config</span>
+</pre></div>
+
+
+</details>
+<h5 id="setup_py">setup_py</h5>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="err">(</span>
+    <span class="n">location</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
+</pre></div>
+
+
+<p>Returns back any configuration info we are able to determine from a setup.py file</p>
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">setup_py</span><span class="ss">(</span><span class="nv">location</span>: <span class="nv">str</span><span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">dict</span>:
+    <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns back any configuration info we are able to determine from a setup.py file</span><span class="s2">&quot;&quot;&quot;</span>
+    <span class="nv">setup_config</span> <span class="o">=</span> {}
+    <span class="nv">try</span>:
+        <span class="nv">with</span> <span class="nv">open</span><span class="ss">(</span><span class="nv">location</span><span class="ss">)</span> <span class="nv">as</span> <span class="nv">setup_py_file</span>:
+            <span class="k">for</span> <span class="nv">node</span> <span class="nv">in</span> <span class="nv">ast</span>.<span class="nv">walk</span><span class="ss">(</span><span class="nv">ast</span>.<span class="nv">parse</span><span class="ss">(</span><span class="nv">setup_py_file</span>.<span class="nv">read</span><span class="ss">()))</span>:
+                <span class="k">if</span> <span class="ss">(</span>
+                    <span class="nv">type</span><span class="ss">(</span><span class="nv">node</span><span class="ss">)</span> <span class="o">==</span> <span class="nv">_ast</span>.<span class="nv">Call</span>
+                    <span class="nv">and</span> <span class="nv">type</span><span class="ss">(</span><span class="nv">getattr</span><span class="ss">(</span><span class="nv">node</span>, <span class="s2">&quot;</span><span class="s">func</span><span class="s2">&quot;</span>, <span class="nv">None</span><span class="ss">))</span> <span class="o">==</span> <span class="nv">_ast</span>.<span class="nv">Name</span>
+                    <span class="nv">and</span> <span class="nv">node</span>.<span class="nv">func</span>.<span class="nv">id</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="s">setup</span><span class="s2">&quot;</span>  # <span class="nv">type</span>: <span class="nv">ignore</span>
+                <span class="ss">)</span>:
+                    <span class="k">for</span> <span class="nv">keyword</span> <span class="nv">in</span> <span class="nv">node</span>.<span class="nv">keywords</span>:  # <span class="nv">type</span>: <span class="nv">ignore</span>
+                        <span class="k">if</span> <span class="nv">keyword</span>.<span class="nv">arg</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="s">packages</span><span class="s2">&quot;</span>:
+                            <span class="nv">setup_config</span>[<span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">ast</span>.<span class="nv">literal_eval</span><span class="ss">(</span><span class="nv">keyword</span>.<span class="nv">value</span><span class="ss">)</span>
+                            <span class="k">break</span>
+                    <span class="k">break</span>
+    <span class="nv">except</span> <span class="nv">Exception</span> <span class="nv">as</span> <span class="nv">error</span>:
+        <span class="nv">print</span><span class="ss">(</span>
+            <span class="s2">&quot;</span><span class="s">WARNING: Error ({}) occurred trying to parse setup.py file: {}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">error</span>, <span class="nv">location</span><span class="ss">)</span>
+        <span class="ss">)</span>
+
+    <span class="k">return</span> <span class="nv">setup_config</span>
 </pre></div>
 
 

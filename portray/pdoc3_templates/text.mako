@@ -52,6 +52,15 @@ class (
 
 ${cls.docstring}
 
+% if show_source_code and cls.source:
+
+??? example "View Source"
+        ${"\n        ".join(cls.source.split("\n"))}
+
+------
+
+% endif
+
 <%
   class_vars = cls.class_variables(show_inherited_members, sort=sort_identifiers)
   static_methods = cls.functions(show_inherited_members, sort=sort_identifiers)
@@ -77,7 +86,7 @@ ${h3('Descendants')}
 % if class_vars:
 ${h3('Class variables')}
     % for v in class_vars:
-${variable(v) | indent}
+${variable(v)}
 
     % endfor
 % endif
@@ -85,7 +94,7 @@ ${variable(v) | indent}
 % if static_methods:
 ${h3('Static methods')}
     % for f in static_methods:
-${function(f) | indent}
+${function(f)}
 
     % endfor
 % endif
@@ -93,25 +102,16 @@ ${function(f) | indent}
 % if inst_vars:
 ${h3('Instance variables')}
 % for v in inst_vars:
-${variable(v) | indent}
+${variable(v)}
 
 % endfor
 % endif
 % if methods:
 ${h3('Methods')}
 % for m in methods:
-${function(m) | indent}
+${function(m)}
 
 % endfor
-% endif
-
-% if show_source_code and cls.source:
-
-??? example "View Source"
-        ${"\n        ".join(cls.source.split("\n"))}
-
-------
-
 % endif
 
 </%def>
