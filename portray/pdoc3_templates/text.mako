@@ -52,6 +52,15 @@ class (
 
 ${cls.docstring}
 
+% if show_source_code and cls.source:
+
+??? example "View Source"
+        ${"\n        ".join(cls.source.split("\n"))}
+
+------
+
+% endif
+
 <%
   class_vars = cls.class_variables(show_inherited_members, sort=sort_identifiers)
   static_methods = cls.functions(show_inherited_members, sort=sort_identifiers)
@@ -103,15 +112,6 @@ ${h3('Methods')}
 ${function(m) | indent}
 
 % endfor
-% endif
-
-% if show_source_code and cls.source:
-
-??? example "View Source"
-        ${"\n        ".join(cls.source.split("\n"))}
-
-------
-
 % endif
 
 </%def>
