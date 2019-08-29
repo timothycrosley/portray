@@ -14,7 +14,6 @@ ascii_art = r"""
 
 Version: {}
 Copyright Timothy Edmund Crosley 2019 MIT License
-
 """.format(
     __version__
 )
