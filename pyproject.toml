@@ -8,7 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.6"
 pdoc3 = "^0.6.3"
-hug = "^2.5"
+hug = "^2.6"
 mkdocs = "^1.0"
 toml = "^0.10.0"
 mkdocs-material = "^4.4"
