@@ -684,14 +684,14 @@
 <p>As common issues or questions are encountered solutions will be added to this guide.</p>
 <h2 id="noprojectfound"><code>NoProjectFound</code></h2>
 <p>portray raises this exception when it cant find a project in the current directory.
-This means that there is no <code>project.toml</code> or <code>setup.py</code> file in the directory you ran portray
+This means that there is no <code>pyproject.toml</code> or <code>setup.py</code> file in the directory you ran portray
 AND that you haven't specified modules to include on the command line.</p>
 <h3 id="solution-1-go-to-root-of-project">Solution 1: Go to root of project</h3>
 <p>If you do have a <code>pyproject.toml</code> or <code>setup.py</code> file in your project, chances are you simply accidentally ran
 portray from a different directory. Simply changing back to your projects root directory at the same level as
 these files should be enough to resolve your issue.</p>
 <h3 id="solution-2-create-a-pyprojecttoml-file">Solution 2: Create a pyproject.toml file</h3>
-<p>You can create a simplified pyproject.toml file that explicitly specifies what modules are included in your project:</p>
+<p>You can create a simplified <code>pyproject.toml</code> file that explicitly specifies what modules are included in your project:</p>
 <div class="codehilite"><pre><span></span><span class="k">[tool.portray]</span>
 <span class="n">modules</span> <span class="o">=</span> <span class="k">[&quot;MY_MODULE&quot;]</span>
 </pre></div>
