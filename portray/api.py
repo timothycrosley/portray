@@ -38,7 +38,7 @@ def as_html(
         project_configuration(directory, config_file, modules), overwrite=overwrite
     )
     print(logo.ascii_art)
-    print("Documentation successfully generated into {}!".format(os.path.abspath(output_dir)))
+    print("Documentation successfully generated into `{}` !".format(os.path.abspath(output_dir)))
 
 
 def in_browser(
