@@ -5,7 +5,7 @@ As common issues or questions are encountered solutions will be added to this gu
 ## `NoProjectFound`
 
 portray raises this exception when it cant find a project in the current directory.
-This means that there is no `project.toml` or `setup.py` file in the directory you ran portray
+This means that there is no `pyproject.toml` or `setup.py` file in the directory you ran portray
 AND that you haven't specified modules to include on the command line.
 
 ### Solution 1: Go to root of project
@@ -14,7 +14,7 @@ portray from a different directory. Simply changing back to your projects root d
 these files should be enough to resolve your issue.
 
 ### Solution 2: Create a pyproject.toml file
-You can create a simplified pyproject.toml file that explicitly specifies what modules are included in your project:
+You can create a simplified `pyproject.toml` file that explicitly specifies what modules are included in your project:
 
 ```toml
 [tool.portray]
