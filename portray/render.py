@@ -9,9 +9,10 @@ from contextlib import contextmanager
 from glob import glob
 from typing import Dict
 
+import mako.exceptions
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
-import pdoc.cli
+import pdocs.cli
 from mkdocs.commands.build import build as mkdocs_build
 
 from portray.exceptions import DocumentationAlreadyExists
@@ -56,16 +57,24 @@ def pdoc3(config: dict) -> None:
     it will be compatible with MkDocs.
     """
     try:
-        pdoc.cli.main(Namespace(**config))
-    except TypeError as type_error:
-        if "show_type_annotations=True" not in config["config"]:
-            raise
+        try:
+            pdocs.cli.run(Namespace(**config))
+        except TypeError as type_error:
+            if "show_type_annotations=True" not in config["config"]:
+                raise
 
-        print(type_error)
-        print("WARNING: A type error was thrown. Attempting graceful degradation to no type hints")
-        config["config"].remove("show_type_annotations=True")
-        config["config"].append("show_type_annotations=False")
-        pdoc.cli.main(Namespace(**config))
+            print(type_error)
+            print(
+                "WARNING: A type error was thrown. Attempting graceful degradation to no type hints"
+            )
+            config["config"].remove("show_type_annotations=True")
+            config["config"].append("show_type_annotations=False")
+            pdocs.cli.run(Namespace(**config))
+
+    except Exception:
+        print(config)
+        print(mako.exceptions.text_error_template().render())
+        raise
 
 
 def mkdocs(config: dict):

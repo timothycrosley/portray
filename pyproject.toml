@@ -15,6 +15,7 @@ toml = "^0.10.0"
 mkdocs-material = "^4.4"
 GitPython = "^3.0"
 pymdown-extensions = "^6.0"
+pdocs = "^0.1.0"
 
 [tool.poetry.dev-dependencies]
 vulture = "^1.0"

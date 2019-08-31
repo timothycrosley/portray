@@ -29,7 +29,7 @@ ${func.docstring}
 % if show_source_code and func.source and func.obj is not getattr(func.inherits, 'obj', None):
 
 ??? example "View Source"
-        ${"\n        ".join(func.source.split("\n"))}
+        ${"\n        ".join(func.source)}
 
 % endif
 </%def>
@@ -55,7 +55,7 @@ ${cls.docstring}
 % if show_source_code and cls.source:
 
 ??? example "View Source"
-        ${"\n        ".join(cls.source.split("\n"))}
+        ${"\n        ".join(cls.source)}
 
 ------
 
@@ -122,7 +122,7 @@ ${function(m)}
   variables = module.variables()
   classes = module.classes()
   functions = module.functions()
-  submodules = module.submodules()
+  submodules = module.submodules
   heading = 'Namespace' if module.is_namespace else 'Module'
 %>
 
@@ -131,7 +131,7 @@ ${heading} ${module.name}
 ${module.docstring}
 
 ??? example "View Source"
-        ${"\n        ".join(module.source.split("\n"))}
+        ${"\n        ".join(module.source)}
 
 
 % if submodules:
