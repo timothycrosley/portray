@@ -40,7 +40,7 @@ MKDOCS_DEFAULTS = {
 
 PDOCS_DEFAULTS = {
     "filter": None,
-    "force": True,
+    "overwrite": True,
     "html": False,
     "pdf": False,
     "html_dir": None,
