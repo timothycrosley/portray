@@ -12,7 +12,7 @@ from typing import Dict
 import mako.exceptions
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
-import pdocs.cli
+import pdocs.cli as pdocs_cli
 from mkdocs.commands.build import build as mkdocs_build
 
 from portray.exceptions import DocumentationAlreadyExists
@@ -58,7 +58,7 @@ def pdocs(config: dict) -> None:
     """
     try:
         try:
-            pdocs.cli.run(Namespace(**config))
+            pdocs_cli.run(Namespace(**config))
         except TypeError as type_error:
             if "show_type_annotations=True" not in config["config"]:
                 raise
@@ -69,7 +69,7 @@ def pdocs(config: dict) -> None:
             )
             config["config"].remove("show_type_annotations=True")
             config["config"].append("show_type_annotations=False")
-            pdocs.cli.run(Namespace(**config))
+            pdocs_cli.run(Namespace(**config))
 
     except Exception:
         print(config)
