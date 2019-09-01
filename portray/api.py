@@ -75,7 +75,7 @@ def server(
        - *directory*: The root folder of your project.
        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
          config file you wish to use.
-       - *open_browser": If true a browser will be opened pointing at the documentation server
+       - *open_browser*: If true a browser will be opened pointing at the documentation server
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
        - *modules*: One or more modules to render reference documentation for
