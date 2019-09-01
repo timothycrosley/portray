@@ -38,7 +38,7 @@ def as_html(
         project_configuration(directory, config_file, modules), overwrite=overwrite
     )
     print(logo.ascii_art)
-    print("Documentation successfully generated into `{}` !".format(os.path.abspath(output_dir)))
+    print(f"Documentation successfully generated into `{os.path.abspath(output_dir)}` !")
 
 
 def in_browser(
@@ -94,9 +94,7 @@ def server(
         def custom_startup(*args, **kwargs):  # pragma: no cover
             print(logo.ascii_art)
             if open_browser:
-                webbrowser.open_new(
-                    "http://{}:{}".format(project_config["host"], project_config["port"])
-                )
+                webbrowser.open_new(f"http://{project_config['host']}:{project_config['port']}")
 
         api.http.serve(
             host=host or project_config["host"],

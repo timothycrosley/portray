@@ -137,12 +137,12 @@ def _mkdocs_config(config: dict) -> mkdocs_config.Config:
     if errors:
         print(errors)
         raise _mkdocs_exceptions.ConfigurationError(
-            "Aborted with {} Configuration Errors!".format(len(errors))
+            f"Aborted with {len(errors)} Configuration Errors!"
         )
     elif config.get("strict", False) and warnings:
         print(warnings)
         raise _mkdocs_exceptions.ConfigurationError(
-            "Aborted with {} Configuration Warnings in 'strict' mode!".format(len(warnings))
+            f"Aborted with {len(warnings)} Configuration Warnings in 'strict' mode!"
         )
 
     config_instance.config_file_path = config["config_file_path"]

@@ -13,7 +13,7 @@ class NoProjectFound(PortrayError):
     def __init__(self, directory: str):
         super().__init__(
             self,
-            "No Python project found in the given directory: '{}'".format(directory)
+            f"No Python project found in the given directory: '{directory}'"
             + " See: https://timothycrosley.github.io/portray/TROUBLESHOOTING/#noprojectfound",
         )
         self.directory = directory
@@ -24,7 +24,6 @@ class DocumentationAlreadyExists(PortrayError):
 
     def __init__(self, directory: str):
         super().__init__(
-            self,
-            "Documentation already exists in '{}'. Use --overwrite to ignore".format(directory),
+            self, f"Documentation already exists in '{directory}'. Use --overwrite to ignore"
         )
         self.directory = directory
