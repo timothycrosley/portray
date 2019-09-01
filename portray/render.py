@@ -50,7 +50,7 @@ def documentation(config: dict, overwrite: bool = False) -> None:
         shutil.copytree(documentation_output, config["output_dir"])
 
 
-def pdoc3(config: dict) -> None:
+def pdocs(config: dict) -> None:
     """Render this project using the specified pdoc config passed into pdoc.
 
     This rendering is from code definition to Markdown so that
@@ -95,9 +95,9 @@ def documentation_in_temp_folder(config: dict):
         with tempfile.TemporaryDirectory() as temp_output_dir:
             shutil.copytree(config["directory"], input_dir)
 
-            if "output_dir" not in config["pdoc3"]:
-                config["pdoc3"]["output_dir"] = os.path.join(input_dir, "reference")
-            pdoc3(config["pdoc3"])
+            if "output_dir" not in config["pdocs"]:
+                config["pdocs"]["output_dir"] = os.path.join(input_dir, "reference")
+            pdocs(config["pdocs"])
 
             if "docs_dir" not in config["mkdocs"]:
                 config["mkdocs"]["docs_dir"] = input_dir
@@ -122,7 +122,7 @@ def documentation_in_temp_folder(config: dict):
                     _nested_docs(os.path.join(input_dir, config["docs_dir"]), input_dir, config)
                 )
 
-                reference_docs = _nested_docs(config["pdoc3"]["output_dir"], input_dir, config)
+                reference_docs = _nested_docs(config["pdocs"]["output_dir"], input_dir, config)
                 nav.append({"Reference": reference_docs})  # type: ignore
 
             mkdocs(config["mkdocs"])

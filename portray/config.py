@@ -1,6 +1,7 @@
 """Defines the configuration defaults and load functions used by `portray`"""
 import ast
 import os
+import warnings
 from typing import Any, Dict, List, Union, cast
 from urllib import parse
 
@@ -37,7 +38,7 @@ MKDOCS_DEFAULTS = {
     ],
 }  # type: Dict[str, Any]
 
-PDOC3_DEFAULTS = {
+PDOCS_DEFAULTS = {
     "filter": None,
     "force": True,
     "html": False,
@@ -46,7 +47,7 @@ PDOC3_DEFAULTS = {
     "html_no_source": False,
     "overwrite": False,
     "external_links": False,
-    "template_dir": os.path.join(os.path.dirname(__file__), "pdoc3_templates"),
+    "template_dir": os.path.join(os.path.dirname(__file__), "pdocs_templates"),
     "link_prefix": None,
     "close_stdin": False,
     "http": "",
@@ -72,10 +73,14 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     project_config.update(toml(os.path.join(directory, config_file), **overrides))
 
     project_config.setdefault("modules", [os.path.basename(os.getcwd())])
-    project_config.setdefault("pdoc3", {}).setdefault("modules", project_config["modules"])
+    project_config.setdefault("pdocs", {}).setdefault("modules", project_config["modules"])
 
     project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
-    project_config["pdoc3"] = pdoc3(directory, **project_config.get("pdoc3", {}))
+    if "pdoc3" in project_config:
+        warnings.warn("pdoc3 config usage is depracted in favor of pdocs.", DeprecationWarning)
+    project_config["pdocs"] = pdocs(
+        directory, **project_config.get("pdocs", project_config.get("pdoc3", {}))
+    )
     return project_config
 
 
@@ -96,9 +101,7 @@ def setup_py(location: str) -> dict:
                             break
                     break
     except Exception as error:
-        print(
-            "WARNING: Error ({}) occurred trying to parse setup.py file: {}".format(error, location)
-        )
+        warnings.warn(f"Error ({error}) occurred trying to parse setup.py file: {location}")
 
     return setup_config
 
@@ -130,7 +133,7 @@ def toml(location: str, **overrides) -> dict:
 
         return config
     except Exception:
-        print("WARNING: No {} config file found".format(location))
+        warnings.warn(f"No {location} config file found")
 
     return {}
 
@@ -149,7 +152,7 @@ def repository(directory: str) -> dict:
         config = {}
 
     if not config:
-        print("WARNING: Unable to identify `repo_name` and `repo_url` automatically")
+        warnings.warn("Unable to identify `repo_name` and `repo_url` automatically")
 
     return config
 
@@ -168,12 +171,11 @@ def mkdocs(directory: str, **overrides) -> dict:
     return mkdocs_config
 
 
-def pdoc3(directory: str, **overrides) -> dict:
-    """Returns back the configuration that will be used when running pdoc3"""
-    defaults = {**PDOC3_DEFAULTS}
+def pdocs(directory: str, **overrides) -> dict:
+    """Returns back the configuration that will be used when running pdocs"""
+    defaults = {**PDOCS_DEFAULTS}
     defaults["config"] = [
-        "{}={}".format(key, value)
-        for key, value in PDOC3_DEFAULTS["config"].items()  # type: ignore
+        f"{key}={value}" for key, value in PDOCS_DEFAULTS["config"].items()  # type: ignore
     ]
     defaults.update(overrides)
     return defaults

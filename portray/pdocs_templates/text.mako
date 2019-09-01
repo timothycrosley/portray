@@ -62,10 +62,10 @@ ${cls.docstring}
 % endif
 
 <%
-  class_vars = cls.class_variables(show_inherited_members, sort=sort_identifiers)
-  static_methods = cls.functions(show_inherited_members, sort=sort_identifiers)
-  inst_vars = cls.instance_variables(show_inherited_members, sort=sort_identifiers)
-  methods = cls.methods(show_inherited_members, sort=sort_identifiers)
+  class_vars = cls.class_variables()
+  static_methods = cls.functions()
+  inst_vars = cls.instance_variables()
+  methods = cls.methods()
   mro = cls.mro()
   subclasses = cls.subclasses()
 %>
