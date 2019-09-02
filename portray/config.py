@@ -45,7 +45,6 @@ PDOCS_DEFAULTS = {
     "pdf": False,
     "html_dir": None,
     "html_no_source": False,
-    "overwrite": False,
     "external_links": False,
     "template_dir": os.path.join(os.path.dirname(__file__), "pdocs_templates"),
     "link_prefix": None,
