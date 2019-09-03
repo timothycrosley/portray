@@ -1,18 +1,23 @@
 ## Define mini-templates for each portion of the doco.
 
-<%def name="h3(s)">### ${s}
+<%def name="h4(s)">#### ${s}
 </%def>
 
-<%def name="function(func)" buffered="True">
+<%def name="function(func, class_level=False)" buffered="True">
     <%
         returns = func.return_annotation()
         if returns:
             returns = ' -> ' + returns
     %>
+
+% if class_level:
 ${"##### " + func.name}
+% else:
+${"### " + func.name}
+% endif
 
 ```python3
-def (
+def ${func.name}(
     ${",\n    ".join(func.params())}
 )${returns}
 ```
@@ -34,10 +39,10 @@ ${var.docstring}
 </%def>
 
 <%def name="class_(cls)" buffered="True">
-${"##### " + cls.name}
+${"### " + cls.name}
 
 ```python3
-class (
+class ${cls.name}(
     ${",\n    ".join(cls.params())}
 )
 ```
@@ -62,21 +67,21 @@ ${cls.docstring}
   subclasses = cls.subclasses()
 %>
 % if mro:
-${h3('Ancestors (in MRO)')}
+${h4('Ancestors (in MRO)')}
     % for c in mro:
 * ${c.refname}
     % endfor
 % endif
 
 % if subclasses:
-${h3('Descendants')}
+${h4('Descendants')}
     % for c in subclasses:
 * ${c.refname}
     % endfor
 % endif
 
 % if class_vars:
-${h3('Class variables')}
+${h4('Class variables')}
     % for v in class_vars:
 ${variable(v)}
 
@@ -84,24 +89,24 @@ ${variable(v)}
 % endif
 
 % if static_methods:
-${h3('Static methods')}
+${h4('Static methods')}
     % for f in static_methods:
-${function(f)}
+${function(f, True)}
 
     % endfor
 % endif
 
 % if inst_vars:
-${h3('Instance variables')}
+${h4('Instance variables')}
 % for v in inst_vars:
 ${variable(v)}
 
 % endfor
 % endif
 % if methods:
-${h3('Methods')}
+${h4('Methods')}
 % for m in methods:
-${function(m)}
+${function(m, True)}
 
 % endfor
 % endif
