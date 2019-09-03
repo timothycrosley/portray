@@ -1,19 +1,11 @@
 ## Define mini-templates for each portion of the doco.
 
-<%!
-  def indent(s, spaces=4):
-      new = s.replace('\n', '\n' + ' ' * spaces)
-      return ' ' * spaces + new.strip()
-%>
-
-<%def name="deflist(s)">:${indent(s)[1:]}</%def>
-
 <%def name="h3(s)">### ${s}
 </%def>
 
 <%def name="function(func)" buffered="True">
     <%
-        returns = show_type_annotations and func.return_annotation() or ''
+        returns = func.return_annotation()
         if returns:
             returns = ' -> ' + returns
     %>
@@ -21,12 +13,12 @@ ${"##### " + func.name}
 
 ```python3
 def (
-    ${",\n    ".join(func.params(annotate=show_type_annotations))}
+    ${",\n    ".join(func.params())}
 )${returns}
 ```
 ${func.docstring}
 
-% if show_source_code and func.source and func.obj is not getattr(func.inherits, 'obj', None):
+% if show_source_code and func.source:
 
 ??? example "View Source"
         ${"\n        ".join(func.source)}
@@ -38,7 +30,7 @@ ${func.docstring}
 ```python3
 ${var.name}
 ```
-${var.docstring | deflist}
+${var.docstring}
 </%def>
 
 <%def name="class_(cls)" buffered="True">
@@ -46,7 +38,7 @@ ${"##### " + cls.name}
 
 ```python3
 class (
-    ${",\n    ".join(cls.params(annotate=show_type_annotations))}
+    ${",\n    ".join(cls.params())}
 )
 ```
 
@@ -130,9 +122,12 @@ ${heading} ${module.name}
 =${'=' * (len(module.name) + len(heading))}
 ${module.docstring}
 
+% if show_source_code and module.source:
+
 ??? example "View Source"
         ${"\n        ".join(module.source)}
 
+% endif
 
 % if submodules:
 Sub-modules

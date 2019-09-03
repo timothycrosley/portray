@@ -39,18 +39,9 @@ MKDOCS_DEFAULTS = {
 }  # type: Dict[str, Any]
 
 PDOCS_DEFAULTS = {
-    "filter": None,
     "overwrite": True,
-    "html": False,
-    "pdf": False,
-    "html_dir": None,
-    "html_no_source": False,
-    "external_links": False,
+    "exclude_source": False,
     "template_dir": os.path.join(os.path.dirname(__file__), "pdocs_templates"),
-    "link_prefix": None,
-    "close_stdin": False,
-    "http": "",
-    "config": {"show_type_annotations": True},
 }  # type: Dict[str, Union[str, str, bool, None, Dict, List]]
 
 
@@ -76,9 +67,10 @@ def project(directory: str, config_file: str, **overrides) -> dict:
 
     project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
     if "pdoc3" in project_config:
-        warnings.warn("pdoc3 config usage is depracted in favor of pdocs.", DeprecationWarning)
+        warnings.warn("pdoc3 config usage is deprecated in favor of pdocs. "
+                      "pdoc3 section will be ignored. ", DeprecationWarning)
     project_config["pdocs"] = pdocs(
-        directory, **project_config.get("pdocs", project_config.get("pdoc3", {}))
+        directory, **project_config.get("pdocs", {})
     )
     return project_config
 
@@ -173,8 +165,5 @@ def mkdocs(directory: str, **overrides) -> dict:
 def pdocs(directory: str, **overrides) -> dict:
     """Returns back the configuration that will be used when running pdocs"""
     defaults = {**PDOCS_DEFAULTS}
-    defaults["config"] = [
-        f"{key}={value}" for key, value in PDOCS_DEFAULTS["config"].items()  # type: ignore
-    ]
     defaults.update(overrides)
     return defaults

@@ -12,7 +12,7 @@ from typing import Dict
 import mako.exceptions
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
-import pdocs.cli as pdocs_cli
+from pdocs import as_markdown as pdocs_as_markdown
 from mkdocs.commands.build import build as mkdocs_build
 
 from portray.exceptions import DocumentationAlreadyExists
@@ -56,25 +56,7 @@ def pdocs(config: dict) -> None:
     This rendering is from code definition to Markdown so that
     it will be compatible with MkDocs.
     """
-    try:
-        try:
-            pdocs_cli.run(Namespace(**config))
-        except TypeError as type_error:
-            if "show_type_annotations=True" not in config["config"]:
-                raise
-
-            print(type_error)
-            print(
-                "WARNING: A type error was thrown. Attempting graceful degradation to no type hints"
-            )
-            config["config"].remove("show_type_annotations=True")
-            config["config"].append("show_type_annotations=False")
-            pdocs_cli.run(Namespace(**config))
-
-    except Exception:
-        print(config)
-        print(mako.exceptions.text_error_template().render())
-        raise
+    pdocs_as_markdown(**config)
 
 
 def mkdocs(config: dict):
