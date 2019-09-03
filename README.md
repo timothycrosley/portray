@@ -5,7 +5,7 @@ _________________
 [![Build Status](https://travis-ci.org/timothycrosley/portray.svg?branch=master)](https://travis-ci.org/timothycrosley/portray)
 [![codecov](https://codecov.io/gh/timothycrosley/portray/branch/master/graph/badge.svg)](https://codecov.io/gh/timothycrosley/portray)
 [![Join the chat at https://gitter.im/timothycrosley/portray](https://badges.gitter.im/timothycrosley/portray.svg)](https://gitter.im/timothycrosley/portray?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://pypi.python.org/pypi/hug/)
+[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://pypi.python.org/pypi/portray/)
 [![Downloads](https://pepy.tech/badge/portray)](https://pepy.tech/project/portray)
 _________________
 
