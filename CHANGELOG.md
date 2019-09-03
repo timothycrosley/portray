@@ -18,6 +18,9 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 Changelog
 =========
 
+## 1.2.1 - September 3 2019
+- General improvements to reference code documentation rendering
+
 ## 1.2.0 - September 3 2019
 Potentially breaking dependency change release from pdoc3 to [pdocs](https://timothycrosley.github.io/pdocs/).
 
