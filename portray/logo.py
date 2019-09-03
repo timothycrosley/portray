@@ -1,6 +1,6 @@
 from portray._version import __version__
 
-ascii_art = r"""
+ascii_art = rf"""
                       __
                      /\ \__
  _____     ___   _ __\ \ ,_\  _ __    __     __  __
@@ -12,16 +12,12 @@ ascii_art = r"""
     \/_/                                         \/__/
         Your Project with Great Documentation.
 
-Version: {}
+Version: {__version__}
 Copyright Timothy Edmund Crosley 2019 MIT License
-""".format(
-    __version__
-)
+"""
 
-__doc__ = """
+__doc__ = f"""
 ```python
-{}
+{ascii_art}
 ```
-""".format(
-    ascii_art
-)
+"""

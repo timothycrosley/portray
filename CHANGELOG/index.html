@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../art/logo_small.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
     
     
       
@@ -177,7 +177,7 @@
         
       
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -576,7 +576,14 @@
 <p><code>pipenv install portray</code></p>
 <p>see the <a href="https://timothycrosley.github.io/portray/docs/quick_start/1.-installation/">Installation QuickStart</a> for more instructions.</p>
 <h1 id="changelog">Changelog</h1>
-<h2 id="110-august-29">1.1.0 - August 29</h2>
+<h2 id="120-september-3-2019">1.2.0 - September 3 2019</h2>
+<p>Potentially breaking dependency change release from pdoc3 to <a href="https://timothycrosley.github.io/pdocs/">pdocs</a>.</p>
+<h3 id="migration-guide">Migration guide:</h3>
+<ul>
+<li><code>pyproject.toml</code> config section changes from <code>[tool.portray.pdoc3]</code> to <code>[tool.portray.pdocs]</code></li>
+<li>Type annotations are no longer toggleable but are rather always on.</li>
+</ul>
+<h2 id="110-august-29-2019">1.1.0 - August 29 2019</h2>
 <p>Minor Feature release w/ Bug Fixes</p>
 <ul>
 <li>Added support for specifying modules directly from the CLI and API.</li>
@@ -587,7 +594,7 @@
 <li>Fixed <a href="https://github.com/timothycrosley/portray/issues/10">Issue 10</a> - Class methods rendered incorrectly.</li>
 <li>Fixed <a href="https://github.com/timothycrosley/portray/issues/17">Issue 17</a> - Portray silently requires README.md file.</li>
 </ul>
-<h2 id="105-august-26-pm">1.0.5 - August 26 PM</h2>
+<h2 id="105-august-26-pm-2019">1.0.5 - August 26 PM 2019</h2>
 <p>Bug fix release</p>
 <ul>
 <li>Fixed <a href="https://github.com/timothycrosley/portray/issues/6">Issue 6</a> - Failed to open web-browser on startup.</li>
@@ -595,7 +602,7 @@
 <li>Fixed <a href="https://github.com/timothycrosley/portray/issues/4">Issue 4</a> - Class references generate large code block.</li>
 </ul>
 <p>Big thanks to Marcel Hellkamp (<a href="https://github.com/defnull">@defnull</a>) for fixing these issues.</p>
-<h2 id="100-august-26-am">1.0.0 - August 26 AM</h2>
+<h2 id="100-august-26-am-2019">1.0.0 - August 26 AM 2019</h2>
 <p>Initial API stable release of portray</p>
                 
                   

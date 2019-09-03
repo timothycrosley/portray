@@ -9,9 +9,10 @@ from contextlib import contextmanager
 from glob import glob
 from typing import Dict
 
+import mako.exceptions
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
-import pdoc.cli
+from pdocs import as_markdown as pdocs_as_markdown
 from mkdocs.commands.build import build as mkdocs_build
 
 from portray.exceptions import DocumentationAlreadyExists
@@ -49,23 +50,13 @@ def documentation(config: dict, overwrite: bool = False) -> None:
         shutil.copytree(documentation_output, config["output_dir"])
 
 
-def pdoc3(config: dict) -> None:
+def pdocs(config: dict) -> None:
     """Render this project using the specified pdoc config passed into pdoc.
 
     This rendering is from code definition to Markdown so that
     it will be compatible with MkDocs.
     """
-    try:
-        pdoc.cli.main(Namespace(**config))
-    except TypeError as type_error:
-        if "show_type_annotations=True" not in config["config"]:
-            raise
-
-        print(type_error)
-        print("WARNING: A type error was thrown. Attempting graceful degradation to no type hints")
-        config["config"].remove("show_type_annotations=True")
-        config["config"].append("show_type_annotations=False")
-        pdoc.cli.main(Namespace(**config))
+    pdocs_as_markdown(**config)
 
 
 def mkdocs(config: dict):
@@ -86,9 +77,9 @@ def documentation_in_temp_folder(config: dict):
         with tempfile.TemporaryDirectory() as temp_output_dir:
             shutil.copytree(config["directory"], input_dir)
 
-            if "output_dir" not in config["pdoc3"]:
-                config["pdoc3"]["output_dir"] = os.path.join(input_dir, "reference")
-            pdoc3(config["pdoc3"])
+            if "output_dir" not in config["pdocs"]:
+                config["pdocs"]["output_dir"] = os.path.join(input_dir, "reference")
+            pdocs(config["pdocs"])
 
             if "docs_dir" not in config["mkdocs"]:
                 config["mkdocs"]["docs_dir"] = input_dir
@@ -113,7 +104,7 @@ def documentation_in_temp_folder(config: dict):
                     _nested_docs(os.path.join(input_dir, config["docs_dir"]), input_dir, config)
                 )
 
-                reference_docs = _nested_docs(config["pdoc3"]["output_dir"], input_dir, config)
+                reference_docs = _nested_docs(config["pdocs"]["output_dir"], input_dir, config)
                 nav.append({"Reference": reference_docs})  # type: ignore
 
             mkdocs(config["mkdocs"])
@@ -128,12 +119,12 @@ def _mkdocs_config(config: dict) -> mkdocs_config.Config:
     if errors:
         print(errors)
         raise _mkdocs_exceptions.ConfigurationError(
-            "Aborted with {} Configuration Errors!".format(len(errors))
+            f"Aborted with {len(errors)} Configuration Errors!"
         )
     elif config.get("strict", False) and warnings:
         print(warnings)
         raise _mkdocs_exceptions.ConfigurationError(
-            "Aborted with {} Configuration Warnings in 'strict' mode!".format(len(warnings))
+            f"Aborted with {len(warnings)} Configuration Warnings in 'strict' mode!"
         )
 
     config_instance.config_file_path = config["config_file_path"]

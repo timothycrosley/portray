@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../../art/logo_small.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
     
     
       
@@ -177,7 +177,7 @@
         
       
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -512,9 +512,38 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Logo
+      </label>
+    
     <a href="./" title="Logo" class="md-nav__link md-nav__link--active">
       Logo
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#variables" class="md-nav__link">
+    Variables
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -558,6 +587,22 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#variables" class="md-nav__link">
+    Variables
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -583,42 +628,57 @@
     \<span class="o">/</span><span class="n">_</span><span class="o">/</span>                                         \<span class="o">/</span><span class="n">__</span><span class="o">/</span>
         <span class="n">Your</span> <span class="n">Project</span> <span class="k">with</span> <span class="n">Great</span> <span class="n">Documentation</span><span class="o">.</span>
 
-<span class="n">Version</span><span class="p">:</span> <span class="mf">1.1</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">Version</span><span class="p">:</span> <span class="mf">1.2</span><span class="o">.</span><span class="mi">0</span>
 <span class="n">Copyright</span> <span class="n">Timothy</span> <span class="n">Edmund</span> <span class="n">Crosley</span> <span class="mi">2019</span> <span class="n">MIT</span> <span class="n">License</span>
 </pre></div>
 
 
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">portray._version</span> <span class="kn">import</span> <span class="n">__version__</span>
 
-<span class="n">ascii_art</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="n">ascii_art</span> <span class="o">=</span> <span class="n">rf</span><span class="s2">&quot;&quot;&quot;</span>
+
 <span class="s2">                      __</span>
+
 <span class="s2">                     /\ \__</span>
+
 <span class="s2"> _____     ___   _ __\ \ ,_\  _ __    __     __  __</span>
-<span class="s2">/\ &#39;__`\  / __`\/\`&#39;__\ \ \/ /\`&#39;__\/&#39;__`\  /\ \/\ \</span>
-<span class="s2">\ \ \L\ \/\ \L\ \ \ \/ \ \ \_\ \ \//\ \L\.\_\ \ \_\ \</span>
-<span class="s2"> \ \ ,__/\ \____/\ \_\  \ \__\\ \_\\ \__/.\_\\/`____ \</span>
-<span class="s2">  \ \ \/  \/___/  \/_/   \/__/ \/_/ \/__/\/_/ `/___/&gt; \</span>
+
+<span class="s2">/\ &#39;__`\  / __`\/\`&#39;__\ \ \/ /\`&#39;__\/&#39;__`\  /\ \/\ </span><span class="se">\</span>
+
+<span class="s2">\ \ \L\ \/\ \L\ \ \ \/ \ \ \_\ \ \//\ \L\.\_\ \ \_\ </span><span class="se">\</span>
+
+<span class="s2"> \ \ ,__/\ \____/\ \_\  \ \__</span><span class="se">\\</span><span class="s2"> \_</span><span class="se">\\</span><span class="s2"> \__/.\_</span><span class="se">\\</span><span class="s2">/`____ </span><span class="se">\</span>
+
+<span class="s2">  \ \ \/  \/___/  \/_/   \/__/ \/_/ \/__/\/_/ `/___/&gt; </span><span class="se">\</span>
+
 <span class="s2">   \ \_\                                         /\___/</span>
+
 <span class="s2">    \/_/                                         \/__/</span>
+
 <span class="s2">        Your Project with Great Documentation.</span>
 
-<span class="s2">Version: {}</span>
-<span class="s2">Copyright Timothy Edmund Crosley 2019 MIT License</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="n">__version__</span>
-<span class="p">)</span>
+<span class="s2">Version: {__version__}</span>
 
-<span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Copyright Timothy Edmund Crosley 2019 MIT License</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="vm">__doc__</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;&quot;&quot;</span>
+
 <span class="s2">```python</span>
-<span class="s2">{}</span>
+
+<span class="s2">{ascii_art}</span>
+
 <span class="s2">```</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="n">ascii_art</span>
-<span class="p">)</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
 </pre></div>
 
 
 </details>
+<h2 id="variables">Variables</h2>
+<div class="codehilite"><pre><span></span><span class="n">ascii_art</span>
+</pre></div>
                 
                   
                 

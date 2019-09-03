@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../../art/logo_small.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
     
     
       
@@ -177,7 +177,7 @@
         
       
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -507,7 +507,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#classes" title="Classes" class="md-nav__link">
+  <a href="#classes" class="md-nav__link">
     Classes
   </a>
   
@@ -515,14 +515,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#documentationalreadyexists" title="DocumentationAlreadyExists" class="md-nav__link">
+  <a href="#documentationalreadyexists" class="md-nav__link">
     DocumentationAlreadyExists
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#ancestors-in-mro" title="Ancestors (in MRO)" class="md-nav__link">
+  <a href="#ancestors-in-mro" class="md-nav__link">
     Ancestors (in MRO)
   </a>
   
@@ -530,7 +530,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#noprojectfound" title="NoProjectFound" class="md-nav__link">
+  <a href="#noprojectfound" class="md-nav__link">
     NoProjectFound
   </a>
   
@@ -542,7 +542,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ancestors-in-mro_1" title="Ancestors (in MRO)" class="md-nav__link">
+  <a href="#ancestors-in-mro_1" class="md-nav__link">
     Ancestors (in MRO)
   </a>
   
@@ -550,7 +550,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#portrayerror" title="PortrayError" class="md-nav__link">
+  <a href="#portrayerror" class="md-nav__link">
     PortrayError
   </a>
   
@@ -562,14 +562,14 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ancestors-in-mro_2" title="Ancestors (in MRO)" class="md-nav__link">
+  <a href="#ancestors-in-mro_2" class="md-nav__link">
     Ancestors (in MRO)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#descendants" title="Descendants" class="md-nav__link">
+  <a href="#descendants" class="md-nav__link">
     Descendants
   </a>
   
@@ -658,7 +658,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#classes" title="Classes" class="md-nav__link">
+  <a href="#classes" class="md-nav__link">
     Classes
   </a>
   
@@ -666,14 +666,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#documentationalreadyexists" title="DocumentationAlreadyExists" class="md-nav__link">
+  <a href="#documentationalreadyexists" class="md-nav__link">
     DocumentationAlreadyExists
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#ancestors-in-mro" title="Ancestors (in MRO)" class="md-nav__link">
+  <a href="#ancestors-in-mro" class="md-nav__link">
     Ancestors (in MRO)
   </a>
   
@@ -681,7 +681,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#noprojectfound" title="NoProjectFound" class="md-nav__link">
+  <a href="#noprojectfound" class="md-nav__link">
     NoProjectFound
   </a>
   
@@ -693,7 +693,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ancestors-in-mro_1" title="Ancestors (in MRO)" class="md-nav__link">
+  <a href="#ancestors-in-mro_1" class="md-nav__link">
     Ancestors (in MRO)
   </a>
   
@@ -701,7 +701,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#portrayerror" title="PortrayError" class="md-nav__link">
+  <a href="#portrayerror" class="md-nav__link">
     PortrayError
   </a>
   
@@ -713,14 +713,14 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ancestors-in-mro_2" title="Ancestors (in MRO)" class="md-nav__link">
+  <a href="#ancestors-in-mro_2" class="md-nav__link">
     Ancestors (in MRO)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#descendants" title="Descendants" class="md-nav__link">
+  <a href="#descendants" class="md-nav__link">
     Descendants
   </a>
   
@@ -755,29 +755,41 @@
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="s2">&quot;&quot;&quot;</span><span class="s">All portray specific exception classes should be defined here</span><span class="s2">&quot;&quot;&quot;</span>
 
 <span class="nv">class</span> <span class="nv">PortrayError</span><span class="ss">(</span><span class="nv">Exception</span><span class="ss">)</span>:
+
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Base class for all exceptions returned from portray</span><span class="s2">&quot;&quot;&quot;</span>
 
     <span class="nv">pass</span>
 
 <span class="nv">class</span> <span class="nv">NoProjectFound</span><span class="ss">(</span><span class="nv">PortrayError</span><span class="ss">)</span>:
+
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Thrown when portray is ran in a directory with no Python project</span><span class="s2">&quot;&quot;&quot;</span>
 
     <span class="nv">def</span> <span class="nv">__init__</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">directory</span>: <span class="nv">str</span><span class="ss">)</span>:
+
         <span class="nv">super</span><span class="ss">()</span>.<span class="nv">__init__</span><span class="ss">(</span>
+
             <span class="nv">self</span>,
-            <span class="s2">&quot;</span><span class="s">No Python project found in the given directory: &#39;{}&#39;</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>
+
+            <span class="nv">f</span><span class="s2">&quot;</span><span class="s">No Python project found in the given directory: &#39;{directory}&#39;</span><span class="s2">&quot;</span>
+
             <span class="o">+</span> <span class="s2">&quot;</span><span class="s"> See: https://timothycrosley.github.io/portray/TROUBLESHOOTING/#noprojectfound</span><span class="s2">&quot;</span>,
+
         <span class="ss">)</span>
+
         <span class="nv">self</span>.<span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span>
 
 <span class="nv">class</span> <span class="nv">DocumentationAlreadyExists</span><span class="ss">(</span><span class="nv">PortrayError</span><span class="ss">)</span>:
+
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Thrown when portray has been told to output documentation where it already exists</span><span class="s2">&quot;&quot;&quot;</span>
 
     <span class="nv">def</span> <span class="nv">__init__</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">directory</span>: <span class="nv">str</span><span class="ss">)</span>:
+
         <span class="nv">super</span><span class="ss">()</span>.<span class="nv">__init__</span><span class="ss">(</span>
-            <span class="nv">self</span>,
-            <span class="s2">&quot;</span><span class="s">Documentation already exists in &#39;{}&#39;. Use --overwrite to ignore</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>,
+
+            <span class="nv">self</span>, <span class="nv">f</span><span class="s2">&quot;</span><span class="s">Documentation already exists in &#39;{directory}&#39;. Use --overwrite to ignore</span><span class="s2">&quot;</span>
+
         <span class="ss">)</span>
+
         <span class="nv">self</span>.<span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span>
 </pre></div>
 
@@ -786,20 +798,24 @@
 <h2 id="classes">Classes</h2>
 <h5 id="documentationalreadyexists">DocumentationAlreadyExists</h5>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="err">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span>
 </pre></div>
 
 
 <p>Thrown when portray has been told to output documentation where it already exists</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="k">class</span> <span class="n">DocumentationAlreadyExists</span>(<span class="n">PortrayError</span>):
+
     <span class="s">&quot;&quot;&quot;Thrown when portray has been told to output documentation where it already exists&quot;&quot;&quot;</span>
 
     <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">directory:</span> <span class="n">str</span>):
+
         <span class="n">super</span>().<span class="n">__init__</span>(
-            <span class="k">self</span>,
-            <span class="s">&quot;Documentation already exists in &#39;{}&#39;. Use --overwrite to ignore&quot;</span>.<span class="n">format</span>(<span class="n">directory</span>),
+
+            <span class="k">self</span>, <span class="n">f</span><span class="s">&quot;Documentation already exists in &#39;{directory}&#39;. Use --overwrite to ignore&quot;</span>
+
         )
+
         <span class="k">self</span>.<span class="n">directory</span> = <span class="n">directory</span>
 </pre></div>
 
@@ -814,21 +830,28 @@
 </ul>
 <h5 id="noprojectfound">NoProjectFound</h5>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="err">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span>
 </pre></div>
 
 
 <p>Thrown when portray is ran in a directory with no Python project</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="k">class</span> <span class="n">NoProjectFound</span>(<span class="n">PortrayError</span>):
+
     <span class="s">&quot;&quot;&quot;Thrown when portray is ran in a directory with no Python project&quot;&quot;&quot;</span>
 
     <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">directory:</span> <span class="n">str</span>):
+
         <span class="n">super</span>().<span class="n">__init__</span>(
+
             <span class="k">self</span>,
-            <span class="s">&quot;No Python project found in the given directory: &#39;{}&#39;&quot;</span>.<span class="n">format</span>(<span class="n">directory</span>)
+
+            <span class="n">f</span><span class="s">&quot;No Python project found in the given directory: &#39;{directory}&#39;&quot;</span>
+
             + <span class="s">&quot; See: https://timothycrosley.github.io/portray/TROUBLESHOOTING/#noprojectfound&quot;</span>,
+
         )
+
         <span class="k">self</span>.<span class="n">directory</span> = <span class="n">directory</span>
 </pre></div>
 
@@ -843,6 +866,7 @@
 </ul>
 <h5 id="portrayerror">PortrayError</h5>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="err">(</span>
+    <span class="o">/</span><span class="p">,</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span>
@@ -851,6 +875,7 @@
 
 <p>Base class for all exceptions returned from portray</p>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">class</span> <span class="nv">PortrayError</span><span class="ss">(</span><span class="nv">Exception</span><span class="ss">)</span>:
+
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Base class for all exceptions returned from portray</span><span class="s2">&quot;&quot;&quot;</span>
 
     <span class="nv">pass</span>

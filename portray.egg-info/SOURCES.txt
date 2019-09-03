@@ -15,4 +15,4 @@ portray.egg-info/entry_points.txt
 portray.egg-info/requires.txt
 portray.egg-info/top_level.txt
 portray/mkdocs_templates/partials/footer.html
-portray/pdoc3_templates/text.mako
+portray/pdocs_templates/text.mako

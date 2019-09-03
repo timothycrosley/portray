@@ -1,19 +1,11 @@
 ## Define mini-templates for each portion of the doco.
 
-<%!
-  def indent(s, spaces=4):
-      new = s.replace('\n', '\n' + ' ' * spaces)
-      return ' ' * spaces + new.strip()
-%>
-
-<%def name="deflist(s)">:${indent(s)[1:]}</%def>
-
 <%def name="h3(s)">### ${s}
 </%def>
 
 <%def name="function(func)" buffered="True">
     <%
-        returns = show_type_annotations and func.return_annotation() or ''
+        returns = func.return_annotation()
         if returns:
             returns = ' -> ' + returns
     %>
@@ -21,15 +13,15 @@ ${"##### " + func.name}
 
 ```python3
 def (
-    ${",\n    ".join(func.params(annotate=show_type_annotations))}
+    ${",\n    ".join(func.params())}
 )${returns}
 ```
 ${func.docstring}
 
-% if show_source_code and func.source and func.obj is not getattr(func.inherits, 'obj', None):
+% if show_source_code and func.source:
 
 ??? example "View Source"
-        ${"\n        ".join(func.source.split("\n"))}
+        ${"\n        ".join(func.source)}
 
 % endif
 </%def>
@@ -38,7 +30,7 @@ ${func.docstring}
 ```python3
 ${var.name}
 ```
-${var.docstring | deflist}
+${var.docstring}
 </%def>
 
 <%def name="class_(cls)" buffered="True">
@@ -46,7 +38,7 @@ ${"##### " + cls.name}
 
 ```python3
 class (
-    ${",\n    ".join(cls.params(annotate=show_type_annotations))}
+    ${",\n    ".join(cls.params())}
 )
 ```
 
@@ -55,17 +47,17 @@ ${cls.docstring}
 % if show_source_code and cls.source:
 
 ??? example "View Source"
-        ${"\n        ".join(cls.source.split("\n"))}
+        ${"\n        ".join(cls.source)}
 
 ------
 
 % endif
 
 <%
-  class_vars = cls.class_variables(show_inherited_members, sort=sort_identifiers)
-  static_methods = cls.functions(show_inherited_members, sort=sort_identifiers)
-  inst_vars = cls.instance_variables(show_inherited_members, sort=sort_identifiers)
-  methods = cls.methods(show_inherited_members, sort=sort_identifiers)
+  class_vars = cls.class_variables()
+  static_methods = cls.functions()
+  inst_vars = cls.instance_variables()
+  methods = cls.methods()
   mro = cls.mro()
   subclasses = cls.subclasses()
 %>
@@ -122,7 +114,7 @@ ${function(m)}
   variables = module.variables()
   classes = module.classes()
   functions = module.functions()
-  submodules = module.submodules()
+  submodules = module.submodules
   heading = 'Namespace' if module.is_namespace else 'Module'
 %>
 
@@ -130,9 +122,12 @@ ${heading} ${module.name}
 =${'=' * (len(module.name) + len(heading))}
 ${module.docstring}
 
-??? example "View Source"
-        ${"\n        ".join(module.source.split("\n"))}
+% if show_source_code and module.source:
 
+??? example "View Source"
+        ${"\n        ".join(module.source)}
+
+% endif
 
 % if submodules:
 Sub-modules
