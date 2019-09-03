@@ -18,7 +18,15 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 Changelog
 =========
 
-## 1.1.0 - August 29
+## 1.2.0 - September 3 2019
+Potentially breaking dependency change release from pdoc3 to [pdocs](https://timothycrosley.github.io/pdocs/).
+
+### Migration guide:
+
+- `pyproject.toml` config section changes from `[tool.portray.pdoc3]` to `[tool.portray.pdocs]`
+- Type annotations are no longer toggleable but are rather always on.
+
+## 1.1.0 - August 29 2019
 Minor Feature release w/ Bug Fixes
 
 - Added support for specifying modules directly from the CLI and API.
@@ -29,7 +37,7 @@ Minor Feature release w/ Bug Fixes
 - Fixed [Issue 10](https://github.com/timothycrosley/portray/issues/10) - Class methods rendered incorrectly.
 - Fixed [Issue 17](https://github.com/timothycrosley/portray/issues/17) - Portray silently requires README.md file.
 
-## 1.0.5 - August 26 PM
+## 1.0.5 - August 26 PM 2019
 Bug fix release
 
 - Fixed [Issue 6](https://github.com/timothycrosley/portray/issues/6) - Failed to open web-browser on startup.
@@ -38,5 +46,5 @@ Bug fix release
 
 Big thanks to Marcel Hellkamp ([@defnull](https://github.com/defnull)) for fixing these issues.
 
-## 1.0.0 - August 26 AM
+## 1.0.0 - August 26 AM 2019
 Initial API stable release of portray
