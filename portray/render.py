@@ -12,8 +12,8 @@ from typing import Dict
 import mako.exceptions
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
-from pdocs import as_markdown as pdocs_as_markdown
 from mkdocs.commands.build import build as mkdocs_build
+from pdocs import as_markdown as pdocs_as_markdown
 
 from portray.exceptions import DocumentationAlreadyExists
 

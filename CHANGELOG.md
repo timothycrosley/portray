@@ -17,6 +17,8 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.2.2 - September 4 2019
+- Fixed a bug specifying modules from command line when no configuration file is present.
 
 ## 1.2.1 - September 3 2019
 - General improvements to reference code documentation rendering

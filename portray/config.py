@@ -60,18 +60,20 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     if os.path.isfile(os.path.join(directory, "setup.py")):
         project_config.update(setup_py(os.path.join(directory, "setup.py")))
 
-    project_config.update(toml(os.path.join(directory, config_file), **overrides))
+    project_config.update(toml(os.path.join(directory, config_file)))
+    project_config.update(overrides)
 
     project_config.setdefault("modules", [os.path.basename(os.getcwd())])
     project_config.setdefault("pdocs", {}).setdefault("modules", project_config["modules"])
 
     project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
     if "pdoc3" in project_config:
-        warnings.warn("pdoc3 config usage is deprecated in favor of pdocs. "
-                      "pdoc3 section will be ignored. ", DeprecationWarning)
-    project_config["pdocs"] = pdocs(
-        directory, **project_config.get("pdocs", {})
-    )
+        warnings.warn(
+            "pdoc3 config usage is deprecated in favor of pdocs. "
+            "pdoc3 section will be ignored. ",
+            DeprecationWarning,
+        )
+    project_config["pdocs"] = pdocs(directory, **project_config.get("pdocs", {}))
     return project_config
 
 
@@ -97,7 +99,7 @@ def setup_py(location: str) -> dict:
     return setup_config
 
 
-def toml(location: str, **overrides) -> dict:
+def toml(location: str) -> dict:
     """Returns back the configuration found within the projects
        [TOML](https://github.com/toml-lang/toml#toml) config (if there is one).
 
@@ -109,7 +111,6 @@ def toml(location: str, **overrides) -> dict:
         tools = toml_config.get("tool", {})
 
         config = tools.get("portray", {})
-        config.update(overrides)
         config["file"] = location
 
         if "modules" not in config:
