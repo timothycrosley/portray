@@ -29,6 +29,10 @@ def test_as_html(temporary_dir, project_dir, chdir):
             # Unless we enable overwritting destination
             api.as_html(overwrite=True)
 
+            # Or, we output to a different location
+            with tempfile.TemporaryDirectory() as new_temp_directory:
+                api.as_html(output_dir=os.path.join(new_temp_directory, "site"))
+
 
 def test_server(mocker, project_dir, chdir):
     with chdir(project_dir):
