@@ -17,6 +17,9 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.2.4 - September 5 2019
+- Fixed [Issue 23](https://github.com/timothycrosley/portray/issues/23) - A confirmed regression from moving to `pdocs` that caused root modules to not be auto included.
+
 ## 1.2.3 - September 4 2019
 - Fixed a bug specifying the output dir for `as_html` command from the command line.
 - Updated to use Python3.6+ style variable annotations.
