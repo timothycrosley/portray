@@ -17,6 +17,9 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.2.3 - September 4 2019
+- Fixed a bug specifying the output dir for `as_html` command from the command line.
+
 ## 1.2.2 - September 4 2019
 - Fixed a bug specifying modules from command line when no configuration file is present.
 
