@@ -61,3 +61,23 @@ def test_on_github_pages(mocker, project_dir, chdir):
         mocker.patch("mkdocs.commands.gh_deploy.gh_deploy")
         api.on_github_pages()
         mkdocs.commands.gh_deploy.gh_deploy.assert_called_once()
+
+
+def test_module_no_path(temporary_dir, chdir):
+    """Test handling of python modules specified in root project directory but not in path"""
+    with chdir(temporary_dir):
+        with open(os.path.join(temporary_dir, "my_module.py"), "w") as pathless_module:
+            pathless_module.write("def my_method():\n    pass\n")
+
+        # Rendering with no module identification should fail
+        with pytest.raises(Exception):
+            api.as_html()
+
+        # With module specification, even without path should succeed
+        api.as_html(modules=["my_module"])
+
+        # Unless path auto inclusion is turned off
+        with open(os.path.join(temporary_dir, "pyproject.toml"), "w") as pyproject:
+            pyproject.write("[tool.portray]\nappend_directory_to_python_path = false")
+        with pytest.raises(Exception):
+            api.as_html()
