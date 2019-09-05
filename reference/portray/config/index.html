@@ -762,11 +762,13 @@
 
     <span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
 
+    <span class="s2">&quot;append_directory_to_python_path&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+
     <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;Cli&quot;</span><span class="p">:</span> <span class="s2">&quot;CLI&quot;</span><span class="p">,</span> <span class="s2">&quot;Api&quot;</span><span class="p">:</span> <span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Http&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTP&quot;</span><span class="p">,</span> <span class="s2">&quot;Pypi&quot;</span><span class="p">:</span> <span class="s2">&quot;PyPI&quot;</span><span class="p">},</span>
 
 <span class="p">}</span>
 
-<span class="n">MKDOCS_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">MKDOCS_DEFAULTS</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
 
     <span class="s2">&quot;site_name&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()),</span>
 
@@ -796,9 +798,9 @@
 
     <span class="p">],</span>
 
-<span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
+<span class="p">}</span>
 
-<span class="n">PDOCS_DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">PDOCS_DEFAULTS</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="p">{</span>
 
     <span class="s2">&quot;overwrite&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
 
@@ -806,7 +808,7 @@
 
     <span class="s2">&quot;template_dir&quot;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;pdocs_templates&quot;</span><span class="p">),</span>
 
-<span class="p">}</span>  <span class="c1"># type: Dict[str, Union[str, str, bool, None, Dict, List]]</span>
+<span class="p">}</span>
 
 <span class="k">def</span> <span class="nf">project</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 
@@ -828,13 +830,15 @@
 
         <span class="k">raise</span> <span class="n">NoProjectFound</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
 
-    <span class="n">project_config</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">PORTRAY_DEFAULTS</span><span class="p">,</span> <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="n">directory</span><span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
+    <span class="n">project_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">PORTRAY_DEFAULTS</span><span class="p">,</span> <span class="s2">&quot;directory&quot;</span><span class="p">:</span> <span class="n">directory</span><span class="p">}</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s2">&quot;setup.py&quot;</span><span class="p">)):</span>
 
         <span class="n">project_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">setup_py</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s2">&quot;setup.py&quot;</span><span class="p">)))</span>
 
-    <span class="n">project_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">toml</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">),</span> <span class="o">**</span><span class="n">overrides</span><span class="p">))</span>
+    <span class="n">project_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">toml</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">)))</span>
+
+    <span class="n">project_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">overrides</span><span class="p">)</span>
 
     <span class="n">project_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())])</span>
 
@@ -844,15 +848,17 @@
 
     <span class="k">if</span> <span class="s2">&quot;pdoc3&quot;</span> <span class="ow">in</span> <span class="n">project_config</span><span class="p">:</span>
 
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;pdoc3 config usage is deprecated in favor of pdocs. &quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
 
-                      <span class="s2">&quot;pdoc3 section will be ignored. &quot;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
+            <span class="s2">&quot;pdoc3 config usage is deprecated in favor of pdocs. &quot;</span>
 
-    <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdocs</span><span class="p">(</span>
+            <span class="s2">&quot;pdoc3 section will be ignored. &quot;</span><span class="p">,</span>
 
-        <span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">project_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pdocs&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="ne">DeprecationWarning</span><span class="p">,</span>
 
-    <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdocs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">project_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pdocs&quot;</span><span class="p">,</span> <span class="p">{}))</span>
 
     <span class="k">return</span> <span class="n">project_config</span>
 
@@ -894,7 +900,7 @@
 
     <span class="k">return</span> <span class="n">setup_config</span>
 
-<span class="k">def</span> <span class="nf">toml</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">toml</span><span class="p">(</span><span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 
     <span class="sd">&quot;&quot;&quot;Returns back the configuration found within the projects</span>
 
@@ -913,8 +919,6 @@
         <span class="n">tools</span> <span class="o">=</span> <span class="n">toml_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tool&quot;</span><span class="p">,</span> <span class="p">{})</span>
 
         <span class="n">config</span> <span class="o">=</span> <span class="n">tools</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;portray&quot;</span><span class="p">,</span> <span class="p">{})</span>
-
-        <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">overrides</span><span class="p">)</span>
 
         <span class="n">config</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">location</span>
 
@@ -978,15 +982,7 @@
 
     <span class="sd">&quot;&quot;&quot;Returns back the configuration that will be used when running mkdocs&quot;&quot;&quot;</span>
 
-    <span class="n">mkdocs_config</span> <span class="o">=</span> <span class="p">{</span>
-
-        <span class="o">**</span><span class="n">MKDOCS_DEFAULTS</span><span class="p">,</span>
-
-        <span class="o">**</span><span class="n">repository</span><span class="p">(</span><span class="n">directory</span><span class="p">),</span>
-
-        <span class="o">**</span><span class="n">overrides</span><span class="p">,</span>
-
-    <span class="p">}</span>  <span class="c1"># type: Dict[str, Any]</span>
+    <span class="n">mkdocs_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">MKDOCS_DEFAULTS</span><span class="p">,</span> <span class="o">**</span><span class="n">repository</span><span class="p">(</span><span class="n">directory</span><span class="p">),</span> <span class="o">**</span><span class="n">overrides</span><span class="p">}</span>
 
     <span class="n">theme</span> <span class="o">=</span> <span class="n">mkdocs_config</span><span class="p">[</span><span class="s2">&quot;theme&quot;</span><span class="p">]</span>
 
@@ -1036,15 +1032,7 @@
 
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns back the configuration that will be used when running mkdocs</span><span class="s2">&quot;&quot;&quot;</span>
 
-    <span class="nv">mkdocs_config</span> <span class="o">=</span> {
-
-        <span class="o">**</span><span class="nv">MKDOCS_DEFAULTS</span>,
-
-        <span class="o">**</span><span class="nv">repository</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>,
-
-        <span class="o">**</span><span class="nv">overrides</span>,
-
-    }  # <span class="nv">type</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>]
+    <span class="nv">mkdocs_config</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>] <span class="o">=</span> {<span class="o">**</span><span class="nv">MKDOCS_DEFAULTS</span>, <span class="o">**</span><span class="nv">repository</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>, <span class="o">**</span><span class="nv">overrides</span>}
 
     <span class="nv">theme</span> <span class="o">=</span> <span class="nv">mkdocs_config</span>[<span class="s2">&quot;</span><span class="s">theme</span><span class="s2">&quot;</span>]
 
@@ -1110,13 +1098,15 @@ defined below that <code>portray</code> was able to determine for the project</p
 
         <span class="nv">raise</span> <span class="nv">NoProjectFound</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>
 
-    <span class="nv">project_config</span> <span class="o">=</span> {<span class="o">**</span><span class="nv">PORTRAY_DEFAULTS</span>, <span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>: <span class="nv">directory</span>}  # <span class="nv">type</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>]
+    <span class="nv">project_config</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>] <span class="o">=</span> {<span class="o">**</span><span class="nv">PORTRAY_DEFAULTS</span>, <span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>: <span class="nv">directory</span>}
 
     <span class="k">if</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">isfile</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="s2">&quot;</span><span class="s">setup.py</span><span class="s2">&quot;</span><span class="ss">))</span>:
 
         <span class="nv">project_config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">setup_py</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="s2">&quot;</span><span class="s">setup.py</span><span class="s2">&quot;</span><span class="ss">)))</span>
 
-    <span class="nv">project_config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">toml</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)</span>, <span class="o">**</span><span class="nv">overrides</span><span class="ss">))</span>
+    <span class="nv">project_config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">toml</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span><span class="ss">)))</span>
+
+    <span class="nv">project_config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">overrides</span><span class="ss">)</span>
 
     <span class="nv">project_config</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>, [<span class="nv">os</span>.<span class="nv">path</span>.<span class="k">basename</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">())</span>]<span class="ss">)</span>
 
@@ -1126,15 +1116,17 @@ defined below that <code>portray</code> was able to determine for the project</p
 
     <span class="k">if</span> <span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">project_config</span>:
 
-        <span class="nv">warnings</span>.<span class="nv">warn</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">pdoc3 config usage is deprecated in favor of pdocs. </span><span class="s2">&quot;</span>
+        <span class="nv">warnings</span>.<span class="nv">warn</span><span class="ss">(</span>
 
-                      <span class="s2">&quot;</span><span class="s">pdoc3 section will be ignored. </span><span class="s2">&quot;</span>, <span class="nv">DeprecationWarning</span><span class="ss">)</span>
+            <span class="s2">&quot;</span><span class="s">pdoc3 config usage is deprecated in favor of pdocs. </span><span class="s2">&quot;</span>
 
-    <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">pdocs</span><span class="ss">(</span>
+            <span class="s2">&quot;</span><span class="s">pdoc3 section will be ignored. </span><span class="s2">&quot;</span>,
 
-        <span class="nv">directory</span>, <span class="o">**</span><span class="nv">project_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>, {}<span class="ss">)</span>
+            <span class="nv">DeprecationWarning</span>,
 
-    <span class="ss">)</span>
+        <span class="ss">)</span>
+
+    <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">pdocs</span><span class="ss">(</span><span class="nv">directory</span>, <span class="o">**</span><span class="nv">project_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>, {}<span class="ss">))</span>
 
     <span class="k">return</span> <span class="nv">project_config</span>
 </pre></div>
@@ -1234,8 +1226,7 @@ defined below that <code>portray</code> was able to determine for the project</p
 </details>
 <h3 id="toml">toml</h3>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">toml</span><span class="p">(</span>
-    <span class="n">location</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">overrides</span>
+    <span class="n">location</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
 </pre></div>
 
@@ -1244,7 +1235,7 @@ defined below that <code>portray</code> was able to determine for the project</p
 <a href="https://github.com/toml-lang/toml#toml">TOML</a> config (if there is one).</p>
 <p>Generally this is a <code>pyproject.toml</code> file at the root of the project
 with a <code>[tool.portray]</code> section defined.</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">toml</span><span class="ss">(</span><span class="nv">location</span>: <span class="nv">str</span>, <span class="o">**</span><span class="nv">overrides</span><span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">dict</span>:
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">toml</span><span class="ss">(</span><span class="nv">location</span>: <span class="nv">str</span><span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">dict</span>:
 
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns back the configuration found within the projects</span>
 
@@ -1263,8 +1254,6 @@ with a <code>[tool.portray]</code> section defined.</p>
         <span class="nv">tools</span> <span class="o">=</span> <span class="nv">toml_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">tool</span><span class="s2">&quot;</span>, {}<span class="ss">)</span>
 
         <span class="nv">config</span> <span class="o">=</span> <span class="nv">tools</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">portray</span><span class="s2">&quot;</span>, {}<span class="ss">)</span>
-
-        <span class="nv">config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">overrides</span><span class="ss">)</span>
 
         <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">file</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">location</span>
 

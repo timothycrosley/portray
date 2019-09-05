@@ -711,6 +711,8 @@ included documentation generation utilities.</p>
 
 <span class="s s-Atom">import</span> <span class="s s-Atom">shutil</span>
 
+<span class="s s-Atom">import</span> <span class="s s-Atom">sys</span>
+
 <span class="s s-Atom">import</span> <span class="s s-Atom">tempfile</span>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">argparse</span> <span class="s s-Atom">import</span> <span class="nv">Namespace</span>
@@ -727,9 +729,9 @@ included documentation generation utilities.</p>
 
 <span class="s s-Atom">import</span> <span class="s s-Atom">mkdocs</span><span class="p">.</span><span class="s s-Atom">exceptions</span> <span class="s s-Atom">as</span> <span class="k">_</span><span class="s s-Atom">mkdocs_exceptions</span>
 
-<span class="s s-Atom">from</span> <span class="s s-Atom">pdocs</span> <span class="s s-Atom">import</span> <span class="s s-Atom">as_markdown</span> <span class="s s-Atom">as</span> <span class="s s-Atom">pdocs_as_markdown</span>
-
 <span class="s s-Atom">from</span> <span class="s s-Atom">mkdocs</span><span class="p">.</span><span class="s s-Atom">commands</span><span class="p">.</span><span class="s s-Atom">build</span> <span class="s s-Atom">import</span> <span class="s s-Atom">build</span> <span class="s s-Atom">as</span> <span class="s s-Atom">mkdocs_build</span>
+
+<span class="s s-Atom">from</span> <span class="s s-Atom">pdocs</span> <span class="s s-Atom">import</span> <span class="s s-Atom">as_markdown</span> <span class="s s-Atom">as</span> <span class="s s-Atom">pdocs_as_markdown</span>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">portray</span><span class="p">.</span><span class="s s-Atom">exceptions</span> <span class="s s-Atom">import</span> <span class="nv">DocumentationAlreadyExists</span>
 
@@ -814,6 +816,10 @@ included documentation generation utilities.</p>
 <span class="s s-Atom">def</span> <span class="nf">documentation_in_temp_folder</span><span class="p">(</span><span class="nn">config</span><span class="p">:</span> <span class="s s-Atom">dict</span><span class="p">)</span><span class="s s-Atom">:</span>
 
     <span class="s2">&quot;&quot;&quot;Build documentation within a temp folder, returning that folder name before it is deleted.&quot;&quot;&quot;</span>
+
+    <span class="s s-Atom">#if</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;append_directory_to_python_path&quot;</span><span class="p">]</span> <span class="s s-Atom">and</span> <span class="o">not</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">]</span> <span class="s s-Atom">in</span> <span class="s s-Atom">sys</span><span class="p">.</span><span class="nn">path</span><span class="p">:</span>
+
+        <span class="s s-Atom">#sys</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">])</span>
 
     <span class="s s-Atom">with</span> <span class="s s-Atom">tempfile</span><span class="p">.</span><span class="nv">TemporaryDirectory</span><span class="p">()</span> <span class="s s-Atom">as</span> <span class="s s-Atom">input_dir:</span>
 
@@ -1031,6 +1037,10 @@ specified output directory.</p>
 <span class="nv">def</span> <span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">config</span>: <span class="nv">dict</span><span class="ss">)</span>:
 
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Build documentation within a temp folder, returning that folder name before it is deleted.</span><span class="s2">&quot;&quot;&quot;</span>
+
+    #<span class="k">if</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">append_directory_to_python_path</span><span class="s2">&quot;</span>] <span class="nv">and</span> <span class="nv">not</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>] <span class="nv">in</span> <span class="nv">sys</span>.<span class="nv">path</span>:
+
+        #<span class="nv">sys</span>.<span class="nv">path</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>]<span class="ss">)</span>
 
     <span class="nv">with</span> <span class="nv">tempfile</span>.<span class="nv">TemporaryDirectory</span><span class="ss">()</span> <span class="nv">as</span> <span class="nv">input_dir</span>:
 

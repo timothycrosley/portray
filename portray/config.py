@@ -18,10 +18,11 @@ PORTRAY_DEFAULTS = {
     "output_dir": "site",
     "port": 8000,
     "host": "127.0.0.1",
+    "append_directory_to_python_path": True,
     "labels": {"Cli": "CLI", "Api": "API", "Http": "HTTP", "Pypi": "PyPI"},
 }
 
-MKDOCS_DEFAULTS = {
+MKDOCS_DEFAULTS: Dict[str, Any] = {
     "site_name": os.path.basename(os.getcwd()),
     "config_file_path": os.getcwd(),
     "theme": {
@@ -36,13 +37,13 @@ MKDOCS_DEFAULTS = {
         "pymdownx.details",
         "pymdownx.highlight",
     ],
-}  # type: Dict[str, Any]
+}
 
-PDOCS_DEFAULTS = {
+PDOCS_DEFAULTS: Dict = {
     "overwrite": True,
     "exclude_source": False,
     "template_dir": os.path.join(os.path.dirname(__file__), "pdocs_templates"),
-}  # type: Dict[str, Union[str, str, bool, None, Dict, List]]
+}
 
 
 def project(directory: str, config_file: str, **overrides) -> dict:
@@ -56,22 +57,24 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     ):
         raise NoProjectFound(directory)
 
-    project_config = {**PORTRAY_DEFAULTS, "directory": directory}  # type: Dict[str, Any]
+    project_config: Dict[str, Any] = {**PORTRAY_DEFAULTS, "directory": directory}
     if os.path.isfile(os.path.join(directory, "setup.py")):
         project_config.update(setup_py(os.path.join(directory, "setup.py")))
 
-    project_config.update(toml(os.path.join(directory, config_file), **overrides))
+    project_config.update(toml(os.path.join(directory, config_file)))
+    project_config.update(overrides)
 
     project_config.setdefault("modules", [os.path.basename(os.getcwd())])
     project_config.setdefault("pdocs", {}).setdefault("modules", project_config["modules"])
 
     project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
     if "pdoc3" in project_config:
-        warnings.warn("pdoc3 config usage is deprecated in favor of pdocs. "
-                      "pdoc3 section will be ignored. ", DeprecationWarning)
-    project_config["pdocs"] = pdocs(
-        directory, **project_config.get("pdocs", {})
-    )
+        warnings.warn(
+            "pdoc3 config usage is deprecated in favor of pdocs. "
+            "pdoc3 section will be ignored. ",
+            DeprecationWarning,
+        )
+    project_config["pdocs"] = pdocs(directory, **project_config.get("pdocs", {}))
     return project_config
 
 
@@ -97,7 +100,7 @@ def setup_py(location: str) -> dict:
     return setup_config
 
 
-def toml(location: str, **overrides) -> dict:
+def toml(location: str) -> dict:
     """Returns back the configuration found within the projects
        [TOML](https://github.com/toml-lang/toml#toml) config (if there is one).
 
@@ -109,7 +112,6 @@ def toml(location: str, **overrides) -> dict:
         tools = toml_config.get("tool", {})
 
         config = tools.get("portray", {})
-        config.update(overrides)
         config["file"] = location
 
         if "modules" not in config:
@@ -150,11 +152,7 @@ def repository(directory: str) -> dict:
 
 def mkdocs(directory: str, **overrides) -> dict:
     """Returns back the configuration that will be used when running mkdocs"""
-    mkdocs_config = {
-        **MKDOCS_DEFAULTS,
-        **repository(directory),
-        **overrides,
-    }  # type: Dict[str, Any]
+    mkdocs_config: Dict[str, Any] = {**MKDOCS_DEFAULTS, **repository(directory), **overrides}
     theme = mkdocs_config["theme"]
     if theme["name"].lower() == "material" and "custom_dir" not in theme:
         theme["custom_dir"] = MKDOCS_DEFAULTS["theme"]["custom_dir"]

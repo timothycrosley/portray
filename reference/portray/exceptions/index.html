@@ -598,13 +598,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#yolo" class="md-nav__link">
-    yolo
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -843,13 +836,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#yolo" class="md-nav__link">
-    yolo
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -966,12 +952,6 @@
 
         <span class="nv">self</span>.<span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span>
 
-    <span class="nv">def</span> <span class="nv">yolo</span><span class="ss">(</span><span class="nv">self</span><span class="ss">)</span>:
-
-        <span class="s2">&quot;&quot;&quot;</span><span class="s">Why?!?!</span><span class="s2">&quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="nv">True</span>
-
 <span class="nv">class</span> <span class="nv">DocumentationAlreadyExists</span><span class="ss">(</span><span class="nv">PortrayError</span><span class="ss">)</span>:
 
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Thrown when portray has been told to output documentation where it already exists</span><span class="s2">&quot;&quot;&quot;</span>
@@ -1045,29 +1025,23 @@ set self.<strong>traceback</strong> to tb and return self.</p>
 
 
 <p>Thrown when portray is ran in a directory with no Python project</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">class</span> <span class="nv">NoProjectFound</span><span class="ss">(</span><span class="nv">PortrayError</span><span class="ss">)</span>:
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="k">class</span> <span class="n">NoProjectFound</span>(<span class="n">PortrayError</span>):
 
-    <span class="s2">&quot;&quot;&quot;</span><span class="s">Thrown when portray is ran in a directory with no Python project</span><span class="s2">&quot;&quot;&quot;</span>
+    <span class="s">&quot;&quot;&quot;Thrown when portray is ran in a directory with no Python project&quot;&quot;&quot;</span>
 
-    <span class="nv">def</span> <span class="nv">__init__</span><span class="ss">(</span><span class="nv">self</span>, <span class="nv">directory</span>: <span class="nv">str</span><span class="ss">)</span>:
+    <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">directory:</span> <span class="n">str</span>):
 
-        <span class="nv">super</span><span class="ss">()</span>.<span class="nv">__init__</span><span class="ss">(</span>
+        <span class="n">super</span>().<span class="n">__init__</span>(
 
-            <span class="nv">self</span>,
+            <span class="k">self</span>,
 
-            <span class="nv">f</span><span class="s2">&quot;</span><span class="s">No Python project found in the given directory: &#39;{directory}&#39;</span><span class="s2">&quot;</span>
+            <span class="n">f</span><span class="s">&quot;No Python project found in the given directory: &#39;{directory}&#39;&quot;</span>
 
-            <span class="o">+</span> <span class="s2">&quot;</span><span class="s"> See: https://timothycrosley.github.io/portray/TROUBLESHOOTING/#noprojectfound</span><span class="s2">&quot;</span>,
+            + <span class="s">&quot; See: https://timothycrosley.github.io/portray/TROUBLESHOOTING/#noprojectfound&quot;</span>,
 
-        <span class="ss">)</span>
+        )
 
-        <span class="nv">self</span>.<span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span>
-
-    <span class="nv">def</span> <span class="nv">yolo</span><span class="ss">(</span><span class="nv">self</span><span class="ss">)</span>:
-
-        <span class="s2">&quot;&quot;&quot;</span><span class="s">Why?!?!</span><span class="s2">&quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="nv">True</span>
+        <span class="k">self</span>.<span class="n">directory</span> = <span class="n">directory</span>
 </pre></div>
 
 
@@ -1094,23 +1068,6 @@ set self.<strong>traceback</strong> to tb and return self.</p>
 
 <p>Exception.with_traceback(tb) --
 set self.<strong>traceback</strong> to tb and return self.</p>
-<h5 id="yolo">yolo</h5>
-<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">yolo</span><span class="p">(</span>
-    <span class="bp">self</span>
-<span class="p">)</span>
-</pre></div>
-
-
-<p>Why?!?!</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span>    <span class="nv">def</span> <span class="nv">yolo</span><span class="ss">(</span><span class="nv">self</span><span class="ss">)</span>:
-
-        <span class="s2">&quot;&quot;&quot;</span><span class="s">Why?!?!</span><span class="s2">&quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="nv">True</span>
-</pre></div>
-
-
-</details>
 <h3 id="portrayerror">PortrayError</h3>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">PortrayError</span><span class="p">(</span>
     <span class="o">/</span><span class="p">,</span>

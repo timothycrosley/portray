@@ -3,6 +3,7 @@ included documentation generation utilities.
 """
 import os
 import shutil
+import sys
 import tempfile
 from argparse import Namespace
 from contextlib import contextmanager
@@ -12,8 +13,8 @@ from typing import Dict
 import mako.exceptions
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
-from pdocs import as_markdown as pdocs_as_markdown
 from mkdocs.commands.build import build as mkdocs_build
+from pdocs import as_markdown as pdocs_as_markdown
 
 from portray.exceptions import DocumentationAlreadyExists
 
@@ -72,6 +73,9 @@ def mkdocs(config: dict):
 @contextmanager
 def documentation_in_temp_folder(config: dict):
     """Build documentation within a temp folder, returning that folder name before it is deleted."""
+    if config["append_directory_to_python_path"] and not config["directory"] in sys.path:
+        sys.path.append(config["directory"])
+
     with tempfile.TemporaryDirectory() as input_dir:
         input_dir = os.path.join(input_dir, "input")
         with tempfile.TemporaryDirectory() as temp_output_dir:

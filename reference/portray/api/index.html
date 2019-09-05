@@ -717,7 +717,7 @@ to start.</p>
 
 <span class="kn">import</span> <span class="nn">webbrowser</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">hug</span>
 
@@ -765,13 +765,15 @@ to start.</p>
 
     <span class="n">render</span><span class="o">.</span><span class="n">documentation</span><span class="p">(</span>
 
-        <span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">modules</span><span class="p">),</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span>
+        <span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="n">modules</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">output_dir</span><span class="p">),</span>
+
+        <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">,</span>
 
     <span class="p">)</span>
 
     <span class="k">print</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">ascii_art</span><span class="p">)</span>
 
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Documentation successfully generated into `{}` !&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Documentation successfully generated into `{os.path.abspath(output_dir)}` !&quot;</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">in_browser</span><span class="p">(</span>
 
@@ -833,7 +835,7 @@ to start.</p>
 
 <span class="sd">         config file you wish to use.</span>
 
-<span class="sd">       - *open_browser&quot;: If true a browser will be opened pointing at the documentation server</span>
+<span class="sd">       - *open_browser*: If true a browser will be opened pointing at the documentation server</span>
 
 <span class="sd">       - *port*: The port to expose your documentation on (defaults to: `8000`)</span>
 
@@ -847,7 +849,7 @@ to start.</p>
 
     <span class="n">api</span> <span class="o">=</span> <span class="n">hug</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="s2">&quot;Doc Server&quot;</span><span class="p">)</span>
 
-    <span class="n">project_config</span> <span class="o">=</span> <span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">modules</span><span class="p">)</span>
+    <span class="n">project_config</span> <span class="o">=</span> <span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="n">modules</span><span class="p">)</span>
 
     <span class="k">with</span> <span class="n">render</span><span class="o">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">)</span> <span class="k">as</span> <span class="n">doc_folder</span><span class="p">:</span>
 
@@ -865,11 +867,7 @@ to start.</p>
 
             <span class="k">if</span> <span class="n">open_browser</span><span class="p">:</span>
 
-                <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new</span><span class="p">(</span>
-
-                    <span class="s2">&quot;http://{}:{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">],</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;port&quot;</span><span class="p">])</span>
-
-                <span class="p">)</span>
+                <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;http://{project_config[&#39;host&#39;]}:{project_config[&#39;port&#39;]}&quot;</span><span class="p">)</span>
 
         <span class="n">api</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">serve</span><span class="p">(</span>
 
@@ -885,7 +883,13 @@ to start.</p>
 
 <span class="k">def</span> <span class="nf">project_configuration</span><span class="p">(</span>
 
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span> <span class="n">modules</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+
+    <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pyproject.toml&quot;</span><span class="p">,</span>
+
+    <span class="n">modules</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+
+    <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span>
 
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 
@@ -901,11 +905,15 @@ to start.</p>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">overrides</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">overrides</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">if</span> <span class="n">modules</span><span class="p">:</span>
 
         <span class="n">overrides</span><span class="p">[</span><span class="s2">&quot;modules&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modules</span>
+
+    <span class="k">if</span> <span class="n">output_dir</span><span class="p">:</span>
+
+        <span class="n">overrides</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_dir</span>
 
     <span class="n">directory</span> <span class="o">=</span> <span class="n">directory</span> <span class="k">if</span> <span class="n">directory</span> <span class="k">else</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 
@@ -1032,13 +1040,15 @@ to start.</p>
 
     <span class="nv">render</span>.<span class="nv">documentation</span><span class="ss">(</span>
 
-        <span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span>, <span class="nv">modules</span><span class="ss">)</span>, <span class="nv">overwrite</span><span class="o">=</span><span class="nv">overwrite</span>
+        <span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span>, <span class="nv">modules</span><span class="o">=</span><span class="nv">modules</span>, <span class="nv">output_dir</span><span class="o">=</span><span class="nv">output_dir</span><span class="ss">)</span>,
+
+        <span class="nv">overwrite</span><span class="o">=</span><span class="nv">overwrite</span>,
 
     <span class="ss">)</span>
 
     <span class="nv">print</span><span class="ss">(</span><span class="nv">logo</span>.<span class="nv">ascii_art</span><span class="ss">)</span>
 
-    <span class="nv">print</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Documentation successfully generated into `{}` !</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">abspath</span><span class="ss">(</span><span class="nv">output_dir</span><span class="ss">)))</span>
+    <span class="nv">print</span><span class="ss">(</span><span class="nv">f</span><span class="s2">&quot;</span><span class="s">Documentation successfully generated into `{os.path.abspath(output_dir)}` !</span><span class="s2">&quot;</span><span class="ss">)</span>
 </pre></div>
 
 
@@ -1186,7 +1196,8 @@ you to browse documentation locally</p>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">project_configuration</span><span class="p">(</span>
     <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
     <span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;pyproject.toml&#39;</span><span class="p">,</span>
-    <span class="n">modules</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">modules</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;site&#39;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
 </pre></div>
 
@@ -1200,7 +1211,13 @@ you to browse documentation locally</p>
 </ul>
 <details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">project_configuration</span><span class="ss">(</span>
 
-    <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>, <span class="nv">config_file</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">pyproject.toml</span><span class="s2">&quot;</span>, <span class="nv">modules</span>: <span class="nv">list</span> <span class="o">=</span> <span class="nv">None</span>
+    <span class="nv">directory</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>,
+
+    <span class="nv">config_file</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">pyproject.toml</span><span class="s2">&quot;</span>,
+
+    <span class="nv">modules</span>: <span class="nv">list</span> <span class="o">=</span> <span class="nv">None</span>,
+
+    <span class="nv">output_dir</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">site</span><span class="s2">&quot;</span>,
 
 <span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">dict</span>:
 
@@ -1216,11 +1233,15 @@ you to browse documentation locally</p>
 
     <span class="s2">&quot;&quot;&quot;</span>
 
-    <span class="nv">overrides</span> <span class="o">=</span> {}
+    <span class="nv">overrides</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Union</span>[<span class="nv">str</span>, <span class="nv">list</span>]] <span class="o">=</span> {}
 
     <span class="k">if</span> <span class="nv">modules</span>:
 
         <span class="nv">overrides</span>[<span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">modules</span>
+
+    <span class="k">if</span> <span class="nv">output_dir</span>:
+
+        <span class="nv">overrides</span>[<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">output_dir</span>
 
     <span class="nv">directory</span> <span class="o">=</span> <span class="nv">directory</span> <span class="k">if</span> <span class="nv">directory</span> <span class="k">else</span> <span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">()</span>
 
@@ -1246,7 +1267,7 @@ you to browse documentation locally</p>
 <li><em>directory</em>: The root folder of your project.</li>
 <li><em>config_file</em>: The <a href="https://github.com/toml-lang/toml#toml">TOML</a> formatted
   config file you wish to use.</li>
-<li>*open_browser": If true a browser will be opened pointing at the documentation server</li>
+<li><em>open_browser</em>: If true a browser will be opened pointing at the documentation server</li>
 <li><em>port</em>: The port to expose your documentation on (defaults to: <code>8000</code>)</li>
 <li><em>host</em>: The host to expose your documentation on (defaults to <code>"127.0.0.1"</code>)</li>
 <li><em>modules</em>: One or more modules to render reference documentation for</li>
@@ -1275,7 +1296,7 @@ you to browse documentation locally</p>
 
          <span class="nv">config</span> <span class="nv">file</span> <span class="nv">you</span> <span class="nv">wish</span> <span class="nv">to</span> <span class="nv">use</span>.
 
-       <span class="o">-</span> <span class="o">*</span><span class="nv">open_browser</span><span class="s2">&quot;</span><span class="s">: If true a browser will be opened pointing at the documentation server</span>
+       <span class="o">-</span> <span class="o">*</span><span class="nv">open_browser</span><span class="o">*</span>: <span class="k">If</span> <span class="nv">true</span> <span class="nv">a</span> <span class="nv">browser</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">opened</span> <span class="nv">pointing</span> <span class="nv">at</span> <span class="nv">the</span> <span class="nv">documentation</span> <span class="nv">server</span>
 
        <span class="o">-</span> <span class="o">*</span><span class="nv">port</span><span class="o">*</span>: <span class="nv">The</span> <span class="nv">port</span> <span class="nv">to</span> <span class="nv">expose</span> <span class="nv">your</span> <span class="nv">documentation</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">defaults</span> <span class="nv">to</span>: `<span class="mi">8000</span>`<span class="ss">)</span>
 
@@ -1289,7 +1310,7 @@ you to browse documentation locally</p>
 
     <span class="nv">api</span> <span class="o">=</span> <span class="nv">hug</span>.<span class="nv">API</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Doc Server</span><span class="s2">&quot;</span><span class="ss">)</span>
 
-    <span class="nv">project_config</span> <span class="o">=</span> <span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span>, <span class="nv">modules</span><span class="ss">)</span>
+    <span class="nv">project_config</span> <span class="o">=</span> <span class="nv">project_configuration</span><span class="ss">(</span><span class="nv">directory</span>, <span class="nv">config_file</span>, <span class="nv">modules</span><span class="o">=</span><span class="nv">modules</span><span class="ss">)</span>
 
     <span class="nv">with</span> <span class="nv">render</span>.<span class="nv">documentation_in_temp_folder</span><span class="ss">(</span><span class="nv">project_config</span><span class="ss">)</span> <span class="nv">as</span> <span class="nv">doc_folder</span>:
 
@@ -1307,11 +1328,7 @@ you to browse documentation locally</p>
 
             <span class="k">if</span> <span class="nv">open_browser</span>:
 
-                <span class="nv">webbrowser</span>.<span class="nv">open_new</span><span class="ss">(</span>
-
-                    <span class="s2">&quot;</span><span class="s">http://{}:{}</span><span class="s2">&quot;</span>.<span class="nv">format</span><span class="ss">(</span><span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">host</span><span class="s2">&quot;</span>], <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">port</span><span class="s2">&quot;</span>]<span class="ss">)</span>
-
-                <span class="ss">)</span>
+                <span class="nv">webbrowser</span>.<span class="nv">open_new</span><span class="ss">(</span><span class="nv">f</span><span class="s2">&quot;</span><span class="s">http://{project_config[&#39;host&#39;]}:{project_config[&#39;port&#39;]}</span><span class="s2">&quot;</span><span class="ss">)</span>
 
         <span class="nv">api</span>.<span class="nv">http</span>.<span class="nv">serve</span><span class="ss">(</span>
 
