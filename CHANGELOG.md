@@ -19,6 +19,7 @@ Changelog
 =========
 ## 1.2.3 - September 4 2019
 - Fixed a bug specifying the output dir for `as_html` command from the command line.
+- Updated to use Python3.6+ style variable annotations.
 
 ## 1.2.2 - September 4 2019
 - Fixed a bug specifying modules from command line when no configuration file is present.
