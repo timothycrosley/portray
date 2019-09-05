@@ -21,7 +21,7 @@ PORTRAY_DEFAULTS = {
     "labels": {"Cli": "CLI", "Api": "API", "Http": "HTTP", "Pypi": "PyPI"},
 }
 
-MKDOCS_DEFAULTS = {
+MKDOCS_DEFAULTS: Dict[str, Any] = {
     "site_name": os.path.basename(os.getcwd()),
     "config_file_path": os.getcwd(),
     "theme": {
@@ -36,13 +36,13 @@ MKDOCS_DEFAULTS = {
         "pymdownx.details",
         "pymdownx.highlight",
     ],
-}  # type: Dict[str, Any]
+}
 
-PDOCS_DEFAULTS = {
+PDOCS_DEFAULTS: Dict = {
     "overwrite": True,
     "exclude_source": False,
     "template_dir": os.path.join(os.path.dirname(__file__), "pdocs_templates"),
-}  # type: Dict[str, Union[str, str, bool, None, Dict, List]]
+}
 
 
 def project(directory: str, config_file: str, **overrides) -> dict:
@@ -56,7 +56,7 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     ):
         raise NoProjectFound(directory)
 
-    project_config = {**PORTRAY_DEFAULTS, "directory": directory}  # type: Dict[str, Any]
+    project_config: Dict[str, Any] = {**PORTRAY_DEFAULTS, "directory": directory}
     if os.path.isfile(os.path.join(directory, "setup.py")):
         project_config.update(setup_py(os.path.join(directory, "setup.py")))
 
@@ -151,11 +151,7 @@ def repository(directory: str) -> dict:
 
 def mkdocs(directory: str, **overrides) -> dict:
     """Returns back the configuration that will be used when running mkdocs"""
-    mkdocs_config = {
-        **MKDOCS_DEFAULTS,
-        **repository(directory),
-        **overrides,
-    }  # type: Dict[str, Any]
+    mkdocs_config: Dict[str, Any] = {**MKDOCS_DEFAULTS, **repository(directory), **overrides}
     theme = mkdocs_config["theme"]
     if theme["name"].lower() == "material" and "custom_dir" not in theme:
         theme["custom_dir"] = MKDOCS_DEFAULTS["theme"]["custom_dir"]
