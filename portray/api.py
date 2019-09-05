@@ -6,7 +6,7 @@
 """
 import os
 import webbrowser
-from typing import Optional
+from typing import Dict, Optional, Union
 
 import hug
 import mkdocs.commands.gh_deploy
@@ -35,7 +35,8 @@ def as_html(
     """
     directory = directory if directory else os.getcwd()
     render.documentation(
-        project_configuration(directory, config_file, modules), overwrite=overwrite
+        project_configuration(directory, config_file, modules=modules, output_dir=output_dir),
+        overwrite=overwrite,
     )
     print(logo.ascii_art)
     print(f"Documentation successfully generated into `{os.path.abspath(output_dir)}` !")
@@ -83,7 +84,7 @@ def server(
     directory = directory if directory else os.getcwd()
     api = hug.API("Doc Server")
 
-    project_config = project_configuration(directory, config_file, modules)
+    project_config = project_configuration(directory, config_file, modules=modules)
     with render.documentation_in_temp_folder(project_config) as doc_folder:
 
         @hug.static("/", api=api)
@@ -105,7 +106,10 @@ def server(
 
 
 def project_configuration(
-    directory: str = "", config_file: str = "pyproject.toml", modules: list = None
+    directory: str = "",
+    config_file: str = "pyproject.toml",
+    modules: list = None,
+    output_dir: str = "site",
 ) -> dict:
     """Returns the configuration associated with a project.
 
@@ -114,9 +118,11 @@ def project_configuration(
           config file you wish to use.
         - *modules*: One or more modules to include in the configuration for reference rendering
     """
-    overrides = {}
+    overrides: Dict[str, Union[str, list]] = {}
     if modules:
         overrides["modules"] = modules
+    if output_dir:
+        overrides["output_dir"] = output_dir
     directory = directory if directory else os.getcwd()
     return config.project(directory=directory, config_file=config_file, **overrides)
 
