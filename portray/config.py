@@ -1,6 +1,7 @@
 """Defines the configuration defaults and load functions used by `portray`"""
 import ast
 import os
+import re
 import warnings
 from typing import Any, Dict, List, Union, cast
 from urllib import parse
@@ -138,9 +139,9 @@ def repository(directory: str) -> dict:
     config = {}
     try:
         repo_url = Repo(directory).remotes.origin.url
-        if "http" in repo_url:
-            config["repo_url"] = repo_url
-            config["repo_name"] = parse.urlsplit(repo_url).path.rstrip(".git").lstrip("/")
+        _path = re.search("(:(//)?)([\w\.@\:/\-~]+)(\.git)?(/)?", repo_url).groups()[2]
+        config["repo_url"] = repo_url
+        config["repo_name"] = _path.split('/')[-1].rstrip('.git')
     except Exception:
         config = {}
 
