@@ -140,8 +140,17 @@ def repository(directory: str) -> dict:
     try:
         repo_url = Repo(directory).remotes.origin.url
         _path = re.search("(:(//)?)([\w\.@\:/\-~]+)(\.git)?(/)?", repo_url).groups()[2]
+        if "github" in repo_url or "gitlab" in repo_url:
+            repo_url = repo_url.replace(".git", "")
+            config["edit_uri"] = "edit/master/"
+        elif "bitbucket" in repo_url:
+            repo_url = repo_url.replace(".git", "")
+            config["edit_uri"] = "src/default/docs/"
+
         config["repo_url"] = repo_url
-        config["repo_name"] = _path.split('/')[-1].rstrip('.git')
+        config["repo_name"] = _path.split('/')[-1]
+        if config["repo_name"].endswith(".git"):
+            config["repo_name"] = config["repo_name"][:-len(".git")]
     except Exception:
         config = {}
 
