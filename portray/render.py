@@ -10,6 +10,7 @@ from contextlib import contextmanager
 from glob import glob
 from typing import Dict
 
+from yaspin import yaspin
 import mako.exceptions
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
@@ -78,12 +79,22 @@ def documentation_in_temp_folder(config: dict):
 
     with tempfile.TemporaryDirectory() as input_dir:
         input_dir = os.path.join(input_dir, "input")
+        os.mkdir(input_dir)
         with tempfile.TemporaryDirectory() as temp_output_dir:
-            shutil.copytree(config["directory"], input_dir)
 
-            if "output_dir" not in config["pdocs"]:
-                config["pdocs"]["output_dir"] = os.path.join(input_dir, "reference")
-            pdocs(config["pdocs"])
+            with yaspin(text="Copying source documentation to temporary compilation directory") as spinner:
+                for root_file in os.listdir(config["directory"]):
+                    root_file_absolute = os.path.join(config["directory"], root_file)
+                    if os.path.isfile(root_file_absolute):
+                        shutil.copyfile(root_file_absolute, os.path.join(input_dir, root_file))
+
+                for source_directory in [config["docs_dir"]] + config["extra_dirs"]:
+                    directory_absolute = os.path.join(config["directory"], source_directory)
+                    if os.path.isdir(directory_absolute):
+                        shutil.copytree(directory_absolute,
+                                os.path.join(input_dir, source_directory))
+
+                spinner.ok("Done")
 
             if "docs_dir" not in config["mkdocs"]:
                 config["mkdocs"]["docs_dir"] = input_dir
@@ -119,10 +130,17 @@ def documentation_in_temp_folder(config: dict):
                         shutil.copyfile(os.path.join(input_dir, index_page), destination_index_page)
 
             if config["include_reference_documentation"]:
-                reference_docs = _nested_docs(config["pdocs"]["output_dir"], input_dir, config)
-                nav.append({"Reference": reference_docs})  # type: ignore
+                with yaspin(text="Auto generating reference documentation using pdocs") as spinner:
+                    if "output_dir" not in config["pdocs"]:
+                        config["pdocs"]["output_dir"] = os.path.join(input_dir, "reference")
+                    pdocs(config["pdocs"])
+                    reference_docs = _nested_docs(config["pdocs"]["output_dir"], input_dir, config)
+                    nav.append({"Reference": reference_docs})  # type: ignore
+                    spinner.ok("Done")
 
-            mkdocs(config["mkdocs"])
+            with yaspin(text="Rendering complete website from Markdown using MkDocs") as spinner:
+                mkdocs(config["mkdocs"])
+                spinner.ok("Done")
             yield temp_output_dir
 
 

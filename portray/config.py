@@ -16,6 +16,7 @@ from portray.exceptions import NoProjectFound
 
 PORTRAY_DEFAULTS = {
     "docs_dir": "docs",
+    "extra_dirs": ["art", "images", "media"],
     "output_dir": "site",
     "port": 8000,
     "host": "127.0.0.1",
