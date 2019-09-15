@@ -78,8 +78,22 @@ def documentation_in_temp_folder(config: dict):
 
     with tempfile.TemporaryDirectory() as input_dir:
         input_dir = os.path.join(input_dir, "input")
+        os.mkdir(input_dir)
         with tempfile.TemporaryDirectory() as temp_output_dir:
-            shutil.copytree(config["directory"], input_dir)
+            for root_file in os.listdir(config["directory"]):
+                root_file_absolute = os.path.join(config["directory"], root_file)
+                if os.path.isfile(root_file_absolute):
+                    shutil.copyfile(root_file_absolute, os.path.join(input_dir, root_file))
+
+            shutil.copytree(os.path.join(config["directory"], config["docs_dir"]),
+                            os.path.join(input_dir, config["docs_dir"]))
+
+            for extra_dir in config["extra_dirs"]:
+                extra_dir_absolute = os.path.join(config["directory"], extra_dir)
+                if os.path.isdir(extra_dir_absolute):
+                    shutil.copytree(extra_dir_absolute,
+                                    os.path.join(input_dir, extra_dir))
+
 
             if "output_dir" not in config["pdocs"]:
                 config["pdocs"]["output_dir"] = os.path.join(input_dir, "reference")
