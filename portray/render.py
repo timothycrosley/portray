@@ -107,7 +107,10 @@ def documentation_in_temp_folder(config: dict):
                 nav.extend(
                     _nested_docs(os.path.join(input_dir, config["docs_dir"]), input_dir, config)
                 )
+            else:
+                nav = config["mkdocs"]["nav"]
 
+            if config["include_reference_documentation"]:
                 reference_docs = _nested_docs(config["pdocs"]["output_dir"], input_dir, config)
                 nav.append({"Reference": reference_docs})  # type: ignore
 

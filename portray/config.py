@@ -20,6 +20,7 @@ PORTRAY_DEFAULTS = {
     "port": 8000,
     "host": "127.0.0.1",
     "append_directory_to_python_path": True,
+    "include_reference_documentation": True,
     "labels": {"Cli": "CLI", "Api": "API", "Http": "HTTP", "Pypi": "PyPI"},
 }
 
