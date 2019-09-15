@@ -107,7 +107,18 @@ def documentation_in_temp_folder(config: dict):
                 nav.extend(
                     _nested_docs(os.path.join(input_dir, config["docs_dir"]), input_dir, config)
                 )
+            else:
+                nav = config["mkdocs"]["nav"]
+                if nav:
+                    index_page = nav[0]
+                    if index_page and isinstance(index_page, dict):
+                        index_page = tuple(index_page.values())[0]
 
+                    destination_index_page = os.path.join(input_dir, "index.md")
+                    if index_page != "README.md" and index_page != "index.md" and not os.path.exists(destination_index_page):
+                        shutil.copyfile(os.path.join(input_dir, index_page), destination_index_page)
+
+            if config["include_reference_documentation"]:
                 reference_docs = _nested_docs(config["pdocs"]["output_dir"], input_dir, config)
                 nav.append({"Reference": reference_docs})  # type: ignore
 

@@ -20,6 +20,7 @@ PORTRAY_DEFAULTS = {
     "port": 8000,
     "host": "127.0.0.1",
     "append_directory_to_python_path": True,
+    "include_reference_documentation": True,
     "labels": {"Cli": "CLI", "Api": "API", "Http": "HTTP", "Pypi": "PyPI"},
 }
 
@@ -196,6 +197,10 @@ def mkdocs(directory: str, **overrides) -> dict:
     theme = mkdocs_config["theme"]
     if theme["name"].lower() == "material" and "custom_dir" not in theme:
         theme["custom_dir"] = MKDOCS_DEFAULTS["theme"]["custom_dir"]
+
+    nav = mkdocs_config.get("nav", None)
+    if nav and hasattr(nav[0], "copy"):
+        mkdocs_config["nav"] = [nav_item.copy() for nav_item in nav]
 
     return mkdocs_config
 
