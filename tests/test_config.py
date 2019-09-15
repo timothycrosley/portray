@@ -3,8 +3,11 @@ from hypothesis_auto import auto_test
 from portray import config, exceptions
 
 
-def test_project_properties():
+def test_project_properties(project_dir):
     auto_test(config.project, _auto_allow_exceptions=(exceptions.NoProjectFound,))
+    auto_test(
+        config.project, directory=project_dir, _auto_allow_exceptions=(exceptions.NoProjectFound,)
+    )
 
 
 def test_setup_py_properties():
