@@ -1,6 +1,26 @@
 from hypothesis_auto import auto_test
 
-from portray import config
+from portray import config, exceptions
+
+
+def test_project_properties():
+    auto_test(config.project, _auto_allow_exceptions=(exceptions.NoProjectFound,))
+
+
+def test_setup_py_properties():
+    auto_test(config.setup_py)
+
+
+def test_toml_properties():
+    auto_test(config.toml)
+
+
+def test_mkdocs_properties():
+    auto_test(config.mkdocs)
+
+
+def test_pdocs_properties():
+    auto_test(config.pdocs)
 
 
 def test_repository_properties():
