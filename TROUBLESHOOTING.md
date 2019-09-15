@@ -26,6 +26,33 @@ Every CLI command supports explicitly setting one or more modules using `-m`:
 
 <script id="asciicast-264805" src="https://asciinema.org/a/264805.js" async></script>
 
+## `Unable to identify repo_name, repo_url, and edit_uri automatically.`
+
+This is a warning that is returned when you haven't manually specified these configuration options
+and portray is unable to determine them automatically based on your project's repository.
+There are many reasons that this can happen, the simplest of which are that your project isn't source
+controlled or you utilize a source control system other than git.
+
+### Solution 1: Ignore the warning
+These settings are optional and are used only by certain mkdocs themes to provide links back to your repository.
+
+![Features that repo_url settings are used for](art/repo_url.png)
+
+If these features are not relevant to you, you can safely ignore the warning.
+
+### Solution 2: Manually specify settings in `pyproject.toml`
+If for any reason portray is unable to determine the repository information from your repo automatically you can
+manually specify the settings within your config file:
+
+```toml
+[tool.portray.mkdocs]
+repo_url = "MY_REPO_URL"
+repo_name = "MY_REPO_NAME"
+edit_uri = "MY_EDIT_URL"
+```
+
+For more information about these settings, refer to the [mkdocs reference documentation](https://www.mkdocs.org/user-guide/configuration/#repo_url).
+
 ## Deploying to Netlify
 
 portray includes a built-in command to deploy to [Github Pages](https://pages.github.com/) but it's also compatible with every static website host, including the popular [Netflify](https://www.netlify.com).

@@ -3,7 +3,7 @@ import ast
 import os
 import re
 import warnings
-from typing import Any, Dict, List, Union, cast
+from typing import Any, Dict, List, Optional, Union, cast
 from urllib import parse
 
 import mkdocs.config as _mkdocs_config
@@ -132,28 +132,67 @@ def toml(location: str) -> dict:
     return {}
 
 
-def repository(directory: str) -> dict:
+def repository(
+    directory: str,
+    repo_url: Optional[str] = None,
+    repo_name: Optional[str] = None,
+    edit_uri: Optional[str] = None,
+    normalize_repo_url: bool = True,
+    **kwargs,
+) -> Dict[str, Optional[str]]:
     """Returns back any information that can be determined by introspecting the projects git repo
        (if there is one).
     """
-    config = {}
     try:
-        repo_url = Repo(directory).remotes.origin.url
-        _path = re.search("(:(//)?)([\w\.@\:/\-~]+)(\.git)?(/)?", repo_url).groups()[2]
-        config["repo_url"] = repo_url
-        config["repo_name"] = _path.split('/')[-1].rstrip('.git')
+        if repo_url is None:
+            repo_url = Repo(directory).remotes.origin.url
+        if repo_name is None:
+            match = re.search(r"(:(//)?)([\w\.@\:/\-~]+)(\.git)?(/)?", repo_url)
+            if match:
+                path = match.groups()[2]
+            else:
+                path = repo_url
+            repo_name = path.split("/")[-1]
+            if repo_name.endswith(".git"):
+                repo_name = repo_name[: -len(".git")]
+        if edit_uri is None:
+            if "github" in repo_url or "gitlab" in repo_url:
+                edit_uri = "edit/master/"
+            elif "bitbucket" in repo_url:
+                edit_uri = "src/default/docs/"
+
+        if normalize_repo_url:
+            if repo_url.startswith("git@") and ":" in repo_url:
+                tld, path = repo_url[4:].split(":")
+                repo_url = f"https://{tld}/{path}"
+            elif repo_url.startswith("https://") and "@" in repo_url:
+                repo_url = f"https://{repo_url.split('@')[1]}"
+
+            if repo_url and "github" in repo_url or "gitlab" in repo_url or "bitbucket" in repo_url:
+                repo_url = repo_url.replace(".git", "")
+
+        return {
+            key: value
+            for key, value in {
+                "repo_url": repo_url,
+                "repo_name": repo_name,
+                "edit_uri": edit_uri,
+            }.items()
+            if value
+        }
+
     except Exception:
-        config = {}
-
-    if not config:
-        warnings.warn("Unable to identify `repo_name` and `repo_url` automatically")
-
-    return config
+        warnings.warn("Unable to identify `repo_name`, `repo_url`, and `edit_uri` automatically.")
+        return {}
 
 
 def mkdocs(directory: str, **overrides) -> dict:
     """Returns back the configuration that will be used when running mkdocs"""
-    mkdocs_config: Dict[str, Any] = {**MKDOCS_DEFAULTS, **repository(directory), **overrides}
+    mkdocs_config: Dict[str, Any] = {
+        **MKDOCS_DEFAULTS,
+        **repository(directory, **overrides),
+        **overrides,
+    }
     theme = mkdocs_config["theme"]
     if theme["name"].lower() == "material" and "custom_dir" not in theme:
         theme["custom_dir"] = MKDOCS_DEFAULTS["theme"]["custom_dir"]
