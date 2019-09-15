@@ -165,6 +165,8 @@ def repository(
             if repo_url.startswith("git@") and ":" in repo_url:
                 tld, path = repo_url[4:].split(":")
                 repo_url = f"https://{tld}/{path}"
+            elif repo_url.startswith("https://") and "@" in repo_url:
+                repo_url = f"https://{repo_url.split('@')[1]}"
 
             if repo_url and "github" in repo_url or "gitlab" in repo_url or "bitbucket" in repo_url:
                 repo_url = repo_url.replace(".git", "")

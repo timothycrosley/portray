@@ -55,6 +55,10 @@ def test_repository_custom_config(project_dir):
         "repo_url": "not_actually_a_valid_url",
     }
 
+    assert config.repository(
+        project_dir, repo_url="https://gitlab.ci.token:password@gitlab.net/app.git"
+    ) == {"edit_uri": "edit/master/", "repo_name": "app", "repo_url": "https://gitlab.net/app"}
+
 
 def test_repository_no_config_no_repository(temporary_dir):
     assert config.repository(temporary_dir) == {}
