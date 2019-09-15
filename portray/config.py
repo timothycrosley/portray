@@ -137,6 +137,7 @@ def repository(
     repo_url: Optional[str] = None,
     repo_name: Optional[str] = None,
     edit_uri: Optional[str] = None,
+    normalize_repo_url: bool = True,
     **kwargs,
 ) -> Dict[str, Optional[str]]:
     """Returns back any information that can be determined by introspecting the projects git repo
@@ -156,13 +157,27 @@ def repository(
                 repo_name = repo_name[: -len(".git")]
         if edit_uri is None:
             if "github" in repo_url or "gitlab" in repo_url:
-                repo_url = repo_url.replace(".git", "")
                 edit_uri = "edit/master/"
             elif "bitbucket" in repo_url:
-                repo_url = repo_url.replace(".git", "")
                 edit_uri = "src/default/docs/"
 
-        return {"repo_url": repo_url, "repo_name": repo_name, "edit_uri": edit_uri}
+        if normalize_repo_url:
+            if repo_url.startswith("git@") and ":" in repo_url:
+                tld, path = repo_url[4:].split(":")
+                repo_url = f"https://{tld}/{path}"
+
+            if repo_url and "github" in repo_url or "gitlab" in repo_url or "bitbucket" in repo_url:
+                repo_url = repo_url.replace(".git", "")
+
+        return {
+            key: value
+            for key, value in {
+                "repo_url": repo_url,
+                "repo_name": repo_name,
+                "edit_uri": edit_uri,
+            }.items()
+            if value
+        }
 
     except Exception:
         warnings.warn("Unable to identify `repo_name`, `repo_url`, and `edit_uri` automatically.")
