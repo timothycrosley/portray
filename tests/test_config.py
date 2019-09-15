@@ -16,6 +16,25 @@ setup(name='fake',
       packages=['fake'])
 """
 
+FAKE_PYPROJECT_TOML_FLIT = """
+[tool.flit.metadata]
+module = "preconvert"
+author = "Timothy Edmund Crosley"
+author-email = "timothy.crosley@gmail.com"
+home-page = "https://github.com/timothycrosley/preconvert"
+requires-python=">=3.5"
+description-file="README.md"
+classifiers=[
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[tool.portray.pdoc3]
+just = "kidding"
+"""
+
 
 def test_project_properties(project_dir):
     auto_test(config.project, _auto_allow_exceptions=(exceptions.NoProjectFound,))
@@ -30,6 +49,14 @@ def test_project_setup_py(temporary_dir):
 
     project_config = config.project(directory=temporary_dir, config_file="")
     assert project_config["modules"] == ["fake"]
+
+
+def test_project_flit_setup(temporary_dir):
+    with open(os.path.join(temporary_dir, "pyproject.toml"), "w") as setup_file:
+        setup_file.write(FAKE_PYPROJECT_TOML_FLIT)
+
+    project_config = config.project(directory=temporary_dir, config_file="pyproject.toml")
+    assert project_config["modules"] == ["preconvert"]
 
 
 def test_setup_py_properties():
