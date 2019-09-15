@@ -1,6 +1,20 @@
+import os
+
 from hypothesis_auto import auto_test
 
 from portray import config, exceptions
+
+FAKE_SETUP_FILE = """
+from setuptools import setup
+
+setup(name='fake',
+      version='0.1',
+      description='Fake package for tesitng pourposes',
+      author='Flying Circus',
+      author_email='flyingcircus@example.com',
+      license='MIT',
+      packages=['fake'])
+"""
 
 
 def test_project_properties(project_dir):
@@ -8,6 +22,14 @@ def test_project_properties(project_dir):
     auto_test(
         config.project, directory=project_dir, _auto_allow_exceptions=(exceptions.NoProjectFound,)
     )
+
+
+def test_project_setup_py(temporary_dir):
+    with open(os.path.join(temporary_dir, "setup.py"), "w") as setup_file:
+        setup_file.write(FAKE_SETUP_FILE)
+
+    project_config = config.project(directory=temporary_dir, config_file="")
+    assert project_config["modules"] == ["fake"]
 
 
 def test_setup_py_properties():
