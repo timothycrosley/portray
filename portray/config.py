@@ -197,6 +197,10 @@ def mkdocs(directory: str, **overrides) -> dict:
     if theme["name"].lower() == "material" and "custom_dir" not in theme:
         theme["custom_dir"] = MKDOCS_DEFAULTS["theme"]["custom_dir"]
 
+    nav = mkdocs_config.get("nav", None)
+    if nav and hasattr(nav[0], "copy"):
+        mkdocs_config["nav"] = [nav_item.copy() for nav_item in nav]
+
     return mkdocs_config
 
 
