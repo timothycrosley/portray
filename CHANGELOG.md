@@ -17,6 +17,15 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.3.0 - September 15 2019
+- Potentially backward compatibility breaking performance optimization: portray now only renders root project files + the specified documentation directory + any specified extra_dirs.
+  If a previously utilized file used to be auto included, but is no longer, you can force its inclusion by adding its directory to `extra_dirs.`
+  For many projects, this change results in a significantly smaller output size and significantly faster documentation generation.
+- Implemented [Issue 31](https://github.com/timothycrosley/portray/issues/31) - Improved repository auto-discovery and formatting.
+- Fixed [Issue 33](https://github.com/timothycrosley/portray/issues/33) - Improving usability and documentation of nav customization.
+- Added many additional test cases - Reaching 100% test coverage.
+- Added indicators that let users know what step is occurring during documentation generation.
+
 ## 1.2.4 - September 5 2019
 - Fixed [Issue 23](https://github.com/timothycrosley/portray/issues/23) - A confirmed regression from moving to `pdocs` that caused root modules to not be auto included.
 
