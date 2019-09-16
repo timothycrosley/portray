@@ -9,6 +9,40 @@ import pytest
 
 from portray import api, exceptions
 
+CUSTOM_NAV = """
+[[tool.portray.mkdocs.nav]]
+Changelog = "CHANGELOG.md"
+
+[[tool.portray.mkdocs.nav]]
+Troubleshooting = "TROUBLESHOOTING.md"
+
+[[tool.portray.mkdocs.nav]]
+    [[tool.portray.mkdocs.nav.Contributing]]
+    "1. Contributing Guide" = "docs/contributing/1.-contributing-guide.md"
+
+    [[tool.portray.mkdocs.nav.Contributing]]
+    "2. Coding Standard" = "docs/contributing/2.-coding-standard.md"
+
+    [[tool.portray.mkdocs.nav.Contributing]]
+    "3. Code of Conduct" = "docs/contributing/3.-code-of-conduct.md"
+
+    [[tool.portray.mkdocs.nav.Contributing]]
+    "4. Acknowledgements" = "docs/contributing/4.-acknowledgements.md"
+
+[[tool.portray.mkdocs.nav]]
+    [[tool.portray.mkdocs.nav."Quick Start"]]
+    "1. Installation" = "docs/quick_start/1.-installation.md"
+
+    [[tool.portray.mkdocs.nav."Quick Start"]]
+    "2. CLI" = "docs/quick_start/2.-cli.md"
+
+    [[tool.portray.mkdocs.nav."Quick Start"]]
+    "3. API" = "docs/quick_start/3.-api.md"
+
+    [[tool.portray.mkdocs.nav."Quick Start"]]
+    "4. Configuration" = "docs/quick_start/4.-configuration.md"
+"""
+
 
 def test_as_html(temporary_dir, project_dir, chdir):
     with chdir(temporary_dir):
@@ -32,6 +66,17 @@ def test_as_html(temporary_dir, project_dir, chdir):
             # Or, we output to a different location
             with tempfile.TemporaryDirectory() as new_temp_directory:
                 api.as_html(output_dir=os.path.join(new_temp_directory, "site"))
+
+
+def test_as_html_custom_nav(temporary_dir, project_dir, chdir):
+    with chdir(temporary_dir):
+        temp_project_dir = os.path.join(temporary_dir, "portray")
+        shutil.copytree(project_dir, temp_project_dir)
+        with chdir(temp_project_dir):
+            with open(os.path.join(temp_project_dir, "pyproject.toml"), "w+") as pyproject:
+                pyproject.write(CUSTOM_NAV)
+
+            api.as_html()
 
 
 def test_server(mocker, project_dir, chdir):

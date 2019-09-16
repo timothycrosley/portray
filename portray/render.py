@@ -128,7 +128,7 @@ def documentation_in_temp_folder(config: dict):
                     index_page: str = ""
                     if index_nav and isinstance(index_nav, dict):
                         index_page = tuple(index_nav.values())[0]
-                    elif isinstance(index_nav, str):
+                    elif isinstance(index_nav, str):  # pragma: no cover
                         index_page = index_nav
 
                     if index_page:
@@ -168,7 +168,7 @@ def _mkdocs_config(config: dict) -> mkdocs_config.Config:
         raise _mkdocs_exceptions.ConfigurationError(
             f"Aborted with {len(errors)} Configuration Errors!"
         )
-    elif config.get("strict", False) and warnings:
+    elif config.get("strict", False) and warnings:  # pragma: no cover
         print(warnings)
         raise _mkdocs_exceptions.ConfigurationError(
             f"Aborted with {len(warnings)} Configuration Warnings in 'strict' mode!"
