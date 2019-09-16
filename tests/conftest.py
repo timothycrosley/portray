@@ -13,12 +13,12 @@ def chdir_manager(directory):
     os.chdir(old_directory)
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def chdir():
     return chdir_manager
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def temporary_dir():
     with tempfile.TemporaryDirectory() as temp_dir:
         yield temp_dir

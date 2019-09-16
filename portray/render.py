@@ -10,12 +10,12 @@ from contextlib import contextmanager
 from glob import glob
 from typing import Dict
 
-from yaspin import yaspin
 import mako.exceptions
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
 from mkdocs.commands.build import build as mkdocs_build
 from pdocs import as_markdown as pdocs_as_markdown
+from yaspin import yaspin
 
 from portray.exceptions import DocumentationAlreadyExists
 
@@ -82,7 +82,9 @@ def documentation_in_temp_folder(config: dict):
         os.mkdir(input_dir)
         with tempfile.TemporaryDirectory() as temp_output_dir:
 
-            with yaspin(text="Copying source documentation to temporary compilation directory") as spinner:
+            with yaspin(
+                text="Copying source documentation to temporary compilation directory"
+            ) as spinner:
                 for root_file in os.listdir(config["directory"]):
                     root_file_absolute = os.path.join(config["directory"], root_file)
                     if os.path.isfile(root_file_absolute):
@@ -91,8 +93,9 @@ def documentation_in_temp_folder(config: dict):
                 for source_directory in [config["docs_dir"]] + config["extra_dirs"]:
                     directory_absolute = os.path.join(config["directory"], source_directory)
                     if os.path.isdir(directory_absolute):
-                        shutil.copytree(directory_absolute,
-                                os.path.join(input_dir, source_directory))
+                        shutil.copytree(
+                            directory_absolute, os.path.join(input_dir, source_directory)
+                        )
 
                 spinner.ok("Done")
 
@@ -121,13 +124,24 @@ def documentation_in_temp_folder(config: dict):
             else:
                 nav = config["mkdocs"]["nav"]
                 if nav:
-                    index_page = nav[0]
-                    if index_page and isinstance(index_page, dict):
-                        index_page = tuple(index_page.values())[0]
+                    index_nav = nav[0]
+                    index_page: str = ""
+                    if index_nav and isinstance(index_nav, dict):
+                        index_page = tuple(index_nav.values())[0]
+                    elif isinstance(index_nav, str):  # pragma: no cover
+                        index_page = index_nav
 
-                    destination_index_page = os.path.join(input_dir, "index.md")
-                    if index_page != "README.md" and index_page != "index.md" and not os.path.exists(destination_index_page):
-                        shutil.copyfile(os.path.join(input_dir, index_page), destination_index_page)
+                    if index_page:
+
+                        destination_index_page = os.path.join(input_dir, "index.md")
+                        if (
+                            index_page != "README.md"
+                            and index_page != "index.md"
+                            and not os.path.exists(destination_index_page)
+                        ):
+                            shutil.copyfile(
+                                os.path.join(input_dir, index_page), destination_index_page
+                            )
 
             if config["include_reference_documentation"]:
                 with yaspin(text="Auto generating reference documentation using pdocs") as spinner:
@@ -154,7 +168,7 @@ def _mkdocs_config(config: dict) -> mkdocs_config.Config:
         raise _mkdocs_exceptions.ConfigurationError(
             f"Aborted with {len(errors)} Configuration Errors!"
         )
-    elif config.get("strict", False) and warnings:
+    elif config.get("strict", False) and warnings:  # pragma: no cover
         print(warnings)
         raise _mkdocs_exceptions.ConfigurationError(
             f"Aborted with {len(warnings)} Configuration Warnings in 'strict' mode!"
