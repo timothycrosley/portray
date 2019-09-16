@@ -153,7 +153,7 @@
 
   
 
-<a href="https://github.com/timothycrosley/portray.git/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/timothycrosley/portray/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -162,7 +162,7 @@
     </div>
   
   <div class="md-source__repository">
-    timothycrosley/portray
+    portray
   </div>
 </a>
           </div>
@@ -200,7 +200,7 @@
 
   
 
-<a href="https://github.com/timothycrosley/portray.git/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/timothycrosley/portray/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -209,7 +209,7 @@
     </div>
   
   <div class="md-source__repository">
-    timothycrosley/portray
+    portray
   </div>
 </a>
     </div>
@@ -695,7 +695,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/timothycrosley/portray.git/edit/master/docs/reference/portray/render.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/timothycrosley/portray/edit/master/reference/portray/render.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="module-portrayrender">Module portray.render</h1>
@@ -732,6 +732,8 @@ included documentation generation utilities.</p>
 <span class="s s-Atom">from</span> <span class="s s-Atom">mkdocs</span><span class="p">.</span><span class="s s-Atom">commands</span><span class="p">.</span><span class="s s-Atom">build</span> <span class="s s-Atom">import</span> <span class="s s-Atom">build</span> <span class="s s-Atom">as</span> <span class="s s-Atom">mkdocs_build</span>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">pdocs</span> <span class="s s-Atom">import</span> <span class="s s-Atom">as_markdown</span> <span class="s s-Atom">as</span> <span class="s s-Atom">pdocs_as_markdown</span>
+
+<span class="s s-Atom">from</span> <span class="s s-Atom">yaspin</span> <span class="s s-Atom">import</span> <span class="s s-Atom">yaspin</span>
 
 <span class="s s-Atom">from</span> <span class="s s-Atom">portray</span><span class="p">.</span><span class="s s-Atom">exceptions</span> <span class="s s-Atom">import</span> <span class="nv">DocumentationAlreadyExists</span>
 
@@ -817,23 +819,45 @@ included documentation generation utilities.</p>
 
     <span class="s2">&quot;&quot;&quot;Build documentation within a temp folder, returning that folder name before it is deleted.&quot;&quot;&quot;</span>
 
-    <span class="s s-Atom">#if</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;append_directory_to_python_path&quot;</span><span class="p">]</span> <span class="s s-Atom">and</span> <span class="o">not</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">]</span> <span class="s s-Atom">in</span> <span class="s s-Atom">sys</span><span class="p">.</span><span class="nn">path</span><span class="p">:</span>
+    <span class="s s-Atom">if</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;append_directory_to_python_path&quot;</span><span class="p">]</span> <span class="s s-Atom">and</span> <span class="o">not</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">]</span> <span class="s s-Atom">in</span> <span class="s s-Atom">sys</span><span class="p">.</span><span class="nn">path</span><span class="p">:</span>
 
-        <span class="s s-Atom">#sys</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">])</span>
+        <span class="s s-Atom">sys</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">])</span>
 
     <span class="s s-Atom">with</span> <span class="s s-Atom">tempfile</span><span class="p">.</span><span class="nv">TemporaryDirectory</span><span class="p">()</span> <span class="s s-Atom">as</span> <span class="s s-Atom">input_dir:</span>
 
         <span class="s s-Atom">input_dir</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;input&quot;</span><span class="p">)</span>
 
+        <span class="s s-Atom">os</span><span class="p">.</span><span class="nf">mkdir</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">)</span>
+
         <span class="s s-Atom">with</span> <span class="s s-Atom">tempfile</span><span class="p">.</span><span class="nv">TemporaryDirectory</span><span class="p">()</span> <span class="s s-Atom">as</span> <span class="s s-Atom">temp_output_dir:</span>
 
-            <span class="s s-Atom">shutil</span><span class="p">.</span><span class="nf">copytree</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s s-Atom">input_dir</span><span class="p">)</span>
+            <span class="s s-Atom">with</span> <span class="nf">yaspin</span><span class="p">(</span>
 
-            <span class="s s-Atom">if</span> <span class="s2">&quot;output_dir&quot;</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+                <span class="s s-Atom">text=</span><span class="s2">&quot;Copying source documentation to temporary compilation directory&quot;</span>
 
-                <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">][</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+            <span class="p">)</span> <span class="s s-Atom">as</span> <span class="nn">spinner</span><span class="p">:</span>
 
-            <span class="nf">pdocs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">])</span>
+                <span class="s s-Atom">for</span> <span class="s s-Atom">root_file</span> <span class="s s-Atom">in</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="nf">listdir</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">])</span><span class="s s-Atom">:</span>
+
+                    <span class="s s-Atom">root_file_absolute</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s s-Atom">root_file</span><span class="p">)</span>
+
+                    <span class="s s-Atom">if</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">isfile</span><span class="p">(</span><span class="s s-Atom">root_file_absolute</span><span class="p">)</span><span class="s s-Atom">:</span>
+
+                        <span class="s s-Atom">shutil</span><span class="p">.</span><span class="nf">copyfile</span><span class="p">(</span><span class="s s-Atom">root_file_absolute</span><span class="p">,</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">root_file</span><span class="p">))</span>
+
+                <span class="s s-Atom">for</span> <span class="s s-Atom">source_directory</span> <span class="s s-Atom">in</span> <span class="p">[</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;docs_dir&quot;</span><span class="p">]]</span> <span class="o">+</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;extra_dirs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+
+                    <span class="s s-Atom">directory_absolute</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;directory&quot;</span><span class="p">],</span> <span class="s s-Atom">source_directory</span><span class="p">)</span>
+
+                    <span class="s s-Atom">if</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">isdir</span><span class="p">(</span><span class="s s-Atom">directory_absolute</span><span class="p">)</span><span class="s s-Atom">:</span>
+
+                        <span class="s s-Atom">shutil</span><span class="p">.</span><span class="nf">copytree</span><span class="p">(</span>
+
+                            <span class="s s-Atom">directory_absolute</span><span class="p">,</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">source_directory</span><span class="p">)</span>
+
+                        <span class="p">)</span>
+
+                <span class="s s-Atom">spinner</span><span class="p">.</span><span class="nf">ok</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">)</span>
 
             <span class="s s-Atom">if</span> <span class="s2">&quot;docs_dir&quot;</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
 
@@ -871,11 +895,65 @@ included documentation generation utilities.</p>
 
                 <span class="p">)</span>
 
-                <span class="s s-Atom">reference_docs</span> <span class="o">=</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">][</span><span class="s2">&quot;output_dir&quot;</span><span class="p">],</span> <span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span>
+            <span class="nn">else</span><span class="p">:</span>
 
-                <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span><span class="s2">&quot;Reference&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">reference_docs</span><span class="p">})</span>  <span class="s s-Atom">#</span> <span class="nn">type</span><span class="p">:</span> <span class="s s-Atom">ignore</span>
+                <span class="s s-Atom">nav</span> <span class="o">=</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">][</span><span class="s2">&quot;nav&quot;</span><span class="p">]</span>
 
-            <span class="nf">mkdocs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">])</span>
+                <span class="s s-Atom">if</span> <span class="nn">nav</span><span class="p">:</span>
+
+                    <span class="s s-Atom">index_nav</span> <span class="o">=</span> <span class="s s-Atom">nav</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="s s-Atom">index_page:</span> <span class="s s-Atom">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+                    <span class="s s-Atom">if</span> <span class="s s-Atom">index_nav</span> <span class="s s-Atom">and</span> <span class="nf">isinstance</span><span class="p">(</span><span class="s s-Atom">index_nav</span><span class="p">,</span> <span class="s s-Atom">dict</span><span class="p">)</span><span class="s s-Atom">:</span>
+
+                        <span class="s s-Atom">index_page</span> <span class="o">=</span> <span class="nf">tuple</span><span class="p">(</span><span class="s s-Atom">index_nav</span><span class="p">.</span><span class="nf">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="s s-Atom">elif</span> <span class="nf">isinstance</span><span class="p">(</span><span class="s s-Atom">index_nav</span><span class="p">,</span> <span class="s s-Atom">str</span><span class="p">)</span><span class="s s-Atom">:</span>  <span class="s s-Atom">#</span> <span class="nn">pragma</span><span class="p">:</span> <span class="s s-Atom">no</span> <span class="s s-Atom">cover</span>
+
+                        <span class="s s-Atom">index_page</span> <span class="o">=</span> <span class="s s-Atom">index_nav</span>
+
+                    <span class="s s-Atom">if</span> <span class="s s-Atom">index_page:</span>
+
+                        <span class="s s-Atom">destination_index_page</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;index.md&quot;</span><span class="p">)</span>
+
+                        <span class="nf">if</span> <span class="p">(</span>
+
+                            <span class="s s-Atom">index_page</span> <span class="p">!</span><span class="o">=</span> <span class="s2">&quot;README.md&quot;</span>
+
+                            <span class="s s-Atom">and</span> <span class="s s-Atom">index_page</span> <span class="p">!</span><span class="o">=</span> <span class="s2">&quot;index.md&quot;</span>
+
+                            <span class="s s-Atom">and</span> <span class="o">not</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">exists</span><span class="p">(</span><span class="s s-Atom">destination_index_page</span><span class="p">)</span>
+
+                        <span class="p">)</span><span class="s s-Atom">:</span>
+
+                            <span class="s s-Atom">shutil</span><span class="p">.</span><span class="nf">copyfile</span><span class="p">(</span>
+
+                                <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">index_page</span><span class="p">),</span> <span class="s s-Atom">destination_index_page</span>
+
+                            <span class="p">)</span>
+
+            <span class="s s-Atom">if</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;include_reference_documentation&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+
+                <span class="s s-Atom">with</span> <span class="nf">yaspin</span><span class="p">(</span><span class="s s-Atom">text=</span><span class="s2">&quot;Auto generating reference documentation using pdocs&quot;</span><span class="p">)</span> <span class="s s-Atom">as</span> <span class="nn">spinner</span><span class="p">:</span>
+
+                    <span class="s s-Atom">if</span> <span class="s2">&quot;output_dir&quot;</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">]</span><span class="s s-Atom">:</span>
+
+                        <span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">][</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+
+                    <span class="nf">pdocs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">])</span>
+
+                    <span class="s s-Atom">reference_docs</span> <span class="o">=</span> <span class="k">_</span><span class="nf">nested_docs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;pdocs&quot;</span><span class="p">][</span><span class="s2">&quot;output_dir&quot;</span><span class="p">],</span> <span class="s s-Atom">input_dir</span><span class="p">,</span> <span class="s s-Atom">config</span><span class="p">)</span>
+
+                    <span class="s s-Atom">nav</span><span class="p">.</span><span class="nf">append</span><span class="p">({</span><span class="s2">&quot;Reference&quot;</span><span class="s s-Atom">:</span> <span class="s s-Atom">reference_docs</span><span class="p">})</span>  <span class="s s-Atom">#</span> <span class="nn">type</span><span class="p">:</span> <span class="s s-Atom">ignore</span>
+
+                    <span class="s s-Atom">spinner</span><span class="p">.</span><span class="nf">ok</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">)</span>
+
+            <span class="s s-Atom">with</span> <span class="nf">yaspin</span><span class="p">(</span><span class="s s-Atom">text=</span><span class="s2">&quot;Rendering complete website from Markdown using MkDocs&quot;</span><span class="p">)</span> <span class="s s-Atom">as</span> <span class="nn">spinner</span><span class="p">:</span>
+
+                <span class="nf">mkdocs</span><span class="p">(</span><span class="s s-Atom">config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">])</span>
+
+                <span class="s s-Atom">spinner</span><span class="p">.</span><span class="nf">ok</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">)</span>
 
             <span class="s s-Atom">yield</span> <span class="s s-Atom">temp_output_dir</span>
 
@@ -897,7 +975,7 @@ included documentation generation utilities.</p>
 
         <span class="p">)</span>
 
-    <span class="s s-Atom">elif</span> <span class="s s-Atom">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span> <span class="nv">False</span><span class="p">)</span> <span class="s s-Atom">and</span> <span class="nn">warnings</span><span class="p">:</span>
+    <span class="s s-Atom">elif</span> <span class="s s-Atom">config</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">&quot;strict&quot;</span><span class="p">,</span> <span class="nv">False</span><span class="p">)</span> <span class="s s-Atom">and</span> <span class="nn">warnings</span><span class="p">:</span>  <span class="s s-Atom">#</span> <span class="nn">pragma</span><span class="p">:</span> <span class="s s-Atom">no</span> <span class="s s-Atom">cover</span>
 
         <span class="nf">print</span><span class="p">(</span><span class="s s-Atom">warnings</span><span class="p">)</span>
 
@@ -1038,23 +1116,45 @@ specified output directory.</p>
 
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Build documentation within a temp folder, returning that folder name before it is deleted.</span><span class="s2">&quot;&quot;&quot;</span>
 
-    #<span class="k">if</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">append_directory_to_python_path</span><span class="s2">&quot;</span>] <span class="nv">and</span> <span class="nv">not</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>] <span class="nv">in</span> <span class="nv">sys</span>.<span class="nv">path</span>:
+    <span class="k">if</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">append_directory_to_python_path</span><span class="s2">&quot;</span>] <span class="nv">and</span> <span class="nv">not</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>] <span class="nv">in</span> <span class="nv">sys</span>.<span class="nv">path</span>:
 
-        #<span class="nv">sys</span>.<span class="nv">path</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>]<span class="ss">)</span>
+        <span class="nv">sys</span>.<span class="nv">path</span>.<span class="nv">append</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>]<span class="ss">)</span>
 
     <span class="nv">with</span> <span class="nv">tempfile</span>.<span class="nv">TemporaryDirectory</span><span class="ss">()</span> <span class="nv">as</span> <span class="nv">input_dir</span>:
 
         <span class="nv">input_dir</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">input</span><span class="s2">&quot;</span><span class="ss">)</span>
 
+        <span class="nv">os</span>.<span class="nv">mkdir</span><span class="ss">(</span><span class="nv">input_dir</span><span class="ss">)</span>
+
         <span class="nv">with</span> <span class="nv">tempfile</span>.<span class="nv">TemporaryDirectory</span><span class="ss">()</span> <span class="nv">as</span> <span class="nv">temp_output_dir</span>:
 
-            <span class="nv">shutil</span>.<span class="nv">copytree</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>], <span class="nv">input_dir</span><span class="ss">)</span>
+            <span class="nv">with</span> <span class="nv">yaspin</span><span class="ss">(</span>
 
-            <span class="k">if</span> <span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>]:
+                <span class="nv">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">Copying source documentation to temporary compilation directory</span><span class="s2">&quot;</span>
 
-                <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">reference</span><span class="s2">&quot;</span><span class="ss">)</span>
+            <span class="ss">)</span> <span class="nv">as</span> <span class="nv">spinner</span>:
 
-            <span class="nv">pdocs</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>]<span class="ss">)</span>
+                <span class="k">for</span> <span class="nv">root_file</span> <span class="nv">in</span> <span class="nv">os</span>.<span class="nv">listdir</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>]<span class="ss">)</span>:
+
+                    <span class="nv">root_file_absolute</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>], <span class="nv">root_file</span><span class="ss">)</span>
+
+                    <span class="k">if</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">isfile</span><span class="ss">(</span><span class="nv">root_file_absolute</span><span class="ss">)</span>:
+
+                        <span class="nv">shutil</span>.<span class="nv">copyfile</span><span class="ss">(</span><span class="nv">root_file_absolute</span>, <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="nv">root_file</span><span class="ss">))</span>
+
+                <span class="k">for</span> <span class="nv">source_directory</span> <span class="nv">in</span> [<span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">docs_dir</span><span class="s2">&quot;</span>]] <span class="o">+</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">extra_dirs</span><span class="s2">&quot;</span>]:
+
+                    <span class="nv">directory_absolute</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">directory</span><span class="s2">&quot;</span>], <span class="nv">source_directory</span><span class="ss">)</span>
+
+                    <span class="k">if</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">isdir</span><span class="ss">(</span><span class="nv">directory_absolute</span><span class="ss">)</span>:
+
+                        <span class="nv">shutil</span>.<span class="nv">copytree</span><span class="ss">(</span>
+
+                            <span class="nv">directory_absolute</span>, <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="nv">source_directory</span><span class="ss">)</span>
+
+                        <span class="ss">)</span>
+
+                <span class="nv">spinner</span>.<span class="nv">ok</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Done</span><span class="s2">&quot;</span><span class="ss">)</span>
 
             <span class="k">if</span> <span class="s2">&quot;</span><span class="s">docs_dir</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]:
 
@@ -1092,11 +1192,65 @@ specified output directory.</p>
 
                 <span class="ss">)</span>
 
-                <span class="nv">reference_docs</span> <span class="o">=</span> <span class="nv">_nested_docs</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>], <span class="nv">input_dir</span>, <span class="nv">config</span><span class="ss">)</span>
+            <span class="k">else</span>:
 
-                <span class="nv">nav</span>.<span class="nv">append</span><span class="ss">(</span>{<span class="s2">&quot;</span><span class="s">Reference</span><span class="s2">&quot;</span>: <span class="nv">reference_docs</span>}<span class="ss">)</span>  # <span class="nv">type</span>: <span class="nv">ignore</span>
+                <span class="nv">nav</span> <span class="o">=</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">nav</span><span class="s2">&quot;</span>]
 
-            <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]<span class="ss">)</span>
+                <span class="k">if</span> <span class="nv">nav</span>:
+
+                    <span class="nv">index_nav</span> <span class="o">=</span> <span class="nv">nav</span>[<span class="mi">0</span>]
+
+                    <span class="nv">index_page</span>: <span class="nv">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+                    <span class="k">if</span> <span class="nv">index_nav</span> <span class="nv">and</span> <span class="nv">isinstance</span><span class="ss">(</span><span class="nv">index_nav</span>, <span class="nv">dict</span><span class="ss">)</span>:
+
+                        <span class="nv">index_page</span> <span class="o">=</span> <span class="nv">tuple</span><span class="ss">(</span><span class="nv">index_nav</span>.<span class="nv">values</span><span class="ss">())</span>[<span class="mi">0</span>]
+
+                    <span class="nv">elif</span> <span class="nv">isinstance</span><span class="ss">(</span><span class="nv">index_nav</span>, <span class="nv">str</span><span class="ss">)</span>:  # <span class="nv">pragma</span>: <span class="nv">no</span> <span class="nv">cover</span>
+
+                        <span class="nv">index_page</span> <span class="o">=</span> <span class="nv">index_nav</span>
+
+                    <span class="k">if</span> <span class="nv">index_page</span>:
+
+                        <span class="nv">destination_index_page</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">index.md</span><span class="s2">&quot;</span><span class="ss">)</span>
+
+                        <span class="k">if</span> <span class="ss">(</span>
+
+                            <span class="nv">index_page</span> <span class="o">!=</span> <span class="s2">&quot;</span><span class="s">README.md</span><span class="s2">&quot;</span>
+
+                            <span class="nv">and</span> <span class="nv">index_page</span> <span class="o">!=</span> <span class="s2">&quot;</span><span class="s">index.md</span><span class="s2">&quot;</span>
+
+                            <span class="nv">and</span> <span class="nv">not</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">exists</span><span class="ss">(</span><span class="nv">destination_index_page</span><span class="ss">)</span>
+
+                        <span class="ss">)</span>:
+
+                            <span class="nv">shutil</span>.<span class="nv">copyfile</span><span class="ss">(</span>
+
+                                <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="nv">index_page</span><span class="ss">)</span>, <span class="nv">destination_index_page</span>
+
+                            <span class="ss">)</span>
+
+            <span class="k">if</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">include_reference_documentation</span><span class="s2">&quot;</span>]:
+
+                <span class="nv">with</span> <span class="nv">yaspin</span><span class="ss">(</span><span class="nv">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">Auto generating reference documentation using pdocs</span><span class="s2">&quot;</span><span class="ss">)</span> <span class="nv">as</span> <span class="nv">spinner</span>:
+
+                    <span class="k">if</span> <span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>]:
+
+                        <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">join</span><span class="ss">(</span><span class="nv">input_dir</span>, <span class="s2">&quot;</span><span class="s">reference</span><span class="s2">&quot;</span><span class="ss">)</span>
+
+                    <span class="nv">pdocs</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>]<span class="ss">)</span>
+
+                    <span class="nv">reference_docs</span> <span class="o">=</span> <span class="nv">_nested_docs</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">output_dir</span><span class="s2">&quot;</span>], <span class="nv">input_dir</span>, <span class="nv">config</span><span class="ss">)</span>
+
+                    <span class="nv">nav</span>.<span class="nv">append</span><span class="ss">(</span>{<span class="s2">&quot;</span><span class="s">Reference</span><span class="s2">&quot;</span>: <span class="nv">reference_docs</span>}<span class="ss">)</span>  # <span class="nv">type</span>: <span class="nv">ignore</span>
+
+                    <span class="nv">spinner</span>.<span class="nv">ok</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Done</span><span class="s2">&quot;</span><span class="ss">)</span>
+
+            <span class="nv">with</span> <span class="nv">yaspin</span><span class="ss">(</span><span class="nv">text</span><span class="o">=</span><span class="s2">&quot;</span><span class="s">Rendering complete website from Markdown using MkDocs</span><span class="s2">&quot;</span><span class="ss">)</span> <span class="nv">as</span> <span class="nv">spinner</span>:
+
+                <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>]<span class="ss">)</span>
+
+                <span class="nv">spinner</span>.<span class="nv">ok</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Done</span><span class="s2">&quot;</span><span class="ss">)</span>
 
             <span class="nv">yield</span> <span class="nv">temp_output_dir</span>
 </pre></div>

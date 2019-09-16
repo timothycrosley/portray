@@ -153,7 +153,7 @@
 
   
 
-<a href="https://github.com/timothycrosley/portray.git/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/timothycrosley/portray/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -162,7 +162,7 @@
     </div>
   
   <div class="md-source__repository">
-    timothycrosley/portray
+    portray
   </div>
 </a>
           </div>
@@ -200,7 +200,7 @@
 
   
 
-<a href="https://github.com/timothycrosley/portray.git/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/timothycrosley/portray/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -209,7 +209,7 @@
     </div>
   
   <div class="md-source__repository">
-    timothycrosley/portray
+    portray
   </div>
 </a>
     </div>
@@ -566,7 +566,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/timothycrosley/portray.git/edit/master/docs/docs/quick_start/4.-configuration.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/timothycrosley/portray/edit/master/docs/quick_start/4.-configuration.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="configuring-portray">Configuring portray</h1>
@@ -581,20 +581,64 @@ Configuration options should be placed within a <code>tool.poetry</code> section
 <p><code>portray</code> itself comes with a handful of configuration options:</p>
 <ul>
 <li><strong>docs_dir</strong>: The directory (beyond your project root directory) where your markdown documentation is located. Defaults to <code>"docs"</code>.</li>
+<li><strong>extra_dirs</strong>: A list of additional directories to make available during static documentation building. Defaults to <code>["art", "images", "media"]</code>.</li>
 <li><strong>output_dir</strong>: The directory to output your generated documentation website when using <code>portray as_html</code>. Defaults to <code>"site"</code>.</li>
 <li><strong>port</strong>: The port to use when serving your website locally. Defaults to <code>8000</code>.</li>
 <li><strong>host</strong>: The host to use when serving your website locally. Defaults to <code>127.0.0.1</code>.</li>
 <li><strong>labels</strong>: Label remappings for documentation pages.</li>
 <li><strong>modules</strong>: A List of Python modules to generate reference documentation for.</li>
+<li><strong>append_directory_to_python_path</strong>: If set to <code>true</code> (the default) appends the projects root directory to the PYTHON_PATH before producing documentation.</li>
+<li><strong>include_reference_documentation</strong>: If set to <code>true</code> (the default) automatic reference documentation is produced by pdocs to live alongside your manually written documentation.</li>
 </ul>
-<p>Beyond portray's direct configuration options, you can modify any of MkDocs or pdocs configuration options in the same <code>pyproject.yaml</code> file.
-Simply nest their documentation under a <code>.mkdocs</code> or <code>.pdoc3</code>.</p>
+<p>Beyond portray's direct configuration options, you can modify any of MkDocs or pdocs configuration options in the same <code>pyproject.toml</code> file.
+Simply nest their configuration under a <code>.mkdocs</code> or <code>.pdoc3</code>.</p>
 <p>For example, to change the MkDocs theme configuration used for portray the following is set in <code>pyproject.toml</code>:</p>
 <div class="codehilite"><pre><span></span><span class="k">[tool.portray.mkdocs.theme]</span>
 <span class="n">favicon</span> <span class="o">=</span> <span class="s">&quot;art/logo_small.png&quot;</span>
 <span class="n">logo</span> <span class="o">=</span> <span class="s">&quot;art/logo_small.png&quot;</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;material&quot;</span>
 <span class="n">palette</span> <span class="o">=</span> <span class="p">{</span><span class="n">primary</span> <span class="o">=</span> <span class="s">&quot;blue grey&quot;</span><span class="p">,</span> <span class="n">accent</span> <span class="o">=</span> <span class="s">&quot;pink&quot;</span><span class="p">}</span>
+</pre></div>
+
+
+<p>TOML doesn't behave 1:1 with YAML, and as a result, in some cases portray forces a stricter form of configuration options.
+For instance, to set up a custom navigation structure with portray, you can either specify just a flat list of file names, or a list of mappings of <code>{LABEL: FILENAME or LIST_OF_MAPPING}</code> but not a mix of both.
+This still allows as much customization as is permitted by mkdocs just with more consistency enforced. The recommended form is always to use lists of mappings.
+Here is what that would look like for portray's documentation site if it chose to specify the navigation manually:</p>
+<div class="codehilite"><pre><span></span><span class="k">[[tool.portray.mkdocs.nav]]</span>
+<span class="n">Home</span> <span class="o">=</span> <span class="s">&quot;README.md&quot;</span>
+
+<span class="k">[[tool.portray.mkdocs.nav]]</span>
+<span class="n">Changelog</span> <span class="o">=</span> <span class="s">&quot;CHANGELOG.md&quot;</span>
+
+<span class="k">[[tool.portray.mkdocs.nav]]</span>
+<span class="n">Troubleshooting</span> <span class="o">=</span> <span class="s">&quot;TROUBLESHOOTING.md&quot;</span>
+
+<span class="k">[[tool.portray.mkdocs.nav]]</span>
+    <span class="k">[[tool.portray.mkdocs.nav.Contributing]]</span>
+    <span class="s">&quot;1. Contributing Guide&quot;</span> <span class="o">=</span> <span class="s">&quot;docs/contributing/1.-contributing-guide.md&quot;</span>
+
+    <span class="k">[[tool.portray.mkdocs.nav.Contributing]]</span>
+    <span class="s">&quot;2. Coding Standard&quot;</span> <span class="o">=</span> <span class="s">&quot;docs/contributing/2.-coding-standard.md&quot;</span>
+
+    <span class="k">[[tool.portray.mkdocs.nav.Contributing]]</span>
+    <span class="s">&quot;3. Code of Conduct&quot;</span> <span class="o">=</span> <span class="s">&quot;docs/contributing/3.-code-of-conduct.md&quot;</span>
+
+    <span class="k">[[tool.portray.mkdocs.nav.Contributing]]</span>
+    <span class="s">&quot;4. Acknowledgements&quot;</span> <span class="o">=</span> <span class="s">&quot;docs/contributing/4.-acknowledgements.md&quot;</span>
+
+<span class="k">[[tool.portray.mkdocs.nav]]</span>
+    <span class="k">[[tool.portray.mkdocs.nav.&quot;Quick Start&quot;]]</span>
+    <span class="s">&quot;1. Installation&quot;</span> <span class="o">=</span> <span class="s">&quot;docs/quick_start/1.-installation.md&quot;</span>
+
+    <span class="k">[[tool.portray.mkdocs.nav.&quot;Quick Start&quot;]]</span>
+    <span class="s">&quot;2. CLI&quot;</span> <span class="o">=</span> <span class="s">&quot;docs/quick_start/2.-cli.md&quot;</span>
+
+    <span class="k">[[tool.portray.mkdocs.nav.&quot;Quick Start&quot;]]</span>
+    <span class="s">&quot;3. API&quot;</span> <span class="o">=</span> <span class="s">&quot;docs/quick_start/3.-api.md&quot;</span>
+
+    <span class="k">[[tool.portray.mkdocs.nav.&quot;Quick Start&quot;]]</span>
+    <span class="s">&quot;4. Configuration&quot;</span> <span class="o">=</span> <span class="s">&quot;docs/quick_start/4.-configuration.md&quot;</span>
 </pre></div>
 
 

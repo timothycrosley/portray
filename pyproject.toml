@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "portray"
-version = "1.2.4"
+version = "1.3.0"
 description = "Your Project with Great Documentation"
 authors = ["Timothy Crosley <timothy.crosley@gmail.com>"]
 license = "MIT"
@@ -15,6 +15,7 @@ toml = "^0.10.0"
 mkdocs-material = "^4.4"
 GitPython = "^3.0"
 pymdown-extensions = "^6.0"
+yaspin = "0.15.0"
 
 [tool.poetry.dev-dependencies]
 vulture = "^1.0"
@@ -29,6 +30,8 @@ ipython = "^7.7"
 pytest-cov = "^2.7"
 pytest-mock = "^1.10"
 pep8-naming = "^0.8.2"
+hypothesis-auto = "^0.0.4"
+pprofile = "^2.0"
 
 [tool.poetry.scripts]
 portray = "portray.cli:__hug__.cli"

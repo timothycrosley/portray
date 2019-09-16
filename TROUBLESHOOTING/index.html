@@ -153,7 +153,7 @@
 
   
 
-<a href="https://github.com/timothycrosley/portray.git/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/timothycrosley/portray/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -162,7 +162,7 @@
     </div>
   
   <div class="md-source__repository">
-    timothycrosley/portray
+    portray
   </div>
 </a>
           </div>
@@ -200,7 +200,7 @@
 
   
 
-<a href="https://github.com/timothycrosley/portray.git/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/timothycrosley/portray/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -209,7 +209,7 @@
     </div>
   
   <div class="md-source__repository">
-    timothycrosley/portray
+    portray
   </div>
 </a>
     </div>
@@ -297,6 +297,33 @@
           <li class="md-nav__item">
   <a href="#solution-3-specify-the-modules-manually-from-the-command-line" class="md-nav__link">
     Solution 3: Specify the modules manually from the command line
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unable-to-identify-repo_name-repo_url-and-edit_uri-automatically" class="md-nav__link">
+    Unable to identify repo_name, repo_url, and edit_uri automatically.
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solution-1-ignore-the-warning" class="md-nav__link">
+    Solution 1: Ignore the warning
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solution-2-manually-specify-settings-in-pyprojecttoml" class="md-nav__link">
+    Solution 2: Manually specify settings in pyproject.toml
   </a>
   
 </li>
@@ -655,6 +682,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#unable-to-identify-repo_name-repo_url-and-edit_uri-automatically" class="md-nav__link">
+    Unable to identify repo_name, repo_url, and edit_uri automatically.
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solution-1-ignore-the-warning" class="md-nav__link">
+    Solution 1: Ignore the warning
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solution-2-manually-specify-settings-in-pyprojecttoml" class="md-nav__link">
+    Solution 2: Manually specify settings in pyproject.toml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#deploying-to-netlify" class="md-nav__link">
     Deploying to Netlify
   </a>
@@ -677,7 +731,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/timothycrosley/portray.git/edit/master/docs/TROUBLESHOOTING.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/timothycrosley/portray/edit/master/TROUBLESHOOTING.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="troubleshooting-faq-guide">Troubleshooting / FAQ Guide</h1>
@@ -701,6 +755,26 @@ these files should be enough to resolve your issue.</p>
 <p>Every CLI command supports explicitly setting one or more modules using <code>-m</code>:</p>
 <script id="asciicast-264805" src="https://asciinema.org/a/264805.js" async></script>
 
+<h2 id="unable-to-identify-repo_name-repo_url-and-edit_uri-automatically"><code>Unable to identify repo_name, repo_url, and edit_uri automatically.</code></h2>
+<p>This is a warning that is returned when you haven't manually specified these configuration options
+and portray is unable to determine them automatically based on your project's repository.
+There are many reasons that this can happen, the simplest of which are that your project isn't source
+controlled or you utilize a source control system other than git.</p>
+<h3 id="solution-1-ignore-the-warning">Solution 1: Ignore the warning</h3>
+<p>These settings are optional and are used only by certain mkdocs themes to provide links back to your repository.</p>
+<p><img alt="Features that repo_url settings are used for" src="../art/repo_url.png" /></p>
+<p>If these features are not relevant to you, you can safely ignore the warning.</p>
+<h3 id="solution-2-manually-specify-settings-in-pyprojecttoml">Solution 2: Manually specify settings in <code>pyproject.toml</code></h3>
+<p>If for any reason portray is unable to determine the repository information from your repo automatically you can
+manually specify the settings within your config file:</p>
+<div class="codehilite"><pre><span></span><span class="k">[tool.portray.mkdocs]</span>
+<span class="n">repo_url</span> <span class="o">=</span> <span class="s">&quot;MY_REPO_URL&quot;</span>
+<span class="n">repo_name</span> <span class="o">=</span> <span class="s">&quot;MY_REPO_NAME&quot;</span>
+<span class="n">edit_uri</span> <span class="o">=</span> <span class="s">&quot;MY_EDIT_URL&quot;</span>
+</pre></div>
+
+
+<p>For more information about these settings, refer to the <a href="https://www.mkdocs.org/user-guide/configuration/#repo_url">mkdocs reference documentation</a>.</p>
 <h2 id="deploying-to-netlify">Deploying to Netlify</h2>
 <p>portray includes a built-in command to deploy to <a href="https://pages.github.com/">Github Pages</a> but it's also compatible with every static website host, including the popular <a href="https://www.netlify.com">Netflify</a>.
 There's a great guide on how to set this up contributed by @sw-yx <a href="https://scotch.io/@sw-yx/python-the-jamstack">here</a>.</p>

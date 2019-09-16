@@ -153,7 +153,7 @@
 
   
 
-<a href="https://github.com/timothycrosley/portray.git/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/timothycrosley/portray/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -162,7 +162,7 @@
     </div>
   
   <div class="md-source__repository">
-    timothycrosley/portray
+    portray
   </div>
 </a>
           </div>
@@ -200,7 +200,7 @@
 
   
 
-<a href="https://github.com/timothycrosley/portray.git/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/timothycrosley/portray/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -209,7 +209,7 @@
     </div>
   
   <div class="md-source__repository">
-    timothycrosley/portray
+    portray
   </div>
 </a>
     </div>
@@ -723,7 +723,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/timothycrosley/portray.git/edit/master/docs/reference/portray/config.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/timothycrosley/portray/edit/master/reference/portray/config.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="module-portrayconfig">Module portray.config</h1>
@@ -734,9 +734,11 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 
+<span class="kn">import</span> <span class="nn">re</span>
+
 <span class="kn">import</span> <span class="nn">warnings</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">cast</span>
 
 <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">parse</span>
 
@@ -756,6 +758,8 @@
 
     <span class="s2">&quot;docs_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;docs&quot;</span><span class="p">,</span>
 
+    <span class="s2">&quot;extra_dirs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;art&quot;</span><span class="p">,</span> <span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;media&quot;</span><span class="p">],</span>
+
     <span class="s2">&quot;output_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span>
 
     <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
@@ -763,6 +767,8 @@
     <span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
 
     <span class="s2">&quot;append_directory_to_python_path&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+
+    <span class="s2">&quot;include_reference_documentation&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
 
     <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;Cli&quot;</span><span class="p">:</span> <span class="s2">&quot;CLI&quot;</span><span class="p">,</span> <span class="s2">&quot;Api&quot;</span><span class="p">:</span> <span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Http&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTP&quot;</span><span class="p">,</span> <span class="s2">&quot;Pypi&quot;</span><span class="p">:</span> <span class="s2">&quot;PyPI&quot;</span><span class="p">},</span>
 
@@ -948,7 +954,21 @@
 
     <span class="k">return</span> <span class="p">{}</span>
 
-<span class="k">def</span> <span class="nf">repository</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">repository</span><span class="p">(</span>
+
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+
+    <span class="n">repo_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+
+    <span class="n">repo_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+
+    <span class="n">edit_uri</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+
+    <span class="n">normalize_repo_url</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
 
     <span class="sd">&quot;&quot;&quot;Returns back any information that can be determined by introspecting the projects git repo</span>
 
@@ -956,39 +976,105 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
-
     <span class="k">try</span><span class="p">:</span>
 
-        <span class="n">repo_url</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">url</span>
+        <span class="k">if</span> <span class="n">repo_url</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
 
-        <span class="k">if</span> <span class="s2">&quot;http&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span><span class="p">:</span>
+            <span class="n">repo_url</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">url</span>
 
-            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;repo_url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">repo_url</span>
+        <span class="k">if</span> <span class="n">repo_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
 
-            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;repo_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">repo_url</span><span class="p">)</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.git&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(:(//)?)([\w\.@\:/\-~]+)(\.git)?(/)?&quot;</span><span class="p">,</span> <span class="n">repo_url</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+
+                <span class="n">path</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">path</span> <span class="o">=</span> <span class="n">repo_url</span>
+
+            <span class="n">repo_name</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">repo_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.git&quot;</span><span class="p">):</span>
+
+                <span class="n">repo_name</span> <span class="o">=</span> <span class="n">repo_name</span><span class="p">[:</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="s2">&quot;.git&quot;</span><span class="p">)]</span>
+
+        <span class="k">if</span> <span class="n">edit_uri</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="s2">&quot;github&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span> <span class="ow">or</span> <span class="s2">&quot;gitlab&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span><span class="p">:</span>
+
+                <span class="n">edit_uri</span> <span class="o">=</span> <span class="s2">&quot;edit/master/&quot;</span>
+
+            <span class="k">elif</span> <span class="s2">&quot;bitbucket&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span><span class="p">:</span>
+
+                <span class="n">edit_uri</span> <span class="o">=</span> <span class="s2">&quot;src/default/docs/&quot;</span>
+
+        <span class="k">if</span> <span class="n">normalize_repo_url</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">repo_url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;git@&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;:&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span><span class="p">:</span>
+
+                <span class="n">tld</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">repo_url</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+
+                <span class="n">repo_url</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;https://{tld}/{path}&quot;</span>
+
+            <span class="k">elif</span> <span class="n">repo_url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;@&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span><span class="p">:</span>
+
+                <span class="n">repo_url</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;https://{repo_url.split(&#39;@&#39;)[1]}&quot;</span>
+
+            <span class="k">if</span> <span class="n">repo_url</span> <span class="ow">and</span> <span class="s2">&quot;github&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span> <span class="ow">or</span> <span class="s2">&quot;gitlab&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span> <span class="ow">or</span> <span class="s2">&quot;bitbucket&quot;</span> <span class="ow">in</span> <span class="n">repo_url</span><span class="p">:</span>
+
+                <span class="n">repo_url</span> <span class="o">=</span> <span class="n">repo_url</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.git&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+
+            <span class="n">key</span><span class="p">:</span> <span class="n">value</span>
+
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">{</span>
+
+                <span class="s2">&quot;repo_url&quot;</span><span class="p">:</span> <span class="n">repo_url</span><span class="p">,</span>
+
+                <span class="s2">&quot;repo_name&quot;</span><span class="p">:</span> <span class="n">repo_name</span><span class="p">,</span>
+
+                <span class="s2">&quot;edit_uri&quot;</span><span class="p">:</span> <span class="n">edit_uri</span><span class="p">,</span>
+
+            <span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">value</span>
+
+        <span class="p">}</span>
 
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
 
-        <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Unable to identify `repo_name`, `repo_url`, and `edit_uri` automatically.&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="p">:</span>
-
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Unable to identify `repo_name` and `repo_url` automatically&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">config</span>
+        <span class="k">return</span> <span class="p">{}</span>
 
 <span class="k">def</span> <span class="nf">mkdocs</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 
     <span class="sd">&quot;&quot;&quot;Returns back the configuration that will be used when running mkdocs&quot;&quot;&quot;</span>
 
-    <span class="n">mkdocs_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">MKDOCS_DEFAULTS</span><span class="p">,</span> <span class="o">**</span><span class="n">repository</span><span class="p">(</span><span class="n">directory</span><span class="p">),</span> <span class="o">**</span><span class="n">overrides</span><span class="p">}</span>
+    <span class="n">mkdocs_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+
+        <span class="o">**</span><span class="n">MKDOCS_DEFAULTS</span><span class="p">,</span>
+
+        <span class="o">**</span><span class="n">repository</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">),</span>
+
+        <span class="o">**</span><span class="n">overrides</span><span class="p">,</span>
+
+    <span class="p">}</span>
 
     <span class="n">theme</span> <span class="o">=</span> <span class="n">mkdocs_config</span><span class="p">[</span><span class="s2">&quot;theme&quot;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">theme</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;material&quot;</span> <span class="ow">and</span> <span class="s2">&quot;custom_dir&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">theme</span><span class="p">:</span>
 
         <span class="n">theme</span><span class="p">[</span><span class="s2">&quot;custom_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">MKDOCS_DEFAULTS</span><span class="p">[</span><span class="s2">&quot;theme&quot;</span><span class="p">][</span><span class="s2">&quot;custom_dir&quot;</span><span class="p">]</span>
+
+    <span class="n">nav</span> <span class="o">=</span> <span class="n">mkdocs_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nav&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">nav</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nav</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;copy&quot;</span><span class="p">):</span>
+
+        <span class="n">mkdocs_config</span><span class="p">[</span><span class="s2">&quot;nav&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">nav_item</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">nav_item</span> <span class="ow">in</span> <span class="n">nav</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">mkdocs_config</span>
 
@@ -1032,13 +1118,27 @@
 
     <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns back the configuration that will be used when running mkdocs</span><span class="s2">&quot;&quot;&quot;</span>
 
-    <span class="nv">mkdocs_config</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>] <span class="o">=</span> {<span class="o">**</span><span class="nv">MKDOCS_DEFAULTS</span>, <span class="o">**</span><span class="nv">repository</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>, <span class="o">**</span><span class="nv">overrides</span>}
+    <span class="nv">mkdocs_config</span>: <span class="nv">Dict</span>[<span class="nv">str</span>, <span class="nv">Any</span>] <span class="o">=</span> {
+
+        <span class="o">**</span><span class="nv">MKDOCS_DEFAULTS</span>,
+
+        <span class="o">**</span><span class="nv">repository</span><span class="ss">(</span><span class="nv">directory</span>, <span class="o">**</span><span class="nv">overrides</span><span class="ss">)</span>,
+
+        <span class="o">**</span><span class="nv">overrides</span>,
+
+    }
 
     <span class="nv">theme</span> <span class="o">=</span> <span class="nv">mkdocs_config</span>[<span class="s2">&quot;</span><span class="s">theme</span><span class="s2">&quot;</span>]
 
     <span class="k">if</span> <span class="nv">theme</span>[<span class="s2">&quot;</span><span class="s">name</span><span class="s2">&quot;</span>].<span class="nv">lower</span><span class="ss">()</span> <span class="o">==</span> <span class="s2">&quot;</span><span class="s">material</span><span class="s2">&quot;</span> <span class="nv">and</span> <span class="s2">&quot;</span><span class="s">custom_dir</span><span class="s2">&quot;</span> <span class="nv">not</span> <span class="nv">in</span> <span class="nv">theme</span>:
 
         <span class="nv">theme</span>[<span class="s2">&quot;</span><span class="s">custom_dir</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">MKDOCS_DEFAULTS</span>[<span class="s2">&quot;</span><span class="s">theme</span><span class="s2">&quot;</span>][<span class="s2">&quot;</span><span class="s">custom_dir</span><span class="s2">&quot;</span>]
+
+    <span class="nv">nav</span> <span class="o">=</span> <span class="nv">mkdocs_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">nav</span><span class="s2">&quot;</span>, <span class="nv">None</span><span class="ss">)</span>
+
+    <span class="k">if</span> <span class="nv">nav</span> <span class="nv">and</span> <span class="nv">hasattr</span><span class="ss">(</span><span class="nv">nav</span>[<span class="mi">0</span>], <span class="s2">&quot;</span><span class="s">copy</span><span class="s2">&quot;</span><span class="ss">)</span>:
+
+        <span class="nv">mkdocs_config</span>[<span class="s2">&quot;</span><span class="s">nav</span><span class="s2">&quot;</span>] <span class="o">=</span> [<span class="nv">nav_item</span>.<span class="nv">copy</span><span class="ss">()</span> <span class="k">for</span> <span class="nv">nav_item</span> <span class="nv">in</span> <span class="nv">nav</span>]
 
     <span class="k">return</span> <span class="nv">mkdocs_config</span>
 </pre></div>
@@ -1135,42 +1235,113 @@ defined below that <code>portray</code> was able to determine for the project</p
 </details>
 <h3 id="repository">repository</h3>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">repository</span><span class="p">(</span>
-    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
+    <span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">repo_url</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">repo_name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">edit_uri</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">normalize_repo_url</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NoneType</span><span class="p">]]</span>
 </pre></div>
 
 
 <p>Returns back any information that can be determined by introspecting the projects git repo
 (if there is one).</p>
-<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="nv">def</span> <span class="nv">repository</span><span class="ss">(</span><span class="nv">directory</span>: <span class="nv">str</span><span class="ss">)</span> <span class="o">-&gt;</span> <span class="nv">dict</span>:
+<details class="example"><summary>View Source</summary><div class="codehilite"><pre><span></span><span class="n">def</span> <span class="nf">repository</span><span class="p">(</span>
 
-    <span class="s2">&quot;&quot;&quot;</span><span class="s">Returns back any information that can be determined by introspecting the projects git repo</span>
+    <span class="nl">directory</span><span class="p">:</span> <span class="n">str</span><span class="p">,</span>
 
-       <span class="ss">(</span><span class="k">if</span> <span class="nv">there</span> <span class="nv">is</span> <span class="nv">one</span><span class="ss">)</span>.
+    <span class="nl">repo_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">None</span><span class="p">,</span>
 
-    <span class="s2">&quot;&quot;&quot;</span>
+    <span class="nl">repo_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">None</span><span class="p">,</span>
 
-    <span class="nv">config</span> <span class="o">=</span> {}
+    <span class="nl">edit_uri</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">None</span><span class="p">,</span>
 
-    <span class="nv">try</span>:
+    <span class="nl">normalize_repo_url</span><span class="p">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="n">True</span><span class="p">,</span>
 
-        <span class="nv">repo_url</span> <span class="o">=</span> <span class="nv">Repo</span><span class="ss">(</span><span class="nv">directory</span><span class="ss">)</span>.<span class="nv">remotes</span>.<span class="nv">origin</span>.<span class="nv">url</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
 
-        <span class="k">if</span> <span class="s2">&quot;</span><span class="s">http</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">repo_url</span>:
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">str</span><span class="p">]]</span><span class="o">:</span>
 
-            <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">repo_url</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">repo_url</span>
+    <span class="s">&quot;&quot;&quot;Returns back any information that can be determined by introspecting the projects git repo</span>
 
-            <span class="nv">config</span>[<span class="s2">&quot;</span><span class="s">repo_name</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">parse</span>.<span class="nv">urlsplit</span><span class="ss">(</span><span class="nv">repo_url</span><span class="ss">)</span>.<span class="nv">path</span>.<span class="nv">rstrip</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">.git</span><span class="s2">&quot;</span><span class="ss">)</span>.<span class="nv">lstrip</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">/</span><span class="s2">&quot;</span><span class="ss">)</span>
+       <span class="p">(</span><span class="k">if</span> <span class="n">there</span> <span class="n">is</span> <span class="n">one</span><span class="p">).</span>
 
-    <span class="nv">except</span> <span class="nv">Exception</span>:
+    <span class="s">&quot;&quot;&quot;</span>
 
-        <span class="nv">config</span> <span class="o">=</span> {}
+    <span class="nl">try</span><span class="p">:</span>
 
-    <span class="k">if</span> <span class="nv">not</span> <span class="nv">config</span>:
+        <span class="k">if</span> <span class="n">repo_url</span> <span class="n">is</span> <span class="nl">None</span><span class="p">:</span>
 
-        <span class="nv">warnings</span>.<span class="nv">warn</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">Unable to identify `repo_name` and `repo_url` automatically</span><span class="s2">&quot;</span><span class="ss">)</span>
+            <span class="n">repo_url</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">directory</span><span class="p">).</span><span class="n">remotes</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">url</span>
 
-    <span class="k">return</span> <span class="nv">config</span>
+        <span class="k">if</span> <span class="n">repo_name</span> <span class="n">is</span> <span class="nl">None</span><span class="p">:</span>
+
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">r</span><span class="s">&quot;(:(//)?)([\w\.@\:/\-~]+)(\.git)?(/)?&quot;</span><span class="p">,</span> <span class="n">repo_url</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nl">match</span><span class="p">:</span>
+
+                <span class="n">path</span> <span class="o">=</span> <span class="n">match</span><span class="p">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="k">else</span><span class="o">:</span>
+
+                <span class="n">path</span> <span class="o">=</span> <span class="n">repo_url</span>
+
+            <span class="n">repo_name</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">repo_name</span><span class="p">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;.git&quot;</span><span class="p">)</span><span class="o">:</span>
+
+                <span class="n">repo_name</span> <span class="o">=</span> <span class="n">repo_name</span><span class="p">[</span><span class="o">:</span> <span class="o">-</span><span class="n">len</span><span class="p">(</span><span class="s">&quot;.git&quot;</span><span class="p">)]</span>
+
+        <span class="k">if</span> <span class="n">edit_uri</span> <span class="n">is</span> <span class="nl">None</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="s">&quot;github&quot;</span> <span class="k">in</span> <span class="n">repo_url</span> <span class="n">or</span> <span class="s">&quot;gitlab&quot;</span> <span class="k">in</span> <span class="nl">repo_url</span><span class="p">:</span>
+
+                <span class="n">edit_uri</span> <span class="o">=</span> <span class="s">&quot;edit/master/&quot;</span>
+
+            <span class="n">elif</span> <span class="s">&quot;bitbucket&quot;</span> <span class="k">in</span> <span class="nl">repo_url</span><span class="p">:</span>
+
+                <span class="n">edit_uri</span> <span class="o">=</span> <span class="s">&quot;src/default/docs/&quot;</span>
+
+        <span class="k">if</span> <span class="nl">normalize_repo_url</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">repo_url</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;git@&quot;</span><span class="p">)</span> <span class="n">and</span> <span class="s">&quot;:&quot;</span> <span class="k">in</span> <span class="nl">repo_url</span><span class="p">:</span>
+
+                <span class="n">tld</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">repo_url</span><span class="p">[</span><span class="mi">4</span><span class="o">:</span><span class="p">].</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span>
+
+                <span class="n">repo_url</span> <span class="o">=</span> <span class="n">f</span><span class="s">&quot;https://</span><span class="p">{</span><span class="n">tld</span><span class="p">}</span><span class="o">/</span><span class="p">{</span><span class="n">path</span><span class="p">}</span><span class="s">&quot;</span>
+
+            <span class="n">elif</span> <span class="n">repo_url</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;https://&quot;</span><span class="p">)</span> <span class="n">and</span> <span class="s">&quot;@&quot;</span> <span class="k">in</span> <span class="nl">repo_url</span><span class="p">:</span>
+
+                <span class="n">repo_url</span> <span class="o">=</span> <span class="n">f</span><span class="s">&quot;https://{repo_url.split(&#39;@&#39;)[1]}&quot;</span>
+
+            <span class="k">if</span> <span class="n">repo_url</span> <span class="n">and</span> <span class="s">&quot;github&quot;</span> <span class="k">in</span> <span class="n">repo_url</span> <span class="n">or</span> <span class="s">&quot;gitlab&quot;</span> <span class="k">in</span> <span class="n">repo_url</span> <span class="n">or</span> <span class="s">&quot;bitbucket&quot;</span> <span class="k">in</span> <span class="nl">repo_url</span><span class="p">:</span>
+
+                <span class="n">repo_url</span> <span class="o">=</span> <span class="n">repo_url</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;.git&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+
+            <span class="nl">key</span><span class="p">:</span> <span class="n">value</span>
+
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="k">in</span> <span class="p">{</span>
+
+                <span class="s">&quot;repo_url&quot;</span><span class="o">:</span> <span class="n">repo_url</span><span class="p">,</span>
+
+                <span class="s">&quot;repo_name&quot;</span><span class="o">:</span> <span class="n">repo_name</span><span class="p">,</span>
+
+                <span class="s">&quot;edit_uri&quot;</span><span class="o">:</span> <span class="n">edit_uri</span><span class="p">,</span>
+
+            <span class="p">}.</span><span class="n">items</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">value</span>
+
+        <span class="p">}</span>
+
+    <span class="n">except</span> <span class="nl">Exception</span><span class="p">:</span>
+
+        <span class="n">warnings</span><span class="p">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Unable to identify `repo_name`, `repo_url`, and `edit_uri` automatically.&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{}</span>
 </pre></div>
 
 
