@@ -642,7 +642,8 @@ Here is what that would look like for portray's documentation site if it chose t
 </pre></div>
 
 
-<p>For more information see <a href="https://www.mkdocs.org/user-guide/configuration/">MkDocs configuration</a> and <a href="https://github.com/pdoc3/pdoc/blob/master/pdoc/templates/config.mako">pdoc3 configuration</a>.</p>
+<p>Note that the above utilizes <a href="https://github.com/toml-lang/toml/blob/master/README.md#user-content-array-of-tables">TOMLs double bracket syntax to specify a List of Dicts</a>.</p>
+<p>For more information about available configuration options see <a href="https://www.mkdocs.org/user-guide/configuration/">MkDocs configuration</a> and <a href="https://github.com/pdoc3/pdoc/blob/master/pdoc/templates/config.mako">pdoc3 configuration</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>While portray allows configuring any aspect of MkDocs or pdoc3, it only allows that configuration to be defined in a <code>pyproject.toml</code> file. Any other configuration files normally used for these projects will be ignored.</p>
