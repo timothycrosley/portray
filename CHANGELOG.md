@@ -17,6 +17,9 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.3.1 - September 22 2019
+- Fixed [Issue 43](https://github.com/timothycrosley/portray/issues/43) - Automatically remap `-` to `_` when attempting to auto-determine module name.
+
 ## 1.3.0 - September 15 2019
 - Potentially backward compatibility breaking performance optimization: portray now only renders root project files + the specified documentation directory + any specified extra_dirs.
   If a previously utilized file used to be auto included, but is no longer, you can force its inclusion by adding its directory to `extra_dirs.`
