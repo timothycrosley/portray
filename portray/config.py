@@ -67,7 +67,7 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     project_config.update(toml(os.path.join(directory, config_file)))
     project_config.update(overrides)
 
-    project_config.setdefault("modules", [os.path.basename(os.getcwd())])
+    project_config.setdefault("modules", [os.path.basename(os.getcwd()).replace("-", "_")])
     project_config.setdefault("pdocs", {}).setdefault("modules", project_config["modules"])
 
     project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
