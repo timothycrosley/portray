@@ -33,6 +33,9 @@ classifiers=[
 
 [tool.portray.pdoc3]
 just = "kidding"
+
+[tool.portray]
+extra_markdown_extensions = ["smarty"]
 """
 
 

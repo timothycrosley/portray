@@ -23,6 +23,7 @@ PORTRAY_DEFAULTS = {
     "append_directory_to_python_path": True,
     "include_reference_documentation": True,
     "labels": {"Cli": "CLI", "Api": "API", "Http": "HTTP", "Pypi": "PyPI"},
+    "extra_markdown_extensions": [],
 }
 
 MKDOCS_DEFAULTS: Dict[str, Any] = {
@@ -70,7 +71,11 @@ def project(directory: str, config_file: str, **overrides) -> dict:
     project_config.setdefault("modules", [os.path.basename(os.getcwd()).replace("-", "_")])
     project_config.setdefault("pdocs", {}).setdefault("modules", project_config["modules"])
 
-    project_config["mkdocs"] = mkdocs(directory, **project_config.get("mkdocs", {}))
+    mkdocs_config = project_config.get("mkdocs", {})
+    mkdocs_config.setdefault(
+        "extra_markdown_extensions", project_config.get("extra_markdown_extensions", [])
+    )
+    project_config["mkdocs"] = mkdocs(directory, **mkdocs_config)
     if "pdoc3" in project_config:
         warnings.warn(
             "pdoc3 config usage is deprecated in favor of pdocs. "
@@ -202,6 +207,10 @@ def mkdocs(directory: str, **overrides) -> dict:
     nav = mkdocs_config.get("nav", None)
     if nav and hasattr(nav[0], "copy"):
         mkdocs_config["nav"] = [nav_item.copy() for nav_item in nav]
+
+    mkdocs_config["markdown_extensions"] = mkdocs_config["markdown_extensions"] + mkdocs_config.pop(
+        "extra_markdown_extensions", []
+    )
 
     return mkdocs_config
 
