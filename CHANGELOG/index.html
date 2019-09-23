@@ -576,6 +576,11 @@
 <p><code>pipenv install portray</code></p>
 <p>see the <a href="https://timothycrosley.github.io/portray/docs/quick_start/1.-installation/">Installation QuickStart</a> for more instructions.</p>
 <h1 id="changelog">Changelog</h1>
+<h2 id="131-september-22-2019">1.3.1 - September 22 2019</h2>
+<ul>
+<li>Fixed <a href="https://github.com/timothycrosley/portray/issues/43">Issue 43</a> - Automatically remap <code>-</code> to <code>_</code> when attempting to auto-determine module name.</li>
+<li>Added <code>extra_markdown_extensions</code> config option, to enable adding markdown extensiions without having to redefine default set included by portray.</li>
+</ul>
 <h2 id="130-september-15-2019">1.3.0 - September 15 2019</h2>
 <ul>
 <li>Potentially backward compatibility breaking performance optimization: portray now only renders root project files + the specified documentation directory + any specified extra_dirs.

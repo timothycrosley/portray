@@ -772,6 +772,8 @@
 
     <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;Cli&quot;</span><span class="p">:</span> <span class="s2">&quot;CLI&quot;</span><span class="p">,</span> <span class="s2">&quot;Api&quot;</span><span class="p">:</span> <span class="s2">&quot;API&quot;</span><span class="p">,</span> <span class="s2">&quot;Http&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTP&quot;</span><span class="p">,</span> <span class="s2">&quot;Pypi&quot;</span><span class="p">:</span> <span class="s2">&quot;PyPI&quot;</span><span class="p">},</span>
 
+    <span class="s2">&quot;extra_markdown_extensions&quot;</span><span class="p">:</span> <span class="p">[],</span>
+
 <span class="p">}</span>
 
 <span class="n">MKDOCS_DEFAULTS</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -846,11 +848,19 @@
 
     <span class="n">project_config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">overrides</span><span class="p">)</span>
 
-    <span class="n">project_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())])</span>
+    <span class="n">project_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)])</span>
 
     <span class="n">project_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;pdocs&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">,</span> <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;modules&quot;</span><span class="p">])</span>
 
-    <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mkdocs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">project_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+    <span class="n">mkdocs_config</span> <span class="o">=</span> <span class="n">project_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">,</span> <span class="p">{})</span>
+
+    <span class="n">mkdocs_config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
+
+        <span class="s2">&quot;extra_markdown_extensions&quot;</span><span class="p">,</span> <span class="n">project_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;extra_markdown_extensions&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+    <span class="p">)</span>
+
+    <span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mkdocs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">mkdocs_config</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="s2">&quot;pdoc3&quot;</span> <span class="ow">in</span> <span class="n">project_config</span><span class="p">:</span>
 
@@ -1076,6 +1086,12 @@
 
         <span class="n">mkdocs_config</span><span class="p">[</span><span class="s2">&quot;nav&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">nav_item</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">nav_item</span> <span class="ow">in</span> <span class="n">nav</span><span class="p">]</span>
 
+    <span class="n">mkdocs_config</span><span class="p">[</span><span class="s2">&quot;markdown_extensions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mkdocs_config</span><span class="p">[</span><span class="s2">&quot;markdown_extensions&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">mkdocs_config</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+
+        <span class="s2">&quot;extra_markdown_extensions&quot;</span><span class="p">,</span> <span class="p">[]</span>
+
+    <span class="p">)</span>
+
     <span class="k">return</span> <span class="n">mkdocs_config</span>
 
 <span class="k">def</span> <span class="nf">pdocs</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">overrides</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
@@ -1139,6 +1155,12 @@
     <span class="k">if</span> <span class="nv">nav</span> <span class="nv">and</span> <span class="nv">hasattr</span><span class="ss">(</span><span class="nv">nav</span>[<span class="mi">0</span>], <span class="s2">&quot;</span><span class="s">copy</span><span class="s2">&quot;</span><span class="ss">)</span>:
 
         <span class="nv">mkdocs_config</span>[<span class="s2">&quot;</span><span class="s">nav</span><span class="s2">&quot;</span>] <span class="o">=</span> [<span class="nv">nav_item</span>.<span class="nv">copy</span><span class="ss">()</span> <span class="k">for</span> <span class="nv">nav_item</span> <span class="nv">in</span> <span class="nv">nav</span>]
+
+    <span class="nv">mkdocs_config</span>[<span class="s2">&quot;</span><span class="s">markdown_extensions</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">mkdocs_config</span>[<span class="s2">&quot;</span><span class="s">markdown_extensions</span><span class="s2">&quot;</span>] <span class="o">+</span> <span class="nv">mkdocs_config</span>.<span class="nv">pop</span><span class="ss">(</span>
+
+        <span class="s2">&quot;</span><span class="s">extra_markdown_extensions</span><span class="s2">&quot;</span>, []
+
+    <span class="ss">)</span>
 
     <span class="k">return</span> <span class="nv">mkdocs_config</span>
 </pre></div>
@@ -1208,11 +1230,19 @@ defined below that <code>portray</code> was able to determine for the project</p
 
     <span class="nv">project_config</span>.<span class="nv">update</span><span class="ss">(</span><span class="nv">overrides</span><span class="ss">)</span>
 
-    <span class="nv">project_config</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>, [<span class="nv">os</span>.<span class="nv">path</span>.<span class="k">basename</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">())</span>]<span class="ss">)</span>
+    <span class="nv">project_config</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>, [<span class="nv">os</span>.<span class="nv">path</span>.<span class="k">basename</span><span class="ss">(</span><span class="nv">os</span>.<span class="nv">getcwd</span><span class="ss">())</span>.<span class="nv">replace</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">-</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">_</span><span class="s2">&quot;</span><span class="ss">)</span>]<span class="ss">)</span>
 
     <span class="nv">project_config</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">pdocs</span><span class="s2">&quot;</span>, {}<span class="ss">)</span>.<span class="nv">setdefault</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>, <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">modules</span><span class="s2">&quot;</span>]<span class="ss">)</span>
 
-    <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">directory</span>, <span class="o">**</span><span class="nv">project_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>, {}<span class="ss">))</span>
+    <span class="nv">mkdocs_config</span> <span class="o">=</span> <span class="nv">project_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>, {}<span class="ss">)</span>
+
+    <span class="nv">mkdocs_config</span>.<span class="nv">setdefault</span><span class="ss">(</span>
+
+        <span class="s2">&quot;</span><span class="s">extra_markdown_extensions</span><span class="s2">&quot;</span>, <span class="nv">project_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">extra_markdown_extensions</span><span class="s2">&quot;</span>, []<span class="ss">)</span>
+
+    <span class="ss">)</span>
+
+    <span class="nv">project_config</span>[<span class="s2">&quot;</span><span class="s">mkdocs</span><span class="s2">&quot;</span>] <span class="o">=</span> <span class="nv">mkdocs</span><span class="ss">(</span><span class="nv">directory</span>, <span class="o">**</span><span class="nv">mkdocs_config</span><span class="ss">)</span>
 
     <span class="k">if</span> <span class="s2">&quot;</span><span class="s">pdoc3</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">project_config</span>:
 
