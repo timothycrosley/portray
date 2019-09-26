@@ -115,11 +115,16 @@ def toml(location: str) -> dict:
        Generally this is a `pyproject.toml` file at the root of the project
        with a `[tool.portray]` section defined.
     """
-    if not location or not os.path.exists(location):
-        # If location file does not exist
+    try:
+        location_exists = os.path.exists(location)
+        if not location_exists:
+            warnings.warn(f'\nNo config file found at location: "{location}"')
+            return {}
+    except Exception as detection_error:
+        warnings.warn(f'\nUnable to check config at "{location}" due to error: {detection_error}')
+        
 
-        warnings.warn(f'\nNo config file found at location: "{location}"')
-        return {}
+    
 
     try:
         toml_config = toml_load(location)
