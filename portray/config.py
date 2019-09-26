@@ -139,8 +139,8 @@ def toml(location: str) -> dict:
                 config["modules"] = [tools["flit"]["metadata"]["module"]]
 
         return config
-    except Exception as loadConfigE:
-        warnings.warn(f'\nConfig file at "{location}" has errors: {loadConfigE}')
+    except Exception as load_config_error:
+        warnings.warn(f'\nConfig file at "{location}" has errors: {load_config_error}')
 
     return {}
 
