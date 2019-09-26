@@ -122,9 +122,6 @@ def toml(location: str) -> dict:
             return {}
     except Exception as detection_error:
         warnings.warn(f'\nUnable to check config at "{location}" due to error: {detection_error}')
-        
-
-    
 
     try:
         toml_config = toml_load(location)
