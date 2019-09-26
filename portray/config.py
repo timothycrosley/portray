@@ -115,6 +115,12 @@ def toml(location: str) -> dict:
        Generally this is a `pyproject.toml` file at the root of the project
        with a `[tool.portray]` section defined.
     """
+    if not location or not os.path.exists(location):
+        # If location file does not exist
+
+        warnings.warn(f'\nNo config file found at location: "{location}"')
+        return {}
+
     try:
         toml_config = toml_load(location)
         tools = toml_config.get("tool", {})
@@ -133,8 +139,8 @@ def toml(location: str) -> dict:
                 config["modules"] = [tools["flit"]["metadata"]["module"]]
 
         return config
-    except Exception:
-        warnings.warn(f"No {location} config file found")
+    except Exception as loadConfigE:
+        warnings.warn(f'\nConfig file at "{location}" has errors: {loadConfigE}')
 
     return {}
 
