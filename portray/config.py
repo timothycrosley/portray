@@ -116,6 +116,17 @@ def toml(location: str) -> dict:
        with a `[tool.portray]` section defined.
     """
     try:
+        location_exists = os.path.exists(location)
+        if not location_exists:
+            warnings.warn(f'\nNo config file found at location: "{location}"')
+            return {}
+    except Exception as detection_error:
+        warnings.warn(f'\nUnable to check config at "{location}" due to error: {detection_error}')
+        
+
+    
+
+    try:
         toml_config = toml_load(location)
         tools = toml_config.get("tool", {})
 
@@ -133,8 +144,8 @@ def toml(location: str) -> dict:
                 config["modules"] = [tools["flit"]["metadata"]["module"]]
 
         return config
-    except Exception:
-        warnings.warn(f"No {location} config file found")
+    except Exception as load_config_error:
+        warnings.warn(f'\nConfig file at "{location}" has errors: {load_config_error}')
 
     return {}
 
