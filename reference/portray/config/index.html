@@ -930,6 +930,20 @@
 
     <span class="k">try</span><span class="p">:</span>
 
+        <span class="n">location_exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">location_exists</span><span class="p">:</span>
+
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">No config file found at location: &quot;{location}&quot;&#39;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="p">{}</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">detection_error</span><span class="p">:</span>
+
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Unable to check config at &quot;{location}&quot; due to error: {detection_error}&#39;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+
         <span class="n">toml_config</span> <span class="o">=</span> <span class="n">toml_load</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
 
         <span class="n">tools</span> <span class="o">=</span> <span class="n">toml_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tool&quot;</span><span class="p">,</span> <span class="p">{})</span>
@@ -958,9 +972,9 @@
 
         <span class="k">return</span> <span class="n">config</span>
 
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">load_config_error</span><span class="p">:</span>
 
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;No {location} config file found&quot;</span><span class="p">)</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Config file at &quot;{location}&quot; has errors: {load_config_error}&#39;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">{}</span>
 
@@ -1450,6 +1464,20 @@ with a <code>[tool.portray]</code> section defined.</p>
 
     <span class="nv">try</span>:
 
+        <span class="nv">location_exists</span> <span class="o">=</span> <span class="nv">os</span>.<span class="nv">path</span>.<span class="nv">exists</span><span class="ss">(</span><span class="nv">location</span><span class="ss">)</span>
+
+        <span class="k">if</span> <span class="nv">not</span> <span class="nv">location_exists</span>:
+
+            <span class="nv">warnings</span>.<span class="nv">warn</span><span class="ss">(</span><span class="nv">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s">No config file found at location: &quot;{location}&quot;</span><span class="s1">&#39;</span><span class="ss">)</span>
+
+            <span class="k">return</span> {}
+
+    <span class="nv">except</span> <span class="nv">Exception</span> <span class="nv">as</span> <span class="nv">detection_error</span>:
+
+        <span class="nv">warnings</span>.<span class="nv">warn</span><span class="ss">(</span><span class="nv">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s">Unable to check config at &quot;{location}&quot; due to error: {detection_error}</span><span class="s1">&#39;</span><span class="ss">)</span>
+
+    <span class="nv">try</span>:
+
         <span class="nv">toml_config</span> <span class="o">=</span> <span class="nv">toml_load</span><span class="ss">(</span><span class="nv">location</span><span class="ss">)</span>
 
         <span class="nv">tools</span> <span class="o">=</span> <span class="nv">toml_config</span>.<span class="nv">get</span><span class="ss">(</span><span class="s2">&quot;</span><span class="s">tool</span><span class="s2">&quot;</span>, {}<span class="ss">)</span>
@@ -1478,9 +1506,9 @@ with a <code>[tool.portray]</code> section defined.</p>
 
         <span class="k">return</span> <span class="nv">config</span>
 
-    <span class="nv">except</span> <span class="nv">Exception</span>:
+    <span class="nv">except</span> <span class="nv">Exception</span> <span class="nv">as</span> <span class="nv">load_config_error</span>:
 
-        <span class="nv">warnings</span>.<span class="nv">warn</span><span class="ss">(</span><span class="nv">f</span><span class="s2">&quot;</span><span class="s">No {location} config file found</span><span class="s2">&quot;</span><span class="ss">)</span>
+        <span class="nv">warnings</span>.<span class="nv">warn</span><span class="ss">(</span><span class="nv">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s">Config file at &quot;{location}&quot; has errors: {load_config_error}</span><span class="s1">&#39;</span><span class="ss">)</span>
 
     <span class="k">return</span> {}
 </pre></div>

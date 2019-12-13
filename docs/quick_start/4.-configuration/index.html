@@ -572,7 +572,7 @@
                 <h1 id="configuring-portray">Configuring portray</h1>
 <p>Hopefully, <code>portray</code>'s automatic configuration will pick up everything you need to document your project.
 If not, <code>portray</code> enables configuration for every aspect of your documentation website using Python's standard <code>pyproject.toml</code> file.
-Configuration options should be placed within a <code>tool.poetry</code> section of your config file:</p>
+Configuration options should be placed within a <code>tool.portray</code> section of your config file:</p>
 <div class="codehilite"><pre><span></span><span class="k">[tool.portray]</span>
 <span class="n">output_dir</span> <span class="o">=</span> <span class="s">&quot;documentation_website&quot;</span>
 </pre></div>
@@ -592,7 +592,7 @@ Configuration options should be placed within a <code>tool.poetry</code> section
 <li><strong>include_reference_documentation</strong>: If set to <code>true</code> (the default) automatic reference documentation is produced by pdocs to live alongside your manually written documentation.</li>
 </ul>
 <p>Beyond portray's direct configuration options, you can modify any of MkDocs or pdocs configuration options in the same <code>pyproject.toml</code> file.
-Simply nest their configuration under a <code>.mkdocs</code> or <code>.pdoc3</code>.</p>
+Simply nest their configuration under a <code>.mkdocs</code> or <code>.pdocs</code>.</p>
 <p>For example, to change the MkDocs theme configuration used for portray the following is set in <code>pyproject.toml</code>:</p>
 <div class="codehilite"><pre><span></span><span class="k">[tool.portray.mkdocs.theme]</span>
 <span class="n">favicon</span> <span class="o">=</span> <span class="s">&quot;art/logo_small.png&quot;</span>
@@ -644,10 +644,10 @@ Here is what that would look like for portray's documentation site if it chose t
 
 
 <p>Note that the above utilizes <a href="https://github.com/toml-lang/toml/blob/master/README.md#user-content-array-of-tables">TOMLs double bracket syntax to specify a List of Dicts</a>.</p>
-<p>For more information about available configuration options see <a href="https://www.mkdocs.org/user-guide/configuration/">MkDocs configuration</a> and <a href="https://github.com/pdoc3/pdoc/blob/master/pdoc/templates/config.mako">pdoc3 configuration</a>.</p>
+<p>For more information about available configuration options see <a href="https://www.mkdocs.org/user-guide/configuration/">MkDocs configuration</a> and <a href="https://timothycrosley.github.io/pdocs/docs/quick_start/2.-cli/">pdocs</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>While portray allows configuring any aspect of MkDocs or pdoc3, it only allows that configuration to be defined in a <code>pyproject.toml</code> file. Any other configuration files normally used for these projects will be ignored.</p>
+<p>While portray allows configuring any aspect of MkDocs or pdocs, it only allows that configuration to be defined in a <code>pyproject.toml</code> file. Any other configuration files normally used for these projects will be ignored.</p>
 </div>
                 
                   
