@@ -33,6 +33,9 @@ pep8-naming = "^0.8.2"
 hypothesis-auto = "^0.0.4"
 pprofile = "^2.0"
 
+[tool.black]
+line-length = 100
+
 [tool.poetry.scripts]
 portray = "portray.cli:__hug__.cli"
 
