@@ -17,6 +17,10 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.3.2 - June 07 2020
+- Bump pdocs dependency to include some package inclusion improvements.
+- Speed up doc copying by only copying markdown files.
+
 ## 1.3.1 - September 22 2019
 - Fixed [Issue 43](https://github.com/timothycrosley/portray/issues/43) - Automatically remap `-` to `_` when attempting to auto-determine module name.
 - Added `extra_markdown_extensions` config option, to enable adding markdown extensions without having to redefine default set included by portray.
