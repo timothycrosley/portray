@@ -5,15 +5,14 @@ import os
 import shutil
 import sys
 import tempfile
-from argparse import Namespace
 from contextlib import contextmanager
 from glob import glob
 from typing import Dict
 
-import mako.exceptions
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
 from mkdocs.commands.build import build as mkdocs_build
+from mkdocs.utils import is_markdown_file
 from pdocs import as_markdown as pdocs_as_markdown
 from yaspin import yaspin
 
@@ -87,7 +86,7 @@ def documentation_in_temp_folder(config: dict):
             ) as spinner:
                 for root_file in os.listdir(config["directory"]):
                     root_file_absolute = os.path.join(config["directory"], root_file)
-                    if os.path.isfile(root_file_absolute):
+                    if os.path.isfile(root_file_absolute) and is_markdown_file(root_file_absolute):
                         shutil.copyfile(root_file_absolute, os.path.join(input_dir, root_file))
 
                 for source_directory in [config["docs_dir"]] + config["extra_dirs"]:
