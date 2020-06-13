@@ -17,6 +17,9 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.4.0 - June 12 2020
+- Upgraded mkdocs-material & pymdown-extensions
+
 ## 1.3.2 - June 07 2020
 - Bump pdocs dependency to include some package inclusion improvements.
 - Speed up doc copying by only copying markdown files.
