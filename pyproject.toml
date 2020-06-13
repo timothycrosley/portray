@@ -12,9 +12,9 @@ hug = "^2.6"
 mkdocs = "^1.0"
 pdocs = "^1.0.2"
 toml = "^0.10.0"
-mkdocs-material = "^4.4"
+mkdocs-material = "^5.0"
 GitPython = "^3.0"
-pymdown-extensions = "^6.0"
+pymdown-extensions = "^7.0"
 yaspin = "^0.15.0"
 
 [tool.poetry.dev-dependencies]
