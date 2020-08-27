@@ -60,7 +60,14 @@ def in_browser(
        - *modules*: One or more modules to render reference documentation for
     """
     directory = directory if directory else os.getcwd()
-    server(directory=directory, config_file=config_file, open_browser=True, modules=modules)
+    server(
+        directory=directory,
+        config_file=config_file,
+        open_browser=True,
+        port=port,
+        host=host,
+        modules=modules,
+    )
 
 
 def server(
@@ -85,6 +92,8 @@ def server(
     api = hug.API("Doc Server")
 
     project_config = project_configuration(directory, config_file, modules=modules)
+    host = host or project_config["host"]
+    port = port or project_config["port"]
     with render.documentation_in_temp_folder(project_config) as doc_folder:
 
         @hug.static("/", api=api)
@@ -95,14 +104,9 @@ def server(
         def custom_startup(*args, **kwargs):  # pragma: no cover
             print(logo.ascii_art)
             if open_browser:
-                webbrowser.open_new(f"http://{project_config['host']}:{project_config['port']}")
+                webbrowser.open_new(f"http://{host}:{port}")
 
-        api.http.serve(
-            host=host or project_config["host"],
-            port=port or project_config["port"],
-            no_documentation=True,
-            display_intro=False,
-        )
+        api.http.serve(host=host, port=port, no_documentation=True, display_intro=False)
 
 
 def project_configuration(

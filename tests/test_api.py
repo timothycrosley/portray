@@ -99,6 +99,10 @@ def test_in_browser(mocker, project_dir, chdir):
         mocker.patch("webbrowser.open_new")
         api.in_browser()
         hug.api.HTTPInterfaceAPI.serve.assert_called_once()
+        api.in_browser(port=9999, host="localhost")
+        hug.api.HTTPInterfaceAPI.serve.assert_called_with(
+            host="localhost", port=9999, no_documentation=True, display_intro=False
+        )
 
 
 def test_on_github_pages(mocker, project_dir, chdir):
