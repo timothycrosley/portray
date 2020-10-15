@@ -6,10 +6,10 @@
 """
 import os
 import webbrowser
-from typing import Dict, Optional, Union
+from typing import Dict, Union
 
-import hug
 import mkdocs.commands.gh_deploy
+from livereload import Server
 
 from portray import config, logo, render
 
@@ -48,6 +48,7 @@ def in_browser(
     port: int = None,
     host: str = None,
     modules: list = None,
+    reload: bool = False,
 ) -> None:
     """Opens your default webbrowser pointing to a locally started development webserver enabling
        you to browse documentation locally
@@ -58,6 +59,7 @@ def in_browser(
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
        - *modules*: One or more modules to render reference documentation for
+       - *reload*: If true the server will live load any changes
     """
     directory = directory if directory else os.getcwd()
     server(
@@ -67,6 +69,7 @@ def in_browser(
         port=port,
         host=host,
         modules=modules,
+        reload=reload,
     )
 
 
@@ -77,6 +80,7 @@ def server(
     port: int = None,
     host: str = None,
     modules: list = None,
+    reload: bool = False,
 ) -> None:
     """Runs a development webserver enabling you to browse documentation locally.
 
@@ -87,26 +91,52 @@ def server(
        - *port*: The port to expose your documentation on (defaults to: `8000`)
        - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
        - *modules*: One or more modules to render reference documentation for
+       - *reload*: If true the server will live load any changes
     """
     directory = directory if directory else os.getcwd()
-    api = hug.API("Doc Server")
-
     project_config = project_configuration(directory, config_file, modules=modules)
     host = host or project_config["host"]
     port = port or project_config["port"]
-    with render.documentation_in_temp_folder(project_config) as doc_folder:
 
-        @hug.static("/", api=api)
-        def my_static_dirs():  # pragma: no cover
-            return (doc_folder,)
+    with render.documentation_in_temp_folder(project_config) as (sources_folder, docs_folder):
 
-        @hug.startup(api=api)
-        def custom_startup(*args, **kwargs):  # pragma: no cover
-            print(logo.ascii_art)
-            if open_browser:
-                webbrowser.open_new(f"http://{host}:{port}")
+        print(logo.ascii_art)
 
-        api.http.serve(host=host, port=port, no_documentation=True, display_intro=False)
+        live_server = Server()
+
+        if reload:
+
+            def reloader():
+                sources_old = sources_folder + ".old"
+                docs_old = docs_folder + ".old"
+                with render.documentation_in_temp_folder(project_config) as (sources_new, docs_new):
+                    # cause as little churn as possible to the server watchers
+                    os.rename(sources_folder, sources_old)
+                    os.rename(sources_new, sources_folder)
+                    os.rename(sources_old, sources_new)
+                    os.rename(docs_folder, docs_old)
+                    os.rename(docs_new, docs_folder)
+                    os.rename(docs_old, docs_new)
+
+            # all directories that feed documentation_in_temp_folder
+            watch_dirs = set(
+                (
+                    project_config["directory"],
+                    project_config["docs_dir"],
+                    *project_config["extra_dirs"],
+                )
+            )
+            if "docs_dir" in project_config["mkdocs"]:
+                watch_dirs.add(project_config["mkdocs"]["docs_dir"])
+            if "site_dir" in project_config["mkdocs"]:
+                watch_dirs.add(project_config["mkdocs"]["site_dir"])
+            for watch_dir in watch_dirs.difference(set((sources_folder, docs_folder))):
+                live_server.watch(watch_dir, reloader)
+
+        if open_browser:
+            webbrowser.open_new(f"http://{host}:{port}")
+
+        live_server.serve(root=docs_folder, host=host, port=port, restart_delay=0)
 
 
 def project_configuration(
