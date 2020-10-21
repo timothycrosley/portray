@@ -1,6 +1,7 @@
 import os
 import shutil
 import tempfile
+import toml
 
 import mkdocs.commands.gh_deploy
 import pytest
@@ -91,7 +92,20 @@ def test_reloading_server(mocker, project_dir, chdir):
         api.server(reload=True)
         server_instance = api.Server.return_value
         server_instance.serve.assert_called_once()
-        server_instance.watch.assert_called()
+        assert len(server_instance.watch.call_args_list) == 5
+
+        server_instance.reset_mock()
+        with tempfile.TemporaryDirectory(dir=project_dir) as test_dir:
+            test_config = os.path.join(test_dir, 'test.toml')
+            test_docs_dir = os.path.join(test_dir, 'docs_dir')
+            test_site_dir = os.path.join(test_dir, 'site_dir')
+            os.mkdir(test_docs_dir)
+            os.mkdir(test_site_dir)
+            with open(test_config, 'w') as test_cfg:
+                toml.dump({"tool": {"portray": {"mkdocs": {"docs_dir": test_docs_dir, "site_dir": test_site_dir}}}}, test_cfg)
+            api.server(config_file=test_config, reload=True)
+            server_instance.watch.assert_called()
+            assert len(server_instance.watch.call_args_list) == 7
 
 
 def project_configuration(project_dir, chdir):

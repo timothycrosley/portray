@@ -106,7 +106,7 @@ def server(
 
         if reload:
 
-            def reloader():
+            def reloader(): # pragma: no cover
                 sources_old = sources_folder + ".old"
                 docs_old = docs_folder + ".old"
                 with render.documentation_in_temp_folder(project_config) as (sources_new, docs_new):
