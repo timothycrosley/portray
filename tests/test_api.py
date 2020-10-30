@@ -1,9 +1,8 @@
 import os
 import shutil
 import tempfile
-import webbrowser
+import toml
 
-import hug
 import mkdocs.commands.gh_deploy
 import pytest
 
@@ -81,9 +80,32 @@ def test_as_html_custom_nav(temporary_dir, project_dir, chdir):
 
 def test_server(mocker, project_dir, chdir):
     with chdir(project_dir):
-        mocker.patch("hug.api.HTTPInterfaceAPI.serve")
+        mocker.patch("portray.api.Server")
         api.server()
-        hug.api.HTTPInterfaceAPI.serve.assert_called_once()
+        api.Server.assert_called_once()
+        api.Server.return_value.serve.assert_called_once()
+
+
+def test_reloading_server(mocker, project_dir, chdir):
+    with chdir(project_dir):
+        mocker.patch("portray.api.Server")
+        api.server(reload=True)
+        server_instance = api.Server.return_value
+        server_instance.serve.assert_called_once()
+        assert len(server_instance.watch.call_args_list) == 5
+
+        server_instance.reset_mock()
+        with tempfile.TemporaryDirectory(dir=project_dir) as test_dir:
+            test_config = os.path.join(test_dir, 'test.toml')
+            test_docs_dir = os.path.join(test_dir, 'docs_dir')
+            test_site_dir = os.path.join(test_dir, 'site_dir')
+            os.mkdir(test_docs_dir)
+            os.mkdir(test_site_dir)
+            with open(test_config, 'w') as test_cfg:
+                toml.dump({"tool": {"portray": {"mkdocs": {"docs_dir": test_docs_dir, "site_dir": test_site_dir}}}}, test_cfg)
+            api.server(config_file=test_config, reload=True)
+            server_instance.watch.assert_called()
+            assert len(server_instance.watch.call_args_list) == 7
 
 
 def project_configuration(project_dir, chdir):
@@ -95,14 +117,17 @@ def project_configuration(project_dir, chdir):
 
 def test_in_browser(mocker, project_dir, chdir):
     with chdir(project_dir):
-        mocker.patch("hug.api.HTTPInterfaceAPI.serve")
+        mocker.patch("portray.api.Server")
         mocker.patch("webbrowser.open_new")
         api.in_browser()
-        hug.api.HTTPInterfaceAPI.serve.assert_called_once()
+        server_instance = api.Server.return_value
+        server_instance.serve.assert_called_once()
+
+        server_instance.reset_mock()
         api.in_browser(port=9999, host="localhost")
-        hug.api.HTTPInterfaceAPI.serve.assert_called_with(
-            host="localhost", port=9999, no_documentation=True, display_intro=False
-        )
+        call_args = server_instance.serve.call_args_list[0][1]
+        assert call_args["host"] == "localhost"
+        assert call_args["port"] == 9999
 
 
 def test_on_github_pages(mocker, project_dir, chdir):

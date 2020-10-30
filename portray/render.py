@@ -7,7 +7,7 @@ import sys
 import tempfile
 from contextlib import contextmanager
 from glob import glob
-from typing import Dict
+from typing import Dict, Iterator, Tuple
 
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
@@ -47,7 +47,7 @@ def documentation(config: dict, overwrite: bool = False) -> None:
         else:
             raise DocumentationAlreadyExists(config["output_dir"])
 
-    with documentation_in_temp_folder(config) as documentation_output:  # type: str
+    with documentation_in_temp_folder(config) as (_, documentation_output):
         shutil.copytree(documentation_output, config["output_dir"])
 
 
@@ -71,7 +71,7 @@ def mkdocs(config: dict):
 
 
 @contextmanager
-def documentation_in_temp_folder(config: dict):
+def documentation_in_temp_folder(config: dict) -> Iterator[Tuple[str, str]]:
     """Build documentation within a temp folder, returning that folder name before it is deleted."""
     if config["append_directory_to_python_path"] and not config["directory"] in sys.path:
         sys.path.append(config["directory"])
@@ -154,7 +154,18 @@ def documentation_in_temp_folder(config: dict):
             with yaspin(text="Rendering complete website from Markdown using MkDocs") as spinner:
                 mkdocs(config["mkdocs"])
                 spinner.ok("Done")
-            yield temp_output_dir
+
+            # remove any settings pointing to the temp dirs
+            if config["mkdocs"]["docs_dir"].startswith(input_dir):
+                del config["mkdocs"]["docs_dir"]
+            if config["mkdocs"]["site_dir"].startswith(temp_output_dir):
+                del config["mkdocs"]["site_dir"]
+            if config["pdocs"]["output_dir"].startswith(input_dir):
+                del config["pdocs"]["output_dir"]
+            if config["include_reference_documentation"]:
+                nav.pop()
+
+            yield input_dir, temp_output_dir
 
 
 def _mkdocs_config(config: dict) -> mkdocs_config.Config:

@@ -16,6 +16,7 @@ mkdocs-material = "^5.0"
 GitPython = "^3.0"
 pymdown-extensions = "^7.0"
 yaspin = "^0.15.0"
+livereload = "^2.6.3"
 
 [tool.poetry.dev-dependencies]
 vulture = "^1.0"
