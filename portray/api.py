@@ -143,7 +143,7 @@ def project_configuration(
     directory: str = "",
     config_file: str = "pyproject.toml",
     modules: list = None,
-    output_dir: str = "site",
+    output_dir: str = None,
 ) -> dict:
     """Returns the configuration associated with a project.
 
