@@ -4,6 +4,8 @@ from hypothesis_auto import auto_test
 
 from portray import config, exceptions
 
+REPO_URL = "https://github.com/timothycrosley/portray"
+
 FAKE_SETUP_FILE = """
 from setuptools import setup
 
@@ -83,22 +85,22 @@ def test_repository_properties():
 
 
 def test_repository_custom_config(project_dir):
-    assert config.repository(project_dir) == {
+    assert config.repository(project_dir, repo_url=REPO_URL) == {
         "edit_uri": "edit/master/",
         "repo_name": "portray",
-        "repo_url": "https://github.com/timothycrosley/portray",
+        "repo_url": REPO_URL,
     }
 
-    assert config.repository(project_dir, repo_name="different_name") == {
+    assert config.repository(project_dir, repo_name="different_name", repo_url=REPO_URL) == {
         "edit_uri": "edit/master/",
         "repo_name": "different_name",
-        "repo_url": "https://github.com/timothycrosley/portray",
+        "repo_url": REPO_URL,
     }
 
-    assert config.repository(project_dir, edit_uri="edit/develop/") == {
+    assert config.repository(project_dir, edit_uri="edit/develop/", repo_url=REPO_URL) == {
         "edit_uri": "edit/develop/",
         "repo_name": "portray",
-        "repo_url": "https://github.com/timothycrosley/portray",
+        "repo_url": REPO_URL,
     }
 
     assert config.repository(
