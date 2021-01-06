@@ -46,7 +46,6 @@ MKDOCS_DEFAULTS: Dict[str, Any] = {
 PDOCS_DEFAULTS: Dict = {
     "overwrite": True,
     "exclude_source": False,
-    "template_dir": os.path.join(os.path.dirname(__file__), "pdocs_templates"),
 }
 
 
