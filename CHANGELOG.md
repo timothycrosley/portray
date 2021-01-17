@@ -17,6 +17,12 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.5.0 - Jan 16 2020
+- Fixed issue #60: Portray in_browser ignores port.
+- Fixed issue #63: Custom "output_dir" ignored in pyproject.toml config.
+- Added support for live reload.
+- Added support for Google and Numpy doc string formats.
+
 ## 1.4.0 - June 12 2020
 - Upgraded mkdocs-material & pymdown-extensions
 
