@@ -42,6 +42,12 @@ Troubleshooting = "TROUBLESHOOTING.md"
     "4. Configuration" = "docs/quick_start/4.-configuration.md"
 """
 
+FAKE_PYPROJECT_TOML_BASIC = """
+[tool.portray]
+modules = ["my_module"]
+output_dir = "docs_output"
+"""
+
 
 def test_as_html(temporary_dir, project_dir, chdir):
     with chdir(temporary_dir):
@@ -155,3 +161,11 @@ def test_module_no_path(temporary_dir, chdir):
             pyproject.write("[tool.portray]\nappend_directory_to_python_path = false")
         with pytest.raises(Exception):
             api.as_html()
+
+
+def test_setting_output_dir_in_pyproject_overwrites_default(temporary_dir):
+    config_file = os.path.join(temporary_dir, "pyproject.toml")
+    with open(config_file, "w") as pyproject:
+        pyproject.write(FAKE_PYPROJECT_TOML_BASIC)
+    config = api.project_configuration(directory=temporary_dir, config_file=config_file)
+    assert config["output_dir"] == "docs_output"
