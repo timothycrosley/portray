@@ -43,10 +43,7 @@ MKDOCS_DEFAULTS: Dict[str, Any] = {
     ],
 }
 
-PDOCS_DEFAULTS: Dict = {
-    "overwrite": True,
-    "exclude_source": False,
-}
+PDOCS_DEFAULTS: Dict = {"overwrite": True, "exclude_source": False}
 
 
 def project(directory: str, config_file: str, **overrides) -> dict:
