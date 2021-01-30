@@ -17,6 +17,9 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.5.1 - Jan 29 2020
+- Bump minimum version of pdocs as it has a bug rendering some doc strings.
+
 ## 1.5.0 - Jan 16 2020
 - Fixed issue #60: Portray in_browser ignores port.
 - Fixed issue #63: Custom "output_dir" ignored in pyproject.toml config.

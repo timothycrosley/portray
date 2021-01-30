@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "portray"
-version = "1.5.0"
+version = "1.5.1"
 description = "Your Project with Great Documentation"
 authors = ["Timothy Crosley <timothy.crosley@gmail.com>"]
 license = "MIT"
@@ -10,7 +10,7 @@ readme = "README.md"
 python = "^3.6"
 hug = "^2.6"
 mkdocs = "^1.0"
-pdocs = "^1.1.0"
+pdocs = "^1.1.1"
 toml = "^0.10.0"
 mkdocs-material = "^5.0"
 GitPython = "^3.0"
