@@ -195,7 +195,10 @@ def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
 
     nested_dirs = sorted(glob(os.path.join(directory, "*/")))
     for nested_dir in nested_dirs:
-        if len(glob(os.path.join(nested_dir, '*.md')) + glob(os.path.join(nested_dir, '**/*.md'))) > 0:
+        if (
+            len(glob(os.path.join(nested_dir, "*.md")) + glob(os.path.join(nested_dir, "**/*.md")))
+            > 0
+        ):
             dir_nav = {
                 _label(nested_dir[:-1], config): _nested_docs(nested_dir, root_directory, config)
             }
