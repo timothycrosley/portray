@@ -17,6 +17,9 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.5.2 - Feb 16 2021
+- Fix incompatibility with latest version of mkdocs and portray on github pages command.
+
 ## 1.5.1 - Jan 29 2020
 - Bump minimum version of pdocs as it has a bug rendering some doc strings.
 

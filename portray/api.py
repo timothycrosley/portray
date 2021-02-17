@@ -181,7 +181,8 @@ def on_github_pages(
     """
     directory = directory if directory else os.getcwd()
     project_config = project_configuration(directory, config_file, modules)
-    with render.documentation_in_temp_folder(project_config):
+    with render.documentation_in_temp_folder(project_config) as (_, site_dir):
+        project_config['mkdocs']['site_dir'] = site_dir
         conf = render._mkdocs_config(project_config["mkdocs"])
         conf.config_file_path = directory
         mkdocs.commands.gh_deploy.gh_deploy(
