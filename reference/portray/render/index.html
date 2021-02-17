@@ -992,7 +992,13 @@
 
     <span class="s s-Atom">for</span> <span class="s s-Atom">nested_dir</span> <span class="s s-Atom">in</span> <span class="s s-Atom">nested_dirs:</span>
 
-        <span class="s s-Atom">if</span> <span class="nf">len</span><span class="p">(</span><span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">,</span> <span class="s s-Atom">&#39;*.md&#39;</span><span class="p">))</span> <span class="o">+</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">,</span> <span class="s s-Atom">&#39;**/*.md&#39;</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="s s-Atom">:</span>
+        <span class="nf">if</span> <span class="p">(</span>
+
+            <span class="nf">len</span><span class="p">(</span><span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">,</span> <span class="s2">&quot;*.md&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="nf">glob</span><span class="p">(</span><span class="s s-Atom">os</span><span class="p">.</span><span class="s s-Atom">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s s-Atom">nested_dir</span><span class="p">,</span> <span class="s2">&quot;**/*.md&quot;</span><span class="p">)))</span>
+
+            <span class="o">&gt;</span> <span class="mi">0</span>
+
+        <span class="p">)</span><span class="s s-Atom">:</span>
 
             <span class="s s-Atom">dir_nav</span> <span class="o">=</span> <span class="p">{</span>
 
