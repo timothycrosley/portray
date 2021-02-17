@@ -992,9 +992,9 @@ to start.</p>
 
     <span class="n">project_config</span> <span class="o">=</span> <span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">modules</span><span class="p">)</span>
 
-    <span class="k">with</span> <span class="n">render</span><span class="o">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">)</span> <span class="k">as</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">docs_folder</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">render</span><span class="o">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">)</span> <span class="k">as</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">site_dir</span><span class="p">):</span>
 
-        <span class="n">breakpoint</span><span class="p">()</span>
+        <span class="n">project_config</span><span class="p">[</span><span class="s1">&#39;mkdocs&#39;</span><span class="p">][</span><span class="s1">&#39;site_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">site_dir</span>
 
         <span class="n">conf</span> <span class="o">=</span> <span class="n">render</span><span class="o">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">])</span>
 
@@ -1226,9 +1226,9 @@ to start.</p>
 
 <span class="w">    </span><span class="n">project_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">project_configuration</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span><span class="w"> </span><span class="n">config_file</span><span class="p">,</span><span class="w"> </span><span class="n">modules</span><span class="p">)</span><span class="w"></span>
 
-<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">render</span><span class="p">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">docs_folder</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">render</span><span class="p">.</span><span class="n">documentation_in_temp_folder</span><span class="p">(</span><span class="n">project_config</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">site_dir</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
 
-<span class="w">        </span><span class="n">breakpoint</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="n">project_config</span><span class="o">[</span><span class="n">&#39;mkdocs&#39;</span><span class="o">][</span><span class="n">&#39;site_dir&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">site_dir</span><span class="w"></span>
 
 <span class="w">        </span><span class="n">conf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">render</span><span class="p">.</span><span class="n">_mkdocs_config</span><span class="p">(</span><span class="n">project_config</span><span class="o">[</span><span class="n">&quot;mkdocs&quot;</span><span class="o">]</span><span class="p">)</span><span class="w"></span>
 
