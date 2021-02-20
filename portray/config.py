@@ -3,15 +3,16 @@ import ast
 import os
 import re
 import warnings
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Union, cast
 from urllib import parse
 
+import _ast
 import mkdocs.config as _mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
 from git import Repo
 from toml import load as toml_load
 
-import _ast
 from portray.exceptions import NoProjectFound
 
 PORTRAY_DEFAULTS = {
@@ -205,8 +206,11 @@ def mkdocs(directory: str, **overrides) -> dict:
         **overrides,
     }
     theme = mkdocs_config["theme"]
-    if theme["name"].lower() == "material" and "custom_dir" not in theme:
-        theme["custom_dir"] = MKDOCS_DEFAULTS["theme"]["custom_dir"]
+    if theme["name"].lower() == "material":
+        if "custom_dir" in theme:
+            theme["custom_dir"] = Path(theme["custom_dir"]).absolute().as_posix()
+        else:
+            theme["custom_dir"] = MKDOCS_DEFAULTS["theme"]["custom_dir"]
 
     nav = mkdocs_config.get("nav", None)
     if nav and hasattr(nav[0], "copy"):
