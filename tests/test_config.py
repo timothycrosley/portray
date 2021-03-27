@@ -86,13 +86,13 @@ def test_repository_properties():
 
 def test_repository_custom_config(project_dir):
     assert config.repository(project_dir, repo_url=REPO_URL) == {
-        "edit_uri": "edit/master/",
+        "edit_uri": "edit/main/",
         "repo_name": "portray",
         "repo_url": REPO_URL,
     }
 
     assert config.repository(project_dir, repo_name="different_name", repo_url=REPO_URL) == {
-        "edit_uri": "edit/master/",
+        "edit_uri": "edit/main/",
         "repo_name": "different_name",
         "repo_url": REPO_URL,
     }
@@ -106,7 +106,7 @@ def test_repository_custom_config(project_dir):
     assert config.repository(
         project_dir, repo_url="https://github.com/timothycrosley/examples"
     ) == {
-        "edit_uri": "edit/master/",
+        "edit_uri": "edit/main/",
         "repo_name": "examples",
         "repo_url": "https://github.com/timothycrosley/examples",
     }
@@ -134,7 +134,7 @@ def test_repository_custom_config(project_dir):
 
     assert config.repository(
         project_dir, repo_url="https://gitlab.ci.token:password@gitlab.net/app.git"
-    ) == {"edit_uri": "edit/master/", "repo_name": "app", "repo_url": "https://gitlab.net/app"}
+    ) == {"edit_uri": "edit/main/", "repo_name": "app", "repo_url": "https://gitlab.net/app"}
 
 
 def test_repository_no_config_no_repository(temporary_dir):

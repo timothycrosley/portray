@@ -169,7 +169,7 @@ def repository(
                 repo_name = repo_name[: -len(".git")]
         if edit_uri is None:
             if "github" in repo_url or "gitlab" in repo_url:
-                edit_uri = "edit/master/"
+                edit_uri = "edit/main/"
             elif "bitbucket" in repo_url:
                 edit_uri = "src/default/docs/"
 

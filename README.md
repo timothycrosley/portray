@@ -1,9 +1,9 @@
-[![portray - Your Project with Great Documentation.](https://raw.github.com/timothycrosley/portray/master/art/logo.png)](https://timothycrosley.github.io/portray/)
+[![portray - Your Project with Great Documentation.](https://raw.github.com/timothycrosley/portray/main/art/logo.png)](https://timothycrosley.github.io/portray/)
 _________________
 
 [![PyPI version](https://badge.fury.io/py/portray.svg)](http://badge.fury.io/py/portray)
-[![Build Status](https://travis-ci.org/timothycrosley/portray.svg?branch=master)](https://travis-ci.org/timothycrosley/portray)
-[![codecov](https://codecov.io/gh/timothycrosley/portray/branch/master/graph/badge.svg)](https://codecov.io/gh/timothycrosley/portray)
+[![Build Status](https://travis-ci.org/timothycrosley/portray.svg?branch=main)](https://travis-ci.org/timothycrosley/portray)
+[![codecov](https://codecov.io/gh/timothycrosley/portray/branch/main/graph/badge.svg)](https://codecov.io/gh/timothycrosley/portray)
 [![Join the chat at https://gitter.im/timothycrosley/portray](https://badges.gitter.im/timothycrosley/portray.svg)](https://gitter.im/timothycrosley/portray?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://pypi.python.org/pypi/portray/)
 [![Downloads](https://pepy.tech/badge/portray)](https://pepy.tech/project/portray)
@@ -16,7 +16,7 @@ _________________
 
 **portray** is a Python3 command line tool and library that helps you create great documentation websites for your Python projects with as little effort as possible.
 
-[![Example Usage Gif](https://raw.githubusercontent.com/timothycrosley/portray/master/art/example.gif)](https://raw.githubusercontent.com/timothycrosley/portray/master/art/example.gif)
+[![Example Usage Gif](https://raw.githubusercontent.com/timothycrosley/portray/main/art/example.gif)](https://raw.githubusercontent.com/timothycrosley/portray/main/art/example.gif)
 
 Key Features:
 
