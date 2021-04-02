@@ -17,6 +17,9 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.6.0 - April 1 2021
+- Updated minimum version of mkdocs material to 7.0.0 to address security concerns on earlier versions.
+
 ## 1.5.2 - Feb 16 2021
 - Fix incompatibility with latest version of mkdocs and portray on github pages command.
 
