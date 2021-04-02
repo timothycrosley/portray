@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "portray"
-version = "1.5.2"
+version = "1.6.0"
 description = "Your Project with Great Documentation"
 authors = ["Timothy Crosley <timothy.crosley@gmail.com>"]
 license = "MIT"
@@ -12,7 +12,7 @@ hug = "^2.6"
 mkdocs = "^1.0"
 pdocs = "^1.1.1"
 toml = "^0.10.0"
-mkdocs-material = "^5.0"
+mkdocs-material = "^7.0"
 GitPython = "^3.0"
 pymdown-extensions = "^7.0"
 yaspin = "^0.15.0"
