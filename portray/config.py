@@ -4,12 +4,11 @@ import os
 import re
 import warnings
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union, cast
-from urllib import parse
+from typing import Any, Dict, Optional
 
 import _ast
-import mkdocs.config as _mkdocs_config
-import mkdocs.exceptions as _mkdocs_exceptions
+import mkdocs.config as _mkdocs_config  # noqa
+import mkdocs.exceptions as _mkdocs_exceptions  # noqa
 from git import Repo
 from toml import load as toml_load
 

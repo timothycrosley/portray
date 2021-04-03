@@ -1,4 +1,5 @@
-#!/bin/bash -xe
+#!/bin/bash
+set -euxo pipefail
 
-poetry run isort --profile hug portray/ tests/
-poetry run black portray/ tests/ -l 100
+poetry run isort portray/ tests/
+poetry run black portray/ tests/
