@@ -1,5 +1,6 @@
 import os
 import shutil
+import sys
 import tempfile
 
 import mkdocs.commands.gh_deploy
@@ -49,6 +50,10 @@ output_dir = "docs_output"
 """
 
 
+@pytest.mark.skipif(
+    sys.version_info < (3, 8) and sys.platform == "win32",
+    reason="Tests fails on CI with this combination due to CI specific permission issues on.",
+)
 def test_as_html(temporary_dir, project_dir, chdir):
     with chdir(temporary_dir):
         # Directory with no project
@@ -73,6 +78,10 @@ def test_as_html(temporary_dir, project_dir, chdir):
                 api.as_html(output_dir=os.path.join(new_temp_directory, "site"))
 
 
+@pytest.mark.skipif(
+    sys.version_info < (3, 8) and sys.platform == "win32",
+    reason="Tests fails on CI with this combination due to CI specific permission issues on.",
+)
 def test_as_html_custom_nav(temporary_dir, project_dir, chdir):
     with chdir(temporary_dir):
         temp_project_dir = os.path.join(temporary_dir, "portray")
