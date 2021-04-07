@@ -2,8 +2,8 @@
 _________________
 
 [![PyPI version](https://badge.fury.io/py/portray.svg)](http://badge.fury.io/py/portray)
-[![Test Status](https://github.com/timothycrosley/portray/workflows/Test/badge.svg?branch=develop)](https://github.com/timothycrosley/portray/actions?query=workflow%3ATest)
-[![Lint Status](https://github.com/timothycrosley/portray/workflows/Lint/badge.svg?branch=develop)](https://github.com/timothycrosley/portray/actions?query=workflow%3ALint)
+[![Test Status](https://github.com/timothycrosley/portray/workflows/Test/badge.svg?branch=main)](https://github.com/timothycrosley/portray/actions?query=workflow%3ATest)
+[![Lint Status](https://github.com/timothycrosley/portray/workflows/Lint/badge.svg?branch=main)](https://github.com/timothycrosley/portray/actions?query=workflow%3ALint)
 [![codecov](https://codecov.io/gh/timothycrosley/portray/branch/main/graph/badge.svg)](https://codecov.io/gh/timothycrosley/portray)
 [![Join the chat at https://gitter.im/timothycrosley/portray](https://badges.gitter.im/timothycrosley/portray.svg)](https://gitter.im/timothycrosley/portray?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://pypi.python.org/pypi/portray/)
