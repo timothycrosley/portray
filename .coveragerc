@@ -2,4 +2,5 @@
 exclude_lines =
     pragma: no cover
 omit =
+    portray/__main__.py
     *tests*
