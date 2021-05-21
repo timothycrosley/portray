@@ -116,7 +116,7 @@ def toml(location: str) -> dict:
         if not location_exists:
             warnings.warn(f'\nNo config file found at location: "{location}"')
             return {}
-    except Exception as detection_error:
+    except Exception as detection_error:  # pragma: no cover
         warnings.warn(f'\nUnable to check config at "{location}" due to error: {detection_error}')
 
     try:
