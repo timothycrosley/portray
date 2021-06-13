@@ -53,7 +53,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade poetry
           poetry install
-          poetry run pip install --upgrade tornado --ignore-installed
+          poetry run pip install --upgrade tornado --ignore-installed || true
       - name: Test
         shell: bash
         run: |
