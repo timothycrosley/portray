@@ -12,6 +12,7 @@ from typing import Dict, Iterator, Tuple
 import mkdocs.config as mkdocs_config
 import mkdocs.exceptions as _mkdocs_exceptions
 from mkdocs.commands.build import build as mkdocs_build
+from mkdocs.config.defaults import get_schema as mkdocs_schema
 from mkdocs.utils import is_markdown_file
 from pdocs import as_markdown as pdocs_as_markdown
 from yaspin import yaspin
@@ -169,7 +170,7 @@ def documentation_in_temp_folder(config: dict) -> Iterator[Tuple[str, str]]:
 
 
 def _mkdocs_config(config: dict) -> mkdocs_config.Config:
-    config_instance = mkdocs_config.Config(schema=mkdocs_config.DEFAULT_SCHEMA)
+    config_instance = mkdocs_config.Config(schema=mkdocs_schema())
     config_instance.load_dict(config)
 
     errors, warnings = config_instance.validate()
