@@ -1,4 +1,5 @@
 """Defines the configuration defaults and load functions used by `portray`"""
+import _ast
 import ast
 import os
 import re
@@ -6,7 +7,6 @@ import warnings
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-import _ast
 import mkdocs.config as _mkdocs_config  # noqa
 import mkdocs.exceptions as _mkdocs_exceptions  # noqa
 from git import Repo
