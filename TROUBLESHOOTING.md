@@ -55,5 +55,5 @@ For more information about these settings, refer to the [mkdocs reference docume
 
 ## Deploying to Netlify
 
-portray includes a built-in command to deploy to [Github Pages](https://pages.github.com/) but it's also compatible with every static website host, including the popular [Netflify](https://www.netlify.com).
+portray includes a built-in command to deploy to [Github Pages](https://pages.github.com/) but it's also compatible with every static website host, including the popular [Netlify](https://www.netlify.com).
 There's a great guide on how to set this up contributed by @sw-yx [here](https://scotch.io/@sw-yx/python-the-jamstack).
