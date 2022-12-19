@@ -19,7 +19,7 @@ def as_html(
     config_file: str = "pyproject.toml",
     output_dir: str = "site",
     overwrite: bool = False,
-    modules: list = None,
+    modules: list = None,  # type: ignore
 ) -> None:
     """Produces HTML documentation for a Python project placing it into output_dir.
 
@@ -45,9 +45,9 @@ def as_html(
 def in_browser(
     directory: str = "",
     config_file: str = "pyproject.toml",
-    port: int = None,
-    host: str = None,
-    modules: list = None,
+    port: int = None,  # type: ignore
+    host: str = None,  # type: ignore
+    modules: list = None,  # type: ignore
     reload: bool = False,
 ) -> None:
     """Opens your default webbrowser pointing to a locally started development webserver enabling
@@ -77,9 +77,9 @@ def server(
     directory: str = "",
     config_file: str = "pyproject.toml",
     open_browser: bool = False,
-    port: int = None,
-    host: str = None,
-    modules: list = None,
+    port: int = None,  # type: ignore
+    host: str = None,  # type: ignore
+    modules: list = None,  # type: ignore
     reload: bool = False,
 ) -> None:
     """Runs a development webserver enabling you to browse documentation locally.
@@ -142,8 +142,8 @@ def server(
 def project_configuration(
     directory: str = "",
     config_file: str = "pyproject.toml",
-    modules: list = None,
-    output_dir: str = None,
+    modules: list = None,  # type: ignore
+    output_dir: str = None,  # type: ignore
 ) -> dict:
     """Returns the configuration associated with a project.
 
@@ -164,10 +164,10 @@ def project_configuration(
 def on_github_pages(
     directory: str = "",
     config_file: str = "pyproject.toml",
-    message: str = None,
+    message: str = None,  # type: ignore
     force: bool = False,
     ignore_version: bool = False,
-    modules: list = None,
+    modules: list = None,  # type: ignore
 ) -> None:
     """Regenerates and deploys the documentation to GitHub pages.
 
