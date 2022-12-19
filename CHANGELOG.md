@@ -17,6 +17,11 @@ see the [Installation QuickStart](https://timothycrosley.github.io/portray/docs/
 
 Changelog
 =========
+## 1.8.0 - Dec 19 2022
+- dropped Python 3.7 support
+- upgraded pdocs and other sub dependencies
+- several small fixes
+
 ## 1.7.0 - June 13 2021
 - mkdocs version bump and compatibility fix for 1.2.x
 
