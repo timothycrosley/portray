@@ -42,9 +42,9 @@ extra_markdown_extensions = ["smarty"]
 
 
 def test_project_properties(project_dir):
-    auto_test(config.project, _auto_allow_exceptions=(exceptions.NoProjectFound,))
+    auto_test(config.project, auto_allow_exceptions_=(exceptions.NoProjectFound,))
     auto_test(
-        config.project, directory=project_dir, _auto_allow_exceptions=(exceptions.NoProjectFound,)
+        config.project, directory=project_dir, auto_allow_exceptions_=(exceptions.NoProjectFound,)
     )
 
 

@@ -7,33 +7,34 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.6"
-hug = "^2.6"
-mkdocs = "~1.2"
-pdocs = "^1.1.1"
-toml = "^0.10.0"
-mkdocs-material = "^7.0"
-GitPython = "^3.0"
-pymdown-extensions = "^7.0"
+python = ">3.6"
+hug = ">=2.6"
+mkdocs = ">=1.3.0"
+pdocs = {version = ">=1.1.1", python = ">=3.7.0,<4.0"}
+toml = ">=0.10.0"
+mkdocs-material = ">=7.0"
+GitPython = ">=3.0"
+pymdown-extensions = ">=7.0"
 yaspin = ">=0.15.0,<3"
-livereload = "^2.6.3"
+livereload = ">=2.6.3"
 
 [tool.poetry.dev-dependencies]
-vulture = "^1.0"
-bandit = "^1.6"
-pytest = "^5.1"
-safety = "^1.8"
-isort = "^5.8"
-flake8-bugbear = "^19.8"
-black = {version = "^18.3-alpha.0", allow-prereleases = true}
-mypy = "^0.730.0"
-ipython = "^7.7"
-pytest-cov = "^2.7"
-pytest-mock = "^1.10"
-pep8-naming = "^0.8.2"
-hypothesis-auto = "^0.0.4"
-pprofile = "^2.0"
-cruft = "^2.2"
+vulture = ">=1.0"
+bandit = ">=1.6"
+pytest = ">=5.1"
+safety = ">=1.8"
+isort = {version = ">=5.8", python = ">=3.7.0,<4.0"}
+flake8-bugbear = ">=19.8"
+black = {version = ">1.0.0", python = ">=3.7.0,<4.0"}
+mypy = ">0.730.0"
+types-toml = ">0.0"
+ipython = ">=7.7"
+pytest-cov = ">=2.7"
+pytest-mock = ">=1.10"
+pep8-naming = ">=0.8.2"
+hypothesis-auto = {version = ">=0.0.4", python = ">=3.7.0,<4.0"}
+pprofile = ">=2.0"
+cruft = {version = ">=2.2", python = ">=3.7.0,<4.0"}
 
 [tool.poetry.scripts]
 portray = "portray.cli:__hug__.cli"

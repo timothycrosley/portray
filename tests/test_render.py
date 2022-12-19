@@ -6,5 +6,5 @@ from portray import render
 def test_mkdocs_config():
     auto_test(
         render._mkdocs_config,
-        _auto_allow_exceptions=(render._mkdocs_exceptions.ConfigurationError,),
+        auto_allow_exceptions_=(render._mkdocs_exceptions.ConfigurationError,),
     )

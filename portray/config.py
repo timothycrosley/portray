@@ -1,4 +1,5 @@
 """Defines the configuration defaults and load functions used by `portray`"""
+import _ast
 import ast
 import os
 import re
@@ -6,7 +7,6 @@ import warnings
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-import _ast
 import mkdocs.config as _mkdocs_config  # noqa
 import mkdocs.exceptions as _mkdocs_exceptions  # noqa
 from git import Repo
@@ -48,7 +48,7 @@ PDOCS_DEFAULTS: Dict = {"overwrite": True, "exclude_source": False}
 
 def project(directory: str, config_file: str, **overrides) -> dict:
     """Returns back the complete configuration - including all sub configuration components
-       defined below that `portray` was able to determine for the project
+    defined below that `portray` was able to determine for the project
     """
     if not (
         os.path.isfile(os.path.join(directory, config_file))
@@ -106,10 +106,10 @@ def setup_py(location: str) -> dict:
 
 def toml(location: str) -> dict:
     """Returns back the configuration found within the projects
-       [TOML](https://github.com/toml-lang/toml#toml) config (if there is one).
+    [TOML](https://github.com/toml-lang/toml#toml) config (if there is one).
 
-       Generally this is a `pyproject.toml` file at the root of the project
-       with a `[tool.portray]` section defined.
+    Generally this is a `pyproject.toml` file at the root of the project
+    with a `[tool.portray]` section defined.
     """
     try:
         location_exists = os.path.exists(location)
@@ -152,7 +152,7 @@ def repository(
     **kwargs,
 ) -> Dict[str, Optional[str]]:
     """Returns back any information that can be determined by introspecting the projects git repo
-       (if there is one).
+    (if there is one).
     """
     try:
         if repo_url is None:

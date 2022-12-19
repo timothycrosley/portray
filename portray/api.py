@@ -23,15 +23,15 @@ def as_html(
 ) -> None:
     """Produces HTML documentation for a Python project placing it into output_dir.
 
-       - *directory*: The root folder of your project.
-       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)
-         formatted config file you wish to use.
-       - *output_dir*: The directory to place the generated HTML into.
-       - *overwrite*: If set to `True` any existing documentation output will be removed
-         before generating new documentation. Otherwise, if documentation exists in the
-         specified `output_dir` the command will fail with a `DocumentationAlreadyExists`
-         exception.
-       - *modules*: One or more modules to render reference documentation for
+    - *directory*: The root folder of your project.
+    - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml)
+      formatted config file you wish to use.
+    - *output_dir*: The directory to place the generated HTML into.
+    - *overwrite*: If set to `True` any existing documentation output will be removed
+      before generating new documentation. Otherwise, if documentation exists in the
+      specified `output_dir` the command will fail with a `DocumentationAlreadyExists`
+      exception.
+    - *modules*: One or more modules to render reference documentation for
     """
     directory = directory if directory else os.getcwd()
     render.documentation(
@@ -51,15 +51,15 @@ def in_browser(
     reload: bool = False,
 ) -> None:
     """Opens your default webbrowser pointing to a locally started development webserver enabling
-       you to browse documentation locally
+    you to browse documentation locally
 
-       - *directory*: The root folder of your project.
-       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
-         config file you wish to use.
-       - *port*: The port to expose your documentation on (defaults to: `8000`)
-       - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
-       - *modules*: One or more modules to render reference documentation for
-       - *reload*: If true the server will live load any changes
+    - *directory*: The root folder of your project.
+    - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
+      config file you wish to use.
+    - *port*: The port to expose your documentation on (defaults to: `8000`)
+    - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
+    - *modules*: One or more modules to render reference documentation for
+    - *reload*: If true the server will live load any changes
     """
     directory = directory if directory else os.getcwd()
     server(
@@ -84,14 +84,14 @@ def server(
 ) -> None:
     """Runs a development webserver enabling you to browse documentation locally.
 
-       - *directory*: The root folder of your project.
-       - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
-         config file you wish to use.
-       - *open_browser*: If true a browser will be opened pointing at the documentation server
-       - *port*: The port to expose your documentation on (defaults to: `8000`)
-       - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
-       - *modules*: One or more modules to render reference documentation for
-       - *reload*: If true the server will live load any changes
+    - *directory*: The root folder of your project.
+    - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
+      config file you wish to use.
+    - *open_browser*: If true a browser will be opened pointing at the documentation server
+    - *port*: The port to expose your documentation on (defaults to: `8000`)
+    - *host*: The host to expose your documentation on (defaults to `"127.0.0.1"`)
+    - *modules*: One or more modules to render reference documentation for
+    - *reload*: If true the server will live load any changes
     """
     directory = directory if directory else os.getcwd()
     project_config = project_configuration(directory, config_file, modules=modules)
@@ -147,10 +147,10 @@ def project_configuration(
 ) -> dict:
     """Returns the configuration associated with a project.
 
-        - *directory*: The root folder of your project.
-        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
-          config file you wish to use.
-        - *modules*: One or more modules to include in the configuration for reference rendering
+    - *directory*: The root folder of your project.
+    - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
+      config file you wish to use.
+    - *modules*: One or more modules to include in the configuration for reference rendering
     """
     overrides: Dict[str, Union[str, list]] = {}
     if modules:
@@ -171,13 +171,13 @@ def on_github_pages(
 ) -> None:
     """Regenerates and deploys the documentation to GitHub pages.
 
-        - *directory*: The root folder of your project.
-        - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
-          config file you wish to use.
-        - *message*: The commit message to use when uploading your documentation.
-        - *force*: Force the push to the repository.
-        - *ignore_version*: Ignore check that build is not being deployed with an old version.
-        - *modules*: One or more modules to render reference documentation for
+    - *directory*: The root folder of your project.
+    - *config_file*: The [TOML](https://github.com/toml-lang/toml#toml) formatted
+      config file you wish to use.
+    - *message*: The commit message to use when uploading your documentation.
+    - *force*: Force the push to the repository.
+    - *ignore_version*: Ignore check that build is not being deployed with an old version.
+    - *modules*: One or more modules to render reference documentation for
     """
     directory = directory if directory else os.getcwd()
     project_config = project_configuration(directory, config_file, modules)
