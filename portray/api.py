@@ -120,8 +120,8 @@ def server(
             # all directories that feed documentation_in_temp_folder
             watch_dirs = {
                 project_config["directory"],
-                    project_config["docs_dir"],
-                    *project_config["extra_dirs"],
+                project_config["docs_dir"],
+                *project_config["extra_dirs"],
             }
             if "docs_dir" in project_config["mkdocs"]:
                 watch_dirs.add(project_config["mkdocs"]["docs_dir"])
