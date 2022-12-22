@@ -1,7 +1,6 @@
 import os
 
 from hypothesis_auto import auto_test
-
 from portray import config, exceptions
 
 REPO_URL = "https://github.com/timothycrosley/portray"

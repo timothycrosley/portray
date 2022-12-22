@@ -1,5 +1,5 @@
 #!/bin/bash
 set -euxo pipefail
 
-poetry run isort portray/ tests/
+poetry run ruff . --fix
 poetry run black portray/ tests/

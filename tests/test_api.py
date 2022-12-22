@@ -6,7 +6,6 @@ import tempfile
 import mkdocs.commands.gh_deploy
 import pytest
 import toml
-
 from portray import api, exceptions
 
 CUSTOM_NAV = """

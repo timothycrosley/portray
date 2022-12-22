@@ -12,7 +12,6 @@ it should maintain 1:1 compatibility with the programmatic API definition in the
 from pprint import pprint
 
 import hug
-
 from portray import api, logo
 
 cli = hug.cli(api=hug.API(__name__, doc=logo.ascii_art))

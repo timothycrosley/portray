@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">3.7"
+python = ">=3.8"
 hug = ">=2.6"
 mkdocs = ">=1.3.0,<1.4.0"
 pdocs = ">=1.2.0"
@@ -19,21 +19,18 @@ yaspin = ">=0.15.0,<3"
 livereload = ">=2.6.3"
 
 [tool.poetry.dev-dependencies]
-vulture = ">=1.0"
 bandit = ">=1.6"
 pytest = ">=5.1"
 safety = ">=1.8"
-isort = {version = ">=5.8", python = ">=3.7.0,<4.0"}
-flake8-bugbear = ">=19.8"
 black = {version = ">1.0.0", python = ">=3.7.0,<4.0"}
 mypy = ">0.730.0"
 types-toml = ">0.0"
 ipython = ">=7.7"
 pytest-cov = ">=2.7"
 pytest-mock = ">=1.10"
-pep8-naming = ">=0.8.2"
 hypothesis-auto = {version = ">=0.0.4", python = ">=3.7.0,<4.0"}
 pprofile = ">=2.0"
+ruff = ">=0.0.191"
 cruft = {version = ">=2.2", python = ">=3.7.0,<4.0"}
 
 [tool.poetry.scripts]
@@ -49,8 +46,24 @@ palette = {primary = "blue grey", accent = "pink"}
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
+[tool.ruff]
+line-length = 100
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[tool.ruff.isort]
+known-third-party = ["portray"]
+
 [tool.black]
 line-length = 100
-
-[tool.isort]
-profile = "hug"

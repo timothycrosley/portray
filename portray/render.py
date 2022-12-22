@@ -15,9 +15,8 @@ from mkdocs.commands.build import build as mkdocs_build
 from mkdocs.config.defaults import get_schema as mkdocs_schema
 from mkdocs.utils import is_markdown_file
 from pdocs import as_markdown as pdocs_as_markdown
-from yaspin import yaspin
-
 from portray.exceptions import DocumentationAlreadyExists
+from yaspin import yaspin
 
 NO_HOME_PAGE = """
 # Nothing here
@@ -74,7 +73,7 @@ def mkdocs(config: dict):
 @contextmanager
 def documentation_in_temp_folder(config: dict) -> Iterator[Tuple[str, str]]:
     """Build documentation within a temp folder, returning that folder name before it is deleted."""
-    if config["append_directory_to_python_path"] and not config["directory"] in sys.path:
+    if config["append_directory_to_python_path"] and config["directory"] not in sys.path:
         sys.path.append(config["directory"])
 
     with tempfile.TemporaryDirectory() as input_dir:

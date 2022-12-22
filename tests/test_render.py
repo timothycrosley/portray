@@ -1,5 +1,4 @@
 from hypothesis_auto import auto_test
-
 from portray import render
 
 

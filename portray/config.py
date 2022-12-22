@@ -10,9 +10,8 @@ from typing import Any, Dict, Optional
 import mkdocs.config as _mkdocs_config  # noqa
 import mkdocs.exceptions as _mkdocs_exceptions  # noqa
 from git import Repo
-from toml import load as toml_load
-
 from portray.exceptions import NoProjectFound
+from toml import load as toml_load
 
 PORTRAY_DEFAULTS = {
     "docs_dir": "docs",
