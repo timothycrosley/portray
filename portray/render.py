@@ -142,7 +142,10 @@ def documentation_in_temp_folder(config: dict) -> Iterator[Tuple[str, str]]:
                                 os.path.join(input_dir, index_page), destination_index_page
                             )
 
-            if config["include_reference_documentation"]:
+            if config["include_reference_documentation"] and (
+                config["include_reference_documentation"] not in ("false", "False")
+                or config["include_reference_documentation"]
+            ):
                 with yaspin(text="Auto generating reference documentation using pdocs") as spinner:
                     if "output_dir" not in config["pdocs"]:
                         config["pdocs"]["output_dir"] = os.path.join(input_dir, "reference")
@@ -160,7 +163,9 @@ def documentation_in_temp_folder(config: dict) -> Iterator[Tuple[str, str]]:
                 del config["mkdocs"]["docs_dir"]
             if config["mkdocs"]["site_dir"].startswith(temp_output_dir):
                 del config["mkdocs"]["site_dir"]
-            if config["pdocs"]["output_dir"].startswith(input_dir):
+            if config["pdocs"].get("output_dir") and config["pdocs"]["output_dir"].startswith(
+                input_dir
+            ):
                 del config["pdocs"]["output_dir"]
             if config["include_reference_documentation"]:
                 nav.pop()
