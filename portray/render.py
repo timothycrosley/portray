@@ -80,7 +80,6 @@ def documentation_in_temp_folder(config: dict) -> Iterator[Tuple[str, str]]:
         input_dir = os.path.join(input_dir, "input")
         os.mkdir(input_dir)
         with tempfile.TemporaryDirectory() as temp_output_dir:
-
             with yaspin(
                 text="Copying source documentation to temporary compilation directory"
             ) as spinner:
@@ -131,7 +130,6 @@ def documentation_in_temp_folder(config: dict) -> Iterator[Tuple[str, str]]:
                         index_page = index_nav
 
                     if index_page:
-
                         destination_index_page = os.path.join(input_dir, "index.md")
                         if (
                             index_page != "README.md"

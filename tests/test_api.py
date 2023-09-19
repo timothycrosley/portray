@@ -131,7 +131,7 @@ def test_reloading_server(mocker, project_dir, chdir):
             assert len(server_instance.watch.call_args_list) == 7
 
 
-def project_configuration(project_dir, chdir):
+def test_project_configuration(project_dir, chdir):
     with chdir(project_dir):
         config = api.project_configuration()
         assert config
@@ -167,7 +167,7 @@ def test_module_no_path(temporary_dir, chdir):
             pathless_module.write("def my_method():\n    pass\n")
 
         # Rendering with no module identification should fail
-        with pytest.raises(Exception):
+        with pytest.raises(exceptions.NoProjectFound):
             api.as_html()
 
         # With module specification, even without path should succeed
@@ -176,7 +176,7 @@ def test_module_no_path(temporary_dir, chdir):
         # Unless path auto inclusion is turned off
         with open(os.path.join(temporary_dir, "pyproject.toml"), "w") as pyproject:
             pyproject.write("[tool.portray]\nappend_directory_to_python_path = false")
-        with pytest.raises(Exception):
+        with pytest.raises(exceptions.DocumentationAlreadyExists):
             api.as_html()
 
 

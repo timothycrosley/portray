@@ -98,7 +98,6 @@ def server(
     port = port or project_config["port"]
 
     with render.documentation_in_temp_folder(project_config) as (sources_folder, docs_folder):
-
         print(logo.ascii_art)
 
         live_server = Server()
