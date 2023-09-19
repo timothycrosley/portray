@@ -192,9 +192,7 @@ def _mkdocs_config(config: dict) -> mkdocs_config.Config:
 
 
 def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
-    nav = [
-        _doc(doc, root_directory, config) for doc in sorted(glob(os.path.join(directory, "*.md")))
-    ]
+    nav = [_doc(doc, root_directory, config) for doc in _sorted_docs(directory)]
 
     nested_dirs = sorted(glob(os.path.join(directory, "*/")))
     for nested_dir in nested_dirs:
@@ -208,6 +206,16 @@ def _nested_docs(directory: str, root_directory: str, config: dict) -> list:
             nav.append(dir_nav)  # type: ignore
 
     return nav
+
+
+def _sorted_docs(directory: str) -> list:
+    """Get all markdown documents in the directory and sort them, but make sure index.md is first."""
+    docs = sorted(glob(os.path.join(directory, "*.md")))
+    index = os.path.join(directory, "index.md")
+    if docs.__contains__(index):
+        docs.remove(index)
+        docs.insert(0, index)
+    return docs
 
 
 def _label(path: str, config: Dict) -> str:
